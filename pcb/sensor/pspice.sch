@@ -1,0 +1,263 @@
+EESchema Schematic File Version 4
+EELAYER 29 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title "Perimter Wire Sensor"
+Date ""
+Rev ""
+Comp "Meadow Robotics GmbH"
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L Device:R R3
+U 1 1 5CDF1F94
+P 2600 2900
+F 0 "R3" H 2670 2946 50  0000 L CNN
+F 1 "100k" H 2670 2855 50  0000 L CNN
+F 2 "" V 2530 2900 50  0001 C CNN
+F 3 "~" H 2600 2900 50  0001 C CNN
+	1    2600 2900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1800 3000 1800 3550
+Wire Wire Line
+	1800 3550 1850 3550
+Wire Wire Line
+	2600 3550 2600 3050
+Text Label 2000 3550 0    50   ~ 0
+V_GND
+Wire Wire Line
+	1800 2600 1800 2400
+Wire Wire Line
+	1800 2400 2600 2400
+Wire Wire Line
+	2600 2400 2600 2750
+$Comp
+L pspice:OPAMP U1
+U 1 1 5CDF4452
+P 3600 3000
+F 0 "U1" H 3944 3046 50  0000 L CNN
+F 1 "OPAMP" H 3900 3150 50  0000 L CNN
+F 2 "" H 3600 3000 50  0001 C CNN
+F 3 "~" H 3600 3000 50  0001 C CNN
+	1    3600 3000
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2600 2400 3300 2400
+Wire Wire Line
+	3300 2400 3300 2900
+Connection ~ 2600 2400
+$Comp
+L Device:R R1
+U 1 1 5CDF5C01
+P 2150 1100
+F 0 "R1" H 2220 1146 50  0000 L CNN
+F 1 "10k" H 2220 1055 50  0000 L CNN
+F 2 "" V 2080 1100 50  0001 C CNN
+F 3 "~" H 2150 1100 50  0001 C CNN
+	1    2150 1100
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R2
+U 1 1 5CDF66D5
+P 2150 1400
+F 0 "R2" H 2220 1446 50  0000 L CNN
+F 1 "10k" H 2220 1355 50  0000 L CNN
+F 2 "" V 2080 1400 50  0001 C CNN
+F 3 "~" H 2150 1400 50  0001 C CNN
+	1    2150 1400
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C1
+U 1 1 5CDF70E9
+P 2450 1400
+F 0 "C1" H 2565 1446 50  0000 L CNN
+F 1 "1u" H 2565 1355 50  0000 L CNN
+F 2 "" H 2488 1250 50  0001 C CNN
+F 3 "~" H 2450 1400 50  0001 C CNN
+	1    2450 1400
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2450 1550 2150 1550
+Connection ~ 2150 1550
+Wire Wire Line
+	2450 1250 2150 1250
+Connection ~ 2150 1250
+Text Label 2700 1250 2    50   ~ 0
+V_GND
+Wire Wire Line
+	2700 1250 2450 1250
+Connection ~ 2450 1250
+Text Notes 1950 4150 0    50   ~ 0
+RL Low Pass.\n85mH, 1M => 1.87MHz\n100mH, 100kR => 160kHz
+$Comp
+L Device:R R4
+U 1 1 5CDFDB44
+P 2900 3300
+F 0 "R4" H 2970 3346 50  0000 L CNN
+F 1 "10k" H 2970 3255 50  0000 L CNN
+F 2 "" V 2830 3300 50  0001 C CNN
+F 3 "~" H 2900 3300 50  0001 C CNN
+	1    2900 3300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R5
+U 1 1 5CDFDF2D
+P 3550 3750
+F 0 "R5" V 3650 3750 50  0000 C CNN
+F 1 "1M" V 3550 3750 50  0000 C CNN
+F 2 "" V 3480 3750 50  0001 C CNN
+F 3 "~" H 3550 3750 50  0001 C CNN
+	1    3550 3750
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	2900 3150 2900 3100
+Wire Wire Line
+	2900 3100 3250 3100
+Wire Wire Line
+	2900 3450 2900 3550
+Wire Wire Line
+	2900 3550 2600 3550
+Connection ~ 2600 3550
+Wire Wire Line
+	3400 3750 3250 3750
+Wire Wire Line
+	3250 3750 3250 3100
+Connection ~ 3250 3100
+Wire Wire Line
+	3250 3100 3300 3100
+Wire Wire Line
+	3900 3000 3900 3750
+Wire Wire Line
+	3900 3750 3700 3750
+Wire Wire Line
+	3900 3000 4600 3000
+Connection ~ 3900 3000
+$Comp
+L Device:L_Coupled L2
+U 1 1 5CE02609
+P 1700 2800
+F 0 "L2" V 1654 2944 50  0000 L CNN
+F 1 "L_Coupled" V 1745 2944 50  0000 L CNN
+F 2 "" H 1700 2800 50  0001 C CNN
+F 3 "~" H 1700 2800 50  0001 C CNN
+	1    1700 2800
+	0    1    1    0   
+$EndComp
+$Comp
+L pspice:VSOURCE V1
+U 1 1 5CE0E42D
+P 850 3000
+F 0 "V1" H 1078 3046 50  0000 L CNN
+F 1 "VSOURCE" H 1078 2955 50  0000 L CNN
+F 2 "" H 850 3000 50  0001 C CNN
+F 3 "~" H 850 3000 50  0001 C CNN
+F 4 "V" H 850 3000 50  0001 C CNN "Spice_Primitive"
+F 5 "pulse(0 10 0 0.000001 0.000001 0.00005 0.0001)" H 850 3000 50  0001 C CNN "Spice_Model"
+F 6 "Y" H 850 3000 50  0001 C CNN "Spice_Netlist_Enabled"
+	1    850  3000
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C2
+U 1 1 5CE0EB01
+P 1150 2400
+F 0 "C2" V 898 2400 50  0000 C CNN
+F 1 "1u" V 989 2400 50  0000 C CNN
+F 2 "" H 1188 2250 50  0001 C CNN
+F 3 "~" H 1150 2400 50  0001 C CNN
+	1    1150 2400
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	1300 2400 1600 2400
+Wire Wire Line
+	1600 2400 1600 2600
+Wire Wire Line
+	1000 2400 850  2400
+Wire Wire Line
+	850  2400 850  2700
+Wire Wire Line
+	850  3300 850  3550
+Wire Wire Line
+	850  3550 1550 3550
+Wire Wire Line
+	1600 3550 1600 3000
+$Comp
+L pspice:0 #GND01
+U 1 1 5CDF3153
+P 1500 1600
+F 0 "#GND01" H 1500 1500 50  0001 C CNN
+F 1 "0" H 1500 1689 50  0000 C CNN
+F 2 "" H 1500 1600 50  0001 C CNN
+F 3 "~" H 1500 1600 50  0001 C CNN
+	1    1500 1600
+	1    0    0    -1  
+$EndComp
+$Comp
+L pspice:VSOURCE V2
+U 1 1 5CDF440D
+P 1500 1250
+F 0 "V2" H 1728 1296 50  0000 L CNN
+F 1 "VSOURCE" H 1728 1205 50  0000 L CNN
+F 2 "" H 1500 1250 50  0001 C CNN
+F 3 "~" H 1500 1250 50  0001 C CNN
+F 4 "V" H 1500 1250 50  0001 C CNN "Spice_Primitive"
+F 5 "dc 5" H 1500 1250 50  0001 C CNN "Spice_Model"
+F 6 "Y" H 1500 1250 50  0001 C CNN "Spice_Netlist_Enabled"
+	1    1500 1250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1500 950  2150 950 
+Wire Wire Line
+	1500 1550 2150 1550
+Wire Wire Line
+	1500 1600 1500 1550
+Connection ~ 1500 1550
+Text Label 1750 950  0    50   ~ 0
+5V
+Text Label 1750 1550 0    50   ~ 0
+GND
+Text Label 3500 2550 3    50   ~ 0
+5V
+Text Label 3500 3500 1    50   ~ 0
+GND
+Wire Wire Line
+	3500 3500 3500 3300
+Wire Wire Line
+	3500 2700 3500 2550
+$Comp
+L Device:R R?
+U 1 1 5CDFD93D
+P 1700 3750
+F 0 "R?" V 1493 3750 50  0000 C CNN
+F 1 "100M" V 1584 3750 50  0000 C CNN
+F 2 "" V 1630 3750 50  0001 C CNN
+F 3 "~" H 1700 3750 50  0001 C CNN
+	1    1700 3750
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	1550 3750 1550 3550
+Connection ~ 1550 3550
+Wire Wire Line
+	1550 3550 1600 3550
+Wire Wire Line
+	1850 3750 1850 3550
+Connection ~ 1850 3550
+Wire Wire Line
+	1850 3550 2600 3550
+$EndSCHEMATC
