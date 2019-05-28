@@ -1,0 +1,6 @@
+[submodule "firmware/sensor/kissfft"]
+	path = firmware/sensor/kissfft
+	url = https://github.com/mborgerding/kissfft
+[submodule "firmware/sensor/fft"]
+	path = firmware/sensor/fft
+	url = https://github.com/adafruit/Adafruit_ZeroFFT.git

@@ -2,3 +2,4 @@
 .vscode
 /firmware/sensor_atmega/Debug
 /firmware/generator/Debug
+/firmware/sensor/Debug
