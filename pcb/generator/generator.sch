@@ -15,7 +15,7 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L generator-rescue:L6206-local U?
+L local:L6206 U?
 U 1 1 5CE0D3EB
 P 8400 3050
 F 0 "U?" H 7950 4000 50  0000 C CNN

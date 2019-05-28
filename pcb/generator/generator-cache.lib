@@ -234,11 +234,11 @@ X OUT 3 300 0 100 L 50 50 1 1 w
 ENDDRAW
 ENDDEF
 #
-# generator-rescue_L6206-local
+# local_L6206
 #
-DEF generator-rescue_L6206-local U 0 40 Y Y 1 F N
+DEF local_L6206 U 0 40 Y Y 1 F N
 F0 "U" -550 850 50 H V C CNN
-F1 "generator-rescue_L6206-local" 0 0 50 H V C CNN
+F1 "local_L6206" 0 0 50 H V C CNN
 F2 "" 0 0 50 H I C CNN
 F3 "" 0 0 50 H I C CNN
 DRAW
