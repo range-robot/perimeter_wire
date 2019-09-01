@@ -1,6 +1,6 @@
 EESchema Schematic File Version 4
 LIBS:sensor-cache
-EELAYER 29 0
+EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
@@ -225,16 +225,16 @@ Wire Wire Line
 Wire Wire Line
 	8100 3150 7650 3150
 $Comp
-L Device:Crystal Y1
+L Device:Crystal_GND23 Y1
 U 1 1 5CEF17FE
 P 7000 3000
 F 0 "Y1" V 6850 3100 50  0000 R CNN
-F 1 "32.768kHz" V 7150 3400 50  0000 R CNN
-F 2 "Crystal:Crystal_AT310_D3.0mm_L10.0mm_Horizontal" H 7000 3000 50  0001 C CNN
+F 1 "32.768kHz" V 6750 3400 50  0000 R CNN
+F 2 "Crystal:Crystal_SMD_SeikoEpson_MC146-4Pin_6.7x1.5mm_HandSoldering" H 7000 3000 50  0001 C CNN
 F 3 "~" H 7000 3000 50  0001 C CNN
-F 4 "AB38T-32.768KHZ" H 7000 3000 50  0001 C CNN "Partnumber"
+F 4 "MC-146 32.7680KA-A5: PURE SN" H 7000 3000 50  0001 C CNN "Partnumber"
 	1    7000 3000
-	0    1    1    0   
+	0    1    -1   0   
 $EndComp
 $Comp
 L Device:C C13
@@ -252,8 +252,8 @@ $Comp
 L Device:C C14
 U 1 1 5CEF38C8
 P 6750 3300
-F 0 "C14" V 6498 3300 50  0000 C CNN
-F 1 "20p" V 6589 3300 50  0000 C CNN
+F 0 "C14" V 7000 3300 50  0000 C CNN
+F 1 "20p" V 6900 3300 50  0000 C CNN
 F 2 "Capacitor_THT:C_Disc_D3.8mm_W2.6mm_P2.50mm" H 6788 3150 50  0001 C CNN
 F 3 "~" H 6750 3300 50  0001 C CNN
 F 4 " SR151A200JAR " H 6750 3300 50  0001 C CNN "Partnumber"
@@ -450,7 +450,7 @@ Text Label 7850 5700 2    50   ~ 0
 USB_D-
 Text Label 7850 5800 2    50   ~ 0
 USB_D+
-Text Label 1450 6150 2    50   ~ 0
+Text Label 1650 6150 2    50   ~ 0
 V_GND
 Wire Wire Line
 	1000 6050 1000 6150
@@ -733,7 +733,7 @@ F 0 "FB1" H 8913 854 50  0000 R CNN
 F 1 " BLM31KN471SN1L" H 8913 945 50  0000 R CNN
 F 2 "Inductor_SMD:L_1206_3216Metric" V 8980 900 50  0001 C CNN
 F 3 "~" H 9050 900 50  0001 C CNN
-F 4 "AWBC-05" H 9050 900 50  0001 C CNN "Partnumber"
+F 4 " BLM31KN471SN1L" H 9050 900 50  0001 C CNN "Partnumber"
 	1    9050 900 
 	-1   0    0    1   
 $EndComp
@@ -834,7 +834,7 @@ Text Label 4350 4250 2    50   ~ 0
 SENSE_C
 Wire Wire Line
 	4350 4250 4000 4250
-Text Label 1450 4650 2    50   ~ 0
+Text Label 1650 4650 2    50   ~ 0
 V_GND
 Wire Wire Line
 	1000 4550 1000 4650
@@ -1089,7 +1089,7 @@ Text Label 4350 2700 2    50   ~ 0
 SENSE_B
 Wire Wire Line
 	4350 2700 4000 2700
-Text Label 1450 3100 2    50   ~ 0
+Text Label 1650 3100 2    50   ~ 0
 V_GND
 Wire Wire Line
 	1000 3000 1000 3100
@@ -1344,7 +1344,7 @@ Text Label 4350 1200 2    50   ~ 0
 SENSE_A
 Wire Wire Line
 	4350 1200 4000 1200
-Text Label 1450 1600 2    50   ~ 0
+Text Label 1650 1600 2    50   ~ 0
 V_GND
 Wire Wire Line
 	1000 1500 1000 1600
@@ -1634,14 +1634,14 @@ Wire Wire Line
 Text Notes 550  6350 0    50   ~ 0
 L5 is optional differential choke\nreplace with bridge if unused
 $Comp
-L Mechanical:MountingHole H1
+L Mechanical:MountingHole_Pad H1
 U 1 1 5CF4CDBE
-P 5950 6650
-F 0 "H1" H 6050 6696 50  0000 L CNN
-F 1 "MountingHole" H 6050 6605 50  0000 L CNN
-F 2 "MountingHole:MountingHole_3.2mm_M3" H 5950 6650 50  0001 C CNN
-F 3 "~" H 5950 6650 50  0001 C CNN
-	1    5950 6650
+P 5950 6550
+F 0 "H1" H 6050 6596 50  0000 L CNN
+F 1 "MountingHole" H 6050 6505 50  0000 L CNN
+F 2 "MountingHole:MountingHole_3.2mm_M3_Pad" H 5950 6550 50  0001 C CNN
+F 3 "~" H 5950 6550 50  0001 C CNN
+	1    5950 6550
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -1893,7 +1893,7 @@ F 0 "FB2" V 7824 4450 50  0000 C CNN
 F 1 " BLM31KN471SN1L" V 7733 4450 50  0000 C CNN
 F 2 "Inductor_SMD:L_1206_3216Metric" V 7480 4450 50  0001 C CNN
 F 3 "~" H 7550 4450 50  0001 C CNN
-F 4 "AWBC-05" H 7550 4450 50  0001 C CNN "Partnumber"
+F 4 " BLM31KN471SN1L" H 7550 4450 50  0001 C CNN "Partnumber"
 	1    7550 4450
 	0    -1   -1   0   
 $EndComp
@@ -2011,4 +2011,49 @@ Connection ~ 7400 4450
 Wire Wire Line
 	7400 4750 7850 4750
 Connection ~ 7850 4750
+Wire Wire Line
+	6850 3000 6800 3000
+Connection ~ 6800 3000
+Wire Wire Line
+	6800 3000 6600 3000
+Wire Wire Line
+	7200 3000 7200 2400
+Wire Wire Line
+	7200 2400 6600 2400
+Wire Wire Line
+	6600 2400 6600 2750
+Connection ~ 6600 2750
+$Comp
+L Mechanical:Fiducial FID1
+U 1 1 5D7BC1CE
+P 5950 7450
+F 0 "FID1" H 6035 7496 50  0000 L CNN
+F 1 "Fiducial" H 6035 7405 50  0000 L CNN
+F 2 "Fiducial:Fiducial_1.5mm_Mask3mm" H 5950 7450 50  0001 C CNN
+F 3 "~" H 5950 7450 50  0001 C CNN
+	1    5950 7450
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:Fiducial FID2
+U 1 1 5D7BD808
+P 5950 7650
+F 0 "FID2" H 6035 7696 50  0000 L CNN
+F 1 "Fiducial" H 6035 7605 50  0000 L CNN
+F 2 "Fiducial:Fiducial_1.5mm_Mask3mm" H 5950 7650 50  0001 C CNN
+F 3 "~" H 5950 7650 50  0001 C CNN
+	1    5950 7650
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5D6D4C0D
+P 5950 6650
+F 0 "#PWR?" H 5950 6400 50  0001 C CNN
+F 1 "GND" H 6100 6600 50  0000 C CNN
+F 2 "" H 5950 6650 50  0001 C CNN
+F 3 "" H 5950 6650 50  0001 C CNN
+	1    5950 6650
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC
