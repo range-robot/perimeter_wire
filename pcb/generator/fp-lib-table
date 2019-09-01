@@ -1,0 +1,3 @@
+(fp_lib_table
+  (lib (name footprints)(type KiCad)(uri /home/michael/golfcart/workspace/src/perimeter_wire/pcb/footprints.pretty)(options "")(descr ""))
+)
