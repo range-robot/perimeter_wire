@@ -2,7 +2,7 @@
 
   (general
     (thickness 1.6)
-    (drawings 17)
+    (drawings 19)
     (tracks 1861)
     (zones 0)
     (modules 53)
@@ -10,6 +10,13 @@
   )
 
   (page A4)
+  (title_block
+    (title "Permimeter Wire Generator")
+    (date 2019-09-02)
+    (rev R1)
+    (company "Meadow Robotics GmbH")
+  )
+
   (layers
     (0 F.Cu signal)
     (31 B.Cu signal)
@@ -3076,6 +3083,12 @@
     )
   )
 
+  (gr_text "Perimeter Wire Generator\nR1" (at 50.8 67.945) (layer F.SilkS)
+    (effects (font (size 1 1) (thickness 0.15)) (justify left))
+  )
+  (gr_text "Meadow Robotics GmbH" (at 50.8 65.405) (layer F.SilkS)
+    (effects (font (size 1 1) (thickness 0.15)) (justify left))
+  )
   (gr_text "USB\n" (at 66.675 58.42) (layer F.SilkS)
     (effects (font (size 1 1) (thickness 0.15)))
   )

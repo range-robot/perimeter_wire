@@ -5,10 +5,10 @@ EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 1
-Title ""
-Date ""
-Rev ""
-Comp ""
+Title "Perimeter Wire Generator"
+Date "2019-09-02"
+Rev "R1"
+Comp "Meadow Robotics GmbH"
 Comment1 ""
 Comment2 ""
 Comment3 ""
@@ -1060,7 +1060,7 @@ L Device:Ferrite_Bead_Small FB1
 U 1 1 5D8BB93B
 P 2450 2550
 F 0 "FB1" V 2213 2550 50  0000 C CNN
-F 1 " BLM31KN471SN1L" V 2304 2550 50  0000 C CNN
+F 1 "BLM31KN471SN1L" V 2304 2550 50  0000 C CNN
 F 2 "Inductor_SMD:L_1206_3216Metric" V 2380 2550 50  0001 C CNN
 F 3 "~" H 2450 2550 50  0001 C CNN
 	1    2450 2550
