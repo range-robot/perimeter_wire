@@ -2,7 +2,7 @@
 
   (general
     (thickness 1.6)
-    (drawings 13)
+    (drawings 14)
     (tracks 797)
     (zones 0)
     (modules 90)
@@ -10,6 +10,13 @@
   )
 
   (page A4)
+  (title_block
+    (title "Perimeter Wire Sensor")
+    (date 2019-09-02)
+    (rev R1)
+    (company "Meadow Robotics GmbH")
+  )
+
   (layers
     (0 F.Cu signal)
     (31 B.Cu signal)
@@ -3882,6 +3889,9 @@
     )
   )
 
+  (gr_text "Meadow Robotics GmbH\nPerimeter Wire Sensor R1" (at 114.3 102.87) (layer F.SilkS)
+    (effects (font (size 1 1) (thickness 0.15)) (justify left))
+  )
   (gr_text USB (at 243.84 116.84 90) (layer F.SilkS)
     (effects (font (size 1 1) (thickness 0.15)))
   )

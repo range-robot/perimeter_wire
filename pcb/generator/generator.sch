@@ -5,10 +5,10 @@ EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 1
-Title ""
-Date ""
-Rev ""
-Comp ""
+Title "Perimeter Wire Generator"
+Date "2019-09-02"
+Rev "R1"
+Comp "Meadow Robotics GmbH"
 Comment1 ""
 Comment2 ""
 Comment3 ""
@@ -19,9 +19,10 @@ L local:L6206P U3
 U 1 1 5CE0D3EB
 P 8400 3050
 F 0 "U3" H 7950 4000 50  0000 C CNN
-F 1 "L6206D" H 7950 3900 50  0000 C CNN
+F 1 "L6206" H 7950 3900 50  0000 C CNN
 F 2 "footprints:PowerSO-36" H 8400 3050 50  0001 C CNN
 F 3 "" H 8400 3050 50  0001 C CNN
+F 4 "L6206PD" H 8400 3050 50  0001 C CNN "Partnumber"
 	1    8400 3050
 	1    0    0    -1  
 $EndComp
@@ -38,6 +39,7 @@ F 0 "J3" H 10050 2800 50  0000 C CNN
 F 1 "CH1" H 10050 2900 50  0000 C CNN
 F 2 "Connector_Phoenix_MSTB:PhoenixContact_MSTBA_2,5_3-G-5,08_1x03_P5.08mm_Horizontal" H 9900 2850 50  0001 C CNN
 F 3 "~" H 9900 2850 50  0001 C CNN
+F 4 "1757255, 1754571" H 9900 2850 50  0001 C CNN "Partnumber"
 	1    9900 2850
 	1    0    0    1   
 $EndComp
@@ -58,6 +60,7 @@ F 0 "J4" H 10050 3300 50  0000 C CNN
 F 1 "CH2" H 10050 3400 50  0000 C CNN
 F 2 "Connector_Phoenix_MSTB:PhoenixContact_MSTBA_2,5_3-G-5,08_1x03_P5.08mm_Horizontal" H 9900 3350 50  0001 C CNN
 F 3 "~" H 9900 3350 50  0001 C CNN
+F 4 "1757255, 1754571" H 9900 3350 50  0001 C CNN "Partnumber"
 	1    9900 3350
 	1    0    0    1   
 $EndComp
@@ -426,8 +429,9 @@ U 1 1 5CE43498
 P 1350 1350
 F 0 "J1" H 1268 1567 50  0000 C CNN
 F 1 "Power" H 1268 1476 50  0000 C CNN
-F 2 "Connector_Phoenix_MSTB:PhoenixContact_MSTBA_2,5_2-G_1x02_P5.00mm_Horizontal" H 1350 1350 50  0001 C CNN
+F 2 "Connector_Phoenix_MSTB:PhoenixContact_MSTBA_2,5_2-G-5,08_1x02_P5.08mm_Horizontal" H 1350 1350 50  0001 C CNN
 F 3 "~" H 1350 1350 50  0001 C CNN
+F 4 "1757242, 1754568 " H 1350 1350 50  0001 C CNN "Partnumber"
 	1    1350 1350
 	-1   0    0    -1  
 $EndComp
@@ -683,6 +687,7 @@ F 0 "U4" H 9520 4646 50  0000 R CNN
 F 1 "MCP9700T-HLT" H 9520 4555 50  0000 R CNN
 F 2 "Package_TO_SOT_SMD:SOT-353_SC-70-5" H 9850 4200 50  0001 C CNN
 F 3 "http://ww1.microchip.com/downloads/en/DeviceDoc/21942e.pdf" H 9850 4600 50  0001 C CNN
+F 4 "MCP9700T-H/LT" H 9850 4600 50  0001 C CNN "Partnumber"
 	1    9850 4600
 	1    0    0    -1  
 $EndComp
@@ -766,9 +771,10 @@ L MCU_Microchip_SAMD:ATSAMD11D14A-SS U1
 U 1 1 5D63EFE2
 P 3200 5750
 F 0 "U1" H 3650 6600 50  0000 C CNN
-F 1 "ATSAMD11D14A-SS" H 3650 6500 50  0000 C CNN
+F 1 "ATSAMD11D14A" H 3650 6500 50  0000 C CNN
 F 2 "Package_SO:SOIC-20W_7.5x12.8mm_P1.27mm" H 3200 4600 50  0001 C CNN
 F 3 "http://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-42363-SAM-D11_Datasheet.pdf" H 3200 4850 50  0001 C CNN
+F 4 "ATSAMD11D14A-SSNT" H 3200 5750 50  0001 C CNN "Partnumber"
 	1    3200 5750
 	1    0    0    -1  
 $EndComp
@@ -780,6 +786,7 @@ F 0 "U2" H 4550 1542 50  0000 C CNN
 F 1 "SRH05S3V3" H 4550 1451 50  0000 C CNN
 F 2 "Converter_DCDC:Converter_DCDC_RECOM_R-78HB-0.5_THT" H 4600 1050 50  0001 L CIN
 F 3 "https://www.recom-power.com/pdf/Innoline/R-78HBxx-0.5_L.pdf" H 4550 1300 50  0001 C CNN
+F 4 "SRH05S3V3" H 4550 1300 50  0001 C CNN "Partnumber"
 	1    4550 1300
 	1    0    0    -1  
 $EndComp
@@ -806,6 +813,7 @@ F 0 "J2" H 8050 5817 50  0000 C CNN
 F 1 "SWD" H 8050 5726 50  0000 C CNN
 F 2 "Connector_PinHeader_1.27mm:PinHeader_2x05_P1.27mm_Vertical" H 8000 5400 50  0001 C CNN
 F 3 "~" H 8000 5400 50  0001 C CNN
+F 4 "HPH2-A-10-UA" H 8000 5400 50  0001 C CNN "Partnumber"
 	1    8000 5400
 	1    0    0    -1  
 $EndComp
@@ -1060,9 +1068,10 @@ L Device:Ferrite_Bead_Small FB1
 U 1 1 5D8BB93B
 P 2450 2550
 F 0 "FB1" V 2213 2550 50  0000 C CNN
-F 1 " BLM31KN471SN1L" V 2304 2550 50  0000 C CNN
+F 1 "BLM31KN471SN1L" V 2304 2550 50  0000 C CNN
 F 2 "Inductor_SMD:L_1206_3216Metric" V 2380 2550 50  0001 C CNN
 F 3 "~" H 2450 2550 50  0001 C CNN
+F 4 "BLM31KN471SN1L" H 2450 2550 50  0001 C CNN "Partnumber"
 	1    2450 2550
 	0    1    1    0   
 $EndComp
@@ -1074,6 +1083,7 @@ F 0 "U5" H 3500 2992 50  0000 C CNN
 F 1 "LP2985-3.3" H 3500 2901 50  0000 C CNN
 F 2 "Package_TO_SOT_SMD:SOT-23-5" H 3500 2975 50  0001 C CNN
 F 3 "http://www.ti.com/lit/ds/symlink/lp2985.pdf" H 3500 2650 50  0001 C CNN
+F 4 "LP2985-33DBVR" H 3500 2650 50  0001 C CNN "Partnumber"
 	1    3500 2650
 	1    0    0    -1  
 $EndComp
@@ -1085,6 +1095,7 @@ F 0 "D7" H 4475 1181 50  0000 C CNN
 F 1 "BAT54" H 4475 1090 50  0000 C CNN
 F 2 "Package_TO_SOT_SMD:SOT-23" H 4450 900 50  0001 C CNN
 F 3 "~" H 4450 900 50  0001 C CNN
+F 4 "BAT54HMFHT116" H 4450 900 50  0001 C CNN "Partnumber"
 	1    4450 900 
 	1    0    0    -1  
 $EndComp
@@ -1254,9 +1265,10 @@ L Device:Ferrite_Bead_Small FB2
 U 1 1 5D6EED76
 P 1900 1300
 F 0 "FB2" V 1663 1300 50  0000 C CNN
-F 1 "BLM31SN500SN1" V 1754 1300 50  0000 C CNN
+F 1 "BLM31SN500SN1L" V 1754 1300 50  0000 C CNN
 F 2 "Inductor_SMD:L_1206_3216Metric" V 1830 1300 50  0001 C CNN
 F 3 "~" H 1900 1300 50  0001 C CNN
+F 4 "BLM31SN500SN1" H 1900 1300 50  0001 C CNN "Partnumber"
 	1    1900 1300
 	0    1    1    0   
 $EndComp
@@ -1351,6 +1363,7 @@ F 0 "U6" H 2100 4275 50  0000 C CNN
 F 1 "SN65220" H 2100 4184 50  0000 C CNN
 F 2 "Package_TO_SOT_SMD:SOT-23-6" H 2450 3900 50  0001 L CNN
 F 3 "http://www.ti.com/lit/ds/symlink/sn65220.pdf" H 2100 4200 50  0001 C CNN
+F 4 "SN65220DBVRG4‎" H 2100 4050 50  0001 C CNN "Partnumber"
 	1    2100 4050
 	1    0    0    -1  
 $EndComp
