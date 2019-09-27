@@ -23,6 +23,20 @@ void usb_connect(void)
 	send_hello = true;
 }
 
+static struct timer_task adc_task;
+
+static void adc_convert_cb(const struct adc_async_descriptor *const descr, const uint8_t channel)
+{
+	uint8_t temp;
+	adc_async_read_channel(&ADC_0, channel, &temp, 1);
+	uplink_write_temp(temp);
+}
+
+static void adc_task_cb()
+{
+	adc_async_start_conversion(&ADC_0);
+}
+
 int main(void)
 {
 	/* Initializes MCU, drivers and middleware */
@@ -34,6 +48,14 @@ int main(void)
 	pwgen_init(&genB, PWGEN_B);
 
 	timer_start(&TIMER_0); 
+
+	// setup adc
+	adc_async_register_callback(&ADC_0, 0, ADC_ASYNC_CONVERT_CB, adc_convert_cb);
+	adc_async_enable_channel(&ADC_0, 0);
+	adc_task.cb = adc_task_cb;
+	adc_task.interval = TIMER_FREQUENCY / 1; // 1 Hz
+	adc_task.mode = TIMER_TASK_REPEAT;
+	timer_add_task(&TIMER_0, &adc_task);
 
 	uplink_read_generatorA_config(&genA_config);
 	uplink_read_generatorB_config(&genB_config);

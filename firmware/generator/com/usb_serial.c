@@ -155,11 +155,12 @@ int16_t async_serial_get(void)
 			
 			// detect resets here (from connect callback)
 			bool reset = true;
+			CRITICAL_SECTION_ENTER()
 			__disable_irq(); //disable all interrupts
 			if (rx_buffer_read_index == current)
 				rx_buffer_read_index = index;
 			reset = false;
-			__enable_irq(); //enable all interrupts
+			CRITICAL_SECTION_LEAVE()
 
 			if (reset)
 				return EOF;

@@ -6,7 +6,7 @@
 
 enum {
 	REGISTER_CONTROL = 0x00,
-	REGISTER_RES1 = 0x01,
+	REGISTER_TEMP = 0x01,
 	REGISTER_A_MODE = 0x02,
 	REGISTER_A_FREQ_L = 0x04,
 	REGISTER_A_FREQ_H = 0x05,
@@ -33,7 +33,9 @@ struct app_registers_t {
 			uint8_t reserved : 7;
 		};
 	} control;
-	
+
+	uint8_t temp;
+
 	struct {
 		uint8_t mode;
 		uint8_t res;

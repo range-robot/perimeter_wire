@@ -104,6 +104,12 @@ int main(int argc, char **argv)
     }
   }
 
+  float temp;
+  if (!driver.getTemperature(temp))
+    ROS_WARN("Failed to read temperature");
+  else
+    ROS_INFO("Temperature: %f", temp);
+
   // read info
   ROS_INFO("Channel A:");
   if (!driver.getChannelAMode(mode))

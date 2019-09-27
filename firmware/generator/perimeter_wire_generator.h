@@ -3,9 +3,10 @@
 
 #include <hal_timer.h>
 #include "atmel_start_pins.h"
+#include "board.h"
 
 /* CONFIG */
-#define PGWEN_TIMER_FREQUENCY 62500
+#define PGWEN_TIMER_FREQUENCY TIMER_FREQUENCY
 #define PWGEN_ENABLE_A EN_A
 #define PWGEN_IN1_A IN1_A
 #define PWGEN_IN2_A IN2_A

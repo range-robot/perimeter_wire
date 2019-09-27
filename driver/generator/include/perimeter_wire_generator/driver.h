@@ -32,6 +32,7 @@ public:
     void reset(void);
 
     bool setControl(bool enable);
+    bool getTemperature(float& temp);
 
     bool getChannelAMode(uint8_t& mode);
     bool setChannelAMode(uint8_t mode);

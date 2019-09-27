@@ -16,25 +16,38 @@
 #include <hpl_adc_base.h>
 #include <hpl_rtc_base.h>
 
-struct timer_descriptor TIMER_0;
+/* The channel amount for ADC */
+#define ADC_0_CH_AMOUNT 1
 
-struct adc_sync_descriptor ADC_0;
+/* The buffer size for ADC */
+#define ADC_0_BUFFER_SIZE 16
 
-void ADC_0_PORT_init(void)
-{
-}
+/* The maximal channel number of enabled channels */
+#define ADC_0_CH_MAX 0
 
-void ADC_0_CLOCK_init(void)
+struct adc_async_descriptor         ADC_0;
+struct adc_async_channel_descriptor ADC_0_ch[ADC_0_CH_AMOUNT];
+struct timer_descriptor             TIMER_0;
+
+static uint8_t ADC_0_buffer[ADC_0_BUFFER_SIZE];
+static uint8_t ADC_0_map[ADC_0_CH_MAX + 1];
+
+/**
+ * \brief ADC initialization function
+ *
+ * Enables ADC peripheral, clocks and initializes ADC driver
+ */
+void ADC_0_init(void)
 {
 	_pm_enable_bus_clock(PM_BUS_APBC, ADC);
 	_gclk_enable_channel(ADC_GCLK_ID, CONF_GCLK_ADC_SRC);
-}
+	adc_async_init(&ADC_0, ADC, ADC_0_map, ADC_0_CH_MAX, ADC_0_CH_AMOUNT, &ADC_0_ch[0], (void *)NULL);
+	adc_async_register_channel_buffer(&ADC_0, 0, ADC_0_buffer, ADC_0_BUFFER_SIZE);
 
-void ADC_0_init(void)
-{
-	ADC_0_CLOCK_init();
-	ADC_0_PORT_init();
-	adc_sync_init(&ADC_0, ADC, (void *)NULL);
+	// Disable digital pin circuitry
+	gpio_set_pin_direction(PB02, GPIO_DIRECTION_OFF);
+
+	gpio_set_pin_function(PB02, PINMUX_PB02B_ADC_AIN10);
 }
 
 /**

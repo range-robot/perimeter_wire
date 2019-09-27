@@ -23,4 +23,9 @@ inline static void uplink_read_generatorB_config(struct pwgen_config_t *const co
 	config->mode = app_registers->channel_b.mode;
 }
 
+inline static void uplink_write_temp(uint8_t temp)
+{
+	app_registers->temp = temp;
+}
+
 #endif /* UPLINK_H_ */

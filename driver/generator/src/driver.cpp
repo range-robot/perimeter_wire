@@ -9,6 +9,7 @@
 
 
 #define FIRMWARE_VERSION 1
+#define TEMP_FACTOR (1.0)
 using namespace perimeter_wire_generator;
 
 GeneratorDriver::GeneratorDriver(const std::string& com_port)
@@ -68,6 +69,15 @@ bool GeneratorDriver::setControl(bool enabled)
 {
   uint8_t control = enabled ? 0x01 : 0x00;
   app_->setReg(REGISTER_CONTROL, control);
+  return true;
+}
+
+bool GeneratorDriver::getTemperature(float& temp)
+{
+  uint8_t int_temp;
+  if (!app_->getReg(REGISTER_TEMP, int_temp))
+    return false;
+  temp = int_temp * TEMP_FACTOR;
   return true;
 }
 

@@ -5,6 +5,7 @@
 
 #define FIRMWARE_VERSION (1)
 
+#define TIMER_FREQUENCY 62500
 
 
 #endif /* BOARD_H_ */
