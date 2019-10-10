@@ -46,7 +46,7 @@
 // <i> Indicates whether configuration for OSC8M is enabled or not
 // <id> enable_osc8m
 #ifndef CONF_OSC8M_CONFIG
-#define CONF_OSC8M_CONFIG 1
+#define CONF_OSC8M_CONFIG 0
 #endif
 
 // <h> 8MHz Internal Oscillator (OSC8M) Control
@@ -54,7 +54,7 @@
 // <i> Indicates whether Internal 8 Mhz Oscillator is enabled or not
 // <id> osc8m_arch_enable
 #ifndef CONF_OSC8M_ENABLE
-#define CONF_OSC8M_ENABLE 1
+#define CONF_OSC8M_ENABLE 0
 #endif
 
 // <q> On Demand Control
@@ -84,7 +84,7 @@
 // <i> Default: No Prescaling
 // <id> osc8m_presc
 #ifndef CONF_OSC8M_PRESC
-#define CONF_OSC8M_PRESC SYSCTRL_OSC8M_PRESC_0_Val
+#define CONF_OSC8M_PRESC SYSCTRL_OSC8M_PRESC_3_Val
 #endif
 
 // <q> Overwrite Default Osc Calibration
@@ -274,7 +274,7 @@
 // <i> Default: 122 us
 // <id> xosc32k_arch_startup
 #ifndef CONF_XOSC32K_STARTUP
-#define CONF_XOSC32K_STARTUP CONF_XOSC32K_STARTUP_TIME_125092MCS
+#define CONF_XOSC32K_STARTUP CONF_XOSC32K_STARTUP_TIME_122MCS
 #endif
 
 // </h>
@@ -447,7 +447,7 @@
 // <i> Indicates whether Bypass coarse lock is enabled or not
 // <id> dfll48m_arch_bplckc
 #ifndef CONF_DFLL_BPLCKC
-#define CONF_DFLL_BPLCKC 1
+#define CONF_DFLL_BPLCKC 0
 #endif
 
 // <q> Quick Lock Disable
@@ -583,7 +583,7 @@
 // <i> Indicates whether configuration for DPLL is enabled or not
 // <id> enable_fdpll96m
 #ifndef CONF_DPLL_CONFIG
-#define CONF_DPLL_CONFIG 1
+#define CONF_DPLL_CONFIG 0
 #endif
 
 // <y> Reference Clock Source
@@ -600,7 +600,7 @@
 // <i> Select the clock source.
 // <id> fdpll96m_ref_clock
 #ifndef CONF_DPLL_GCLK
-#define CONF_DPLL_GCLK GCLK_GENCTRL_SRC_XOSC32K
+#define CONF_DPLL_GCLK GCLK_CLKCTRL_GEN_GCLK3_Val
 #endif
 
 #if (CONF_DPLL_GCLK == GCLK_GENCTRL_SRC_XOSC32K)
@@ -634,7 +634,7 @@
 // <i> Indicates whether DPLL is enabled or not
 // <id> fdpll96m_arch_enable
 #ifndef CONF_DPLL_ENABLE
-#define CONF_DPLL_ENABLE 1
+#define CONF_DPLL_ENABLE 0
 #endif
 
 // <q> Lock ByPass
@@ -655,20 +655,20 @@
 // <i> Set the  fractional part of the frequency multiplier.
 // <id> fdpll96m_ldrfrac
 #ifndef CONF_DPLL_LDRFRAC
-#define CONF_DPLL_LDRFRAC 0
+#define CONF_DPLL_LDRFRAC 13
 #endif
 
 // <o>DPLL LDR <0-4095>
 // <i> Set the  integer part of the frequency multiplier.
 // <id> fdpll96m_ldr
 #ifndef CONF_DPLL_LDR
-#define CONF_DPLL_LDR 2929
+#define CONF_DPLL_LDR 1463
 #endif
 
 // </h>
 // </e>
 
-#define CONF_DPLL_LTIME SYSCTRL_DPLLCTRLB_LTIME_DEFAULT_Val
+#define CONF_DPLL_LTIME SYSCTRL_DPLLCTRLB_LTIME_NONE_Val
 #define CONF_DPLL_WUF 0
 #define CONF_DPLL_LPEN 0
 #define CONF_DPLL_FILTER SYSCTRL_DPLLCTRLB_FILTER_DEFAULT_Val

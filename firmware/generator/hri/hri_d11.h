@@ -1,9 +1,9 @@
 /**
  * \file
  *
- * \brief HPL initialization related functionality implementation.
+ * \brief SAM D11 HRI top-level header file
  *
- * Copyright (c) 2014-2018 Microchip Technology Inc. and its subsidiaries.
+ * Copyright (c) 2016-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \asf_license_start
  *
@@ -31,40 +31,33 @@
  *
  */
 
-#include <hpl_gpio.h>
-#include <hpl_init.h>
-#include <hpl_gclk_base.h>
-#include <hpl_pm_config.h>
-#include <hpl_pm_base.h>
+#ifndef _HRI_D11_H_INCLUDED_
+#define _HRI_D11_H_INCLUDED_
 
-#include <hpl_dma.h>
-#include <hpl_dmac_config.h>
+#include <sam.h>
+#include <hri_ac_d11.h>
+#include <hri_adc_d11.h>
+#include <hri_dac_d11.h>
+#include <hri_dmac_d11.h>
+#include <hri_dsu_d11.h>
+#include <hri_eic_d11.h>
+#include <hri_evsys_d11.h>
+#include <hri_gclk_d11.h>
+#include <hri_hmatrixb_d11.h>
+#include <hri_mtb_d11.h>
+#include <hri_nvic_d11.h>
+#include <hri_nvmctrl_d11.h>
+#include <hri_pac_d11.h>
+#include <hri_pm_d11.h>
+#include <hri_port_d11.h>
+#include <hri_rtc_d11.h>
+#include <hri_sercom_d11.h>
+#include <hri_sysctrl_d11.h>
+#include <hri_systemcontrol_d11.h>
+#include <hri_systick_d11.h>
+#include <hri_tc_d11.h>
+#include <hri_tcc_d11.h>
+#include <hri_usb_d11.h>
+#include <hri_wdt_d11.h>
 
-/* Referenced GCLKs (out of 0~5), should be initialized firstly
- * - GCLK 1 for DFLL48M
- */
-#define _GCLK_INIT_1ST 0x00000002
-/* Not referenced GCLKs, initialized last */
-#define _GCLK_INIT_LAST 0x0000003D
-
-/**
- * \brief Initialize the hardware abstraction layer
- */
-void _init_chip(void)
-{
-	hri_nvmctrl_set_CTRLB_RWS_bf(NVMCTRL, CONF_NVM_WAIT_STATE);
-
-	_pm_init();
-	_sysctrl_init_sources();
-#if _GCLK_INIT_1ST
-	_gclk_init_generators_by_fref(_GCLK_INIT_1ST);
-#endif
-	_sysctrl_init_referenced_generators();
-	_gclk_init_generators_by_fref(_GCLK_INIT_LAST);
-
-#if CONF_DMAC_ENABLE
-	_pm_enable_bus_clock(PM_BUS_AHB, DMAC);
-	_pm_enable_bus_clock(PM_BUS_APBB, DMAC);
-	_dma_init();
-#endif
-}
+#endif /* _HRI_D11_H_INCLUDED_ */

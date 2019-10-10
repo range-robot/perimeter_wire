@@ -40,7 +40,7 @@
  * \acme_license_stop
  *
  * Project: generator
- * Target:  ATSAMD21G18A 
+ * Target:  ATSAMD11D14AS 
  *
  **/
 

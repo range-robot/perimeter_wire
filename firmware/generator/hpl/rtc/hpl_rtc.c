@@ -36,9 +36,6 @@
 #include <hpl_rtc_config.h>
 #include <utils_assert.h>
 
-#define hri_rtcmode0_wait_for_sync(a) hri_rtc_wait_for_sync(a)
-#define hri_rtcmode0_set_READREQ_RCONT_bit(a) hri_rtc_set_READREQ_RCONT_bit(a)
-
 /*!< Pointer to hpl device */
 
 static struct _timer_device *_rtc_dev = NULL;

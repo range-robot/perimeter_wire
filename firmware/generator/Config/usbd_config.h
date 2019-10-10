@@ -297,7 +297,7 @@
 // <0x0200=> 512 bytes
 // <id> usb_cdcd_acm_data_builin_maxpksz_hs
 #ifndef CONF_USB_CDCD_ACM_DATA_BULKIN_MAXPKSZ_HS
-#define CONF_USB_CDCD_ACM_DATA_BULKIN_MAXPKSZ_HS 0x200
+#define CONF_USB_CDCD_ACM_DATA_BULKIN_MAXPKSZ_HS 0x40
 #endif
 
 // <o> BULK OUT Endpoint Address
@@ -333,7 +333,7 @@
 // <0x0200=> 512 bytes
 // <id> usb_cdcd_acm_data_buckout_maxpksz_hs
 #ifndef CONF_USB_CDCD_ACM_DATA_BULKOUT_MAXPKSZ_HS
-#define CONF_USB_CDCD_ACM_DATA_BULKOUT_MAXPKSZ_HS 0x200
+#define CONF_USB_CDCD_ACM_DATA_BULKOUT_MAXPKSZ_HS 0x40
 #endif
 // </h>
 

@@ -16,38 +16,25 @@
 #include <hpl_adc_base.h>
 #include <hpl_rtc_base.h>
 
-/* The channel amount for ADC */
-#define ADC_0_CH_AMOUNT 1
+struct timer_descriptor TIMER_0;
 
-/* The buffer size for ADC */
-#define ADC_0_BUFFER_SIZE 16
+struct adc_sync_descriptor ADC_0;
 
-/* The maximal channel number of enabled channels */
-#define ADC_0_CH_MAX 0
+void ADC_0_PORT_init(void)
+{
+}
 
-struct adc_async_descriptor         ADC_0;
-struct adc_async_channel_descriptor ADC_0_ch[ADC_0_CH_AMOUNT];
-struct timer_descriptor             TIMER_0;
-
-static uint8_t ADC_0_buffer[ADC_0_BUFFER_SIZE];
-static uint8_t ADC_0_map[ADC_0_CH_MAX + 1];
-
-/**
- * \brief ADC initialization function
- *
- * Enables ADC peripheral, clocks and initializes ADC driver
- */
-void ADC_0_init(void)
+void ADC_0_CLOCK_init(void)
 {
 	_pm_enable_bus_clock(PM_BUS_APBC, ADC);
 	_gclk_enable_channel(ADC_GCLK_ID, CONF_GCLK_ADC_SRC);
-	adc_async_init(&ADC_0, ADC, ADC_0_map, ADC_0_CH_MAX, ADC_0_CH_AMOUNT, &ADC_0_ch[0], (void *)NULL);
-	adc_async_register_channel_buffer(&ADC_0, 0, ADC_0_buffer, ADC_0_BUFFER_SIZE);
+}
 
-	// Disable digital pin circuitry
-	gpio_set_pin_direction(PB02, GPIO_DIRECTION_OFF);
-
-	gpio_set_pin_function(PB02, PINMUX_PB02B_ADC_AIN10);
+void ADC_0_init(void)
+{
+	ADC_0_CLOCK_init();
+	ADC_0_PORT_init();
+	adc_sync_init(&ADC_0, ADC, (void *)NULL);
 }
 
 /**
@@ -62,7 +49,7 @@ static void TIMER_0_init(void)
 	timer_init(&TIMER_0, RTC, _rtc_get_timer());
 }
 
-void USB_0_PORT_init(void)
+void USB_DEVICE_INSTANCE_PORT_init(void)
 {
 
 	gpio_set_pin_direction(PA24,
@@ -150,7 +137,7 @@ void USB_0_PORT_init(void)
 #warning USB clock should be 48MHz ~ 0.25% clock, check your configuration!
 #endif
 
-void USB_0_CLOCK_init(void)
+void USB_DEVICE_INSTANCE_CLOCK_init(void)
 {
 
 	_pm_enable_bus_clock(PM_BUS_APBB, USB);
@@ -158,11 +145,11 @@ void USB_0_CLOCK_init(void)
 	_gclk_enable_channel(USB_GCLK_ID, CONF_GCLK_USB_SRC);
 }
 
-void USB_0_init(void)
+void USB_DEVICE_INSTANCE_init(void)
 {
-	USB_0_CLOCK_init();
+	USB_DEVICE_INSTANCE_CLOCK_init();
 	usb_d_init();
-	USB_0_PORT_init();
+	USB_DEVICE_INSTANCE_PORT_init();
 }
 
 void system_init(void)
@@ -285,37 +272,7 @@ void system_init(void)
 
 	// GPIO on PA22
 
-	// Set pin direction to input
-	gpio_set_pin_direction(LED_A, GPIO_DIRECTION_IN);
-
-	gpio_set_pin_pull_mode(LED_A,
-	                       // <y> Pull configuration
-	                       // <id> pad_pull_config
-	                       // <GPIO_PULL_OFF"> Off
-	                       // <GPIO_PULL_UP"> Pull-up
-	                       // <GPIO_PULL_DOWN"> Pull-down
-	                       GPIO_PULL_OFF);
-
-	gpio_set_pin_function(LED_A, GPIO_PIN_FUNCTION_OFF);
-
-	// GPIO on PA23
-
-	// Set pin direction to input
-	gpio_set_pin_direction(LEB_B, GPIO_DIRECTION_IN);
-
-	gpio_set_pin_pull_mode(LEB_B,
-	                       // <y> Pull configuration
-	                       // <id> pad_pull_config
-	                       // <GPIO_PULL_OFF"> Off
-	                       // <GPIO_PULL_UP"> Pull-up
-	                       // <GPIO_PULL_DOWN"> Pull-down
-	                       GPIO_PULL_OFF);
-
-	gpio_set_pin_function(LEB_B, GPIO_PIN_FUNCTION_OFF);
-
-	// GPIO on PB08
-
-	gpio_set_pin_level(LED_MKR_ZERO,
+	gpio_set_pin_level(LED_A,
 	                   // <y> Initial level
 	                   // <id> pad_initial_level
 	                   // <false"> Low
@@ -323,13 +280,27 @@ void system_init(void)
 	                   false);
 
 	// Set pin direction to output
-	gpio_set_pin_direction(LED_MKR_ZERO, GPIO_DIRECTION_OUT);
+	gpio_set_pin_direction(LED_A, GPIO_DIRECTION_OUT);
 
-	gpio_set_pin_function(LED_MKR_ZERO, GPIO_PIN_FUNCTION_OFF);
+	gpio_set_pin_function(LED_A, GPIO_PIN_FUNCTION_OFF);
+
+	// GPIO on PA23
+
+	gpio_set_pin_level(LED_B,
+	                   // <y> Initial level
+	                   // <id> pad_initial_level
+	                   // <false"> Low
+	                   // <true"> High
+	                   false);
+
+	// Set pin direction to output
+	gpio_set_pin_direction(LED_B, GPIO_DIRECTION_OUT);
+
+	gpio_set_pin_function(LED_B, GPIO_PIN_FUNCTION_OFF);
 
 	ADC_0_init();
 
 	TIMER_0_init();
 
-	USB_0_init();
+	USB_DEVICE_INSTANCE_init();
 }

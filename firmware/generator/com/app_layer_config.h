@@ -2,7 +2,7 @@
 #define APP_LAYER_CONFIG_H_
 
 #include "hpl_reset.h"
-#include "uplink.h"
+#include "driver/uplink.h"
 #include <perimeter_wire_generator/registers.h>
 
 // macro for software reset
