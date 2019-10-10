@@ -40,16 +40,6 @@
 #include <string.h>
 #include <utils_assert.h>
 
-#define hri_usbdevice_is_syncing(a, b) hri_usb_is_syncing(a, b)
-#define hri_usbdevice_wait_for_sync(a, b) hri_usb_wait_for_sync(a, b)
-#define hri_usbdevice_write_CTRLA_reg(a, b) hri_usb_write_CTRLA_reg(a, b)
-#define hri_usbdevice_write_DESCADD_reg(a, b) hri_usb_write_DESCADD_reg(a, b)
-#define hri_usbdevice_clear_CTRLA_ENABLE_bit(a) hri_usb_clear_CTRLA_ENABLE_bit(a)
-#define hri_usbdevice_get_CTRLA_reg(a, b) hri_usb_get_CTRLA_reg(a, b)
-#define hri_usbdevice_get_SYNCBUSY_reg(a, b) hri_usb_get_SYNCBUSY_reg(a, b)
-#define hri_usbdevice_read_CTRLA_reg(a) hri_usb_read_CTRLA_reg(a)
-#define hri_usbdevice_read_FSMSTATUS_FSMSTATE_bf(a) hri_usb_read_FSMSTATUS_FSMSTATE_bf(a)
-
 /**
  * \brief Dummy callback function
  * \return Always false.
@@ -165,7 +155,7 @@ static inline void _usb_d_dev_wait_clk_rdy(const uint8_t clk_src)
  *  \param[in] s Buffer size, in number of bytes.
  *  \return \c true If the buffer is in RAM.
  */
-#define _IN_RAM(a, s) ((0x20000000 <= (uint32_t)(a)) && (((uint32_t)(a) + (s)) < (0x20000000 + 0x00008000)))
+#define _IN_RAM(a, s) ((0x20000000 <= (uint32_t)(a)) && (((uint32_t)(a) + (s)) < (0x20000000 + 0x00001000)))
 
 /** Check if the address should be placed in RAM. */
 #define _usb_is_addr4dma(addr, size) _IN_RAM((addr), (size))

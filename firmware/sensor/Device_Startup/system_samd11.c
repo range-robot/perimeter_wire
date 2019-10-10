@@ -27,7 +27,7 @@
  *
  */
 
-#include "samd21.h"
+#include "samd11.h"
 
 /**
  * Initial system clock frequency. The System RC Oscillator (RCSYS) provides

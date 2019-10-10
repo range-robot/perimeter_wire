@@ -1,5 +1,4 @@
 #include <atmel_start.h>
-#include <hal_timer.h>
 #include <perimeter_wire_sensor.h>
 #include <uplink.h>
 #include "com/usb_serial.h"

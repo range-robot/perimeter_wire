@@ -10,7 +10,7 @@
 
 #include <hal_gpio.h>
 
-// SAMD21 has 8 pin functions
+// SAMD11 has 8 pin functions
 
 #define GPIO_PIN_FUNCTION_A 0
 #define GPIO_PIN_FUNCTION_B 1
@@ -21,11 +21,8 @@
 #define GPIO_PIN_FUNCTION_G 6
 #define GPIO_PIN_FUNCTION_H 7
 
-#define PA02 GPIO(GPIO_PORTA, 2)
-#define PA03 GPIO(GPIO_PORTA, 3)
+#define SENSE_A GPIO(GPIO_PORTA, 14)
 #define PA24 GPIO(GPIO_PORTA, 24)
 #define PA25 GPIO(GPIO_PORTA, 25)
-#define PB08 GPIO(GPIO_PORTB, 8)
-#define PB09 GPIO(GPIO_PORTB, 9)
 
 #endif // ATMEL_START_PINS_H_INCLUDED

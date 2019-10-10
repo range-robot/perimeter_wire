@@ -13,10 +13,7 @@
 #include <hpl_gclk_base.h>
 #include <hpl_pm_base.h>
 
-#include <hpl_rtc_base.h>
-
 struct adc_dma_descriptor ADC_0;
-struct timer_descriptor   TIMER_0;
 
 /**
  * \brief ADC initialization function
@@ -31,49 +28,12 @@ static void ADC_0_init(void)
 	adc_dma_init(&ADC_0, ADC);
 
 	// Disable digital pin circuitry
-	gpio_set_pin_direction(PA02, GPIO_DIRECTION_OFF);
+	gpio_set_pin_direction(SENSE_A, GPIO_DIRECTION_OFF);
 
-	gpio_set_pin_function(PA02, PINMUX_PA02B_ADC_AIN0);
-
-	// Disable digital pin circuitry
-	gpio_set_pin_direction(PA03, GPIO_DIRECTION_OFF);
-
-	gpio_set_pin_function(PA03, PINMUX_PA03B_ADC_AIN1);
-
-	// Disable digital pin circuitry
-	gpio_set_pin_direction(PB08, GPIO_DIRECTION_OFF);
-
-	gpio_set_pin_function(PB08, PINMUX_PB08B_ADC_AIN2);
-
-	// Disable digital pin circuitry
-	gpio_set_pin_direction(PB09, GPIO_DIRECTION_OFF);
-
-	gpio_set_pin_function(PB09, PINMUX_PB09B_ADC_AIN3);
+	gpio_set_pin_function(SENSE_A, PINMUX_PA14B_ADC_AIN6);
 }
 
-/**
- * \brief Timer initialization function
- *
- * Enables Timer peripheral, clocks and initializes Timer driver
- */
-static void TIMER_0_init(void)
-{
-	_pm_enable_bus_clock(PM_BUS_APBA, RTC);
-	_gclk_enable_channel(RTC_GCLK_ID, CONF_GCLK_RTC_SRC);
-	timer_init(&TIMER_0, RTC, _rtc_get_timer());
-}
-
-void EVENT_SYSTEM_0_init(void)
-{
-	_gclk_enable_channel(EVSYS_GCLK_ID_0, CONF_GCLK_EVSYS_CHANNEL_0_SRC);
-	_gclk_enable_channel(EVSYS_GCLK_ID_1, CONF_GCLK_EVSYS_CHANNEL_1_SRC);
-
-	_pm_enable_bus_clock(PM_BUS_APBC, EVSYS);
-
-	event_system_init();
-}
-
-void USB_0_PORT_init(void)
+void USB_DEVICE_INSTANCE_PORT_init(void)
 {
 
 	gpio_set_pin_direction(PA24,
@@ -161,7 +121,7 @@ void USB_0_PORT_init(void)
 #warning USB clock should be 48MHz ~ 0.25% clock, check your configuration!
 #endif
 
-void USB_0_CLOCK_init(void)
+void USB_DEVICE_INSTANCE_CLOCK_init(void)
 {
 
 	_pm_enable_bus_clock(PM_BUS_APBB, USB);
@@ -169,11 +129,11 @@ void USB_0_CLOCK_init(void)
 	_gclk_enable_channel(USB_GCLK_ID, CONF_GCLK_USB_SRC);
 }
 
-void USB_0_init(void)
+void USB_DEVICE_INSTANCE_init(void)
 {
-	USB_0_CLOCK_init();
+	USB_DEVICE_INSTANCE_CLOCK_init();
 	usb_d_init();
-	USB_0_PORT_init();
+	USB_DEVICE_INSTANCE_PORT_init();
 }
 
 void system_init(void)
@@ -182,9 +142,5 @@ void system_init(void)
 
 	ADC_0_init();
 
-	TIMER_0_init();
-
-	EVENT_SYSTEM_0_init();
-
-	USB_0_init();
+	USB_DEVICE_INSTANCE_init();
 }

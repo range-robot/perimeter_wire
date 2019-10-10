@@ -23,17 +23,12 @@ extern "C" {
 
 #include <hal_adc_dma.h>
 
-#include <hal_timer.h>
-
-#include <hal_evsys.h>
-
 #include "hal_usb_device.h"
 
 extern struct adc_dma_descriptor ADC_0;
-extern struct timer_descriptor   TIMER_0;
 
-void USB_0_CLOCK_init(void);
-void USB_0_init(void);
+void USB_DEVICE_INSTANCE_CLOCK_init(void);
+void USB_DEVICE_INSTANCE_init(void);
 
 /**
  * \brief Perform system initialization, initialize pins and clocks for

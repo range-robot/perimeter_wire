@@ -91,7 +91,7 @@
 // <i> These bits define the Mux selection for the positive ADC input. (MUXPOS)
 // <id> adc_pinmux_positive
 #ifndef CONF_ADC_0_MUXPOS
-#define CONF_ADC_0_MUXPOS 0x0
+#define CONF_ADC_0_MUXPOS 0x6
 #endif
 
 // <o> Negative Mux Input Selection
@@ -116,7 +116,7 @@
 // <e> Advanced Configuration
 // <id> adc_advanced_settings
 #ifndef CONF_ADC_0_ADVANCED_CONFIG
-#define CONF_ADC_0_ADVANCED_CONFIG 1
+#define CONF_ADC_0_ADVANCED_CONFIG 0
 #endif
 
 // <q> Run in standby
@@ -243,7 +243,7 @@
 // <i>This register gives the number of input sources included in pin scan. The number of input sources included is INPUTSCAN + 1. 0 disables the input scan feature. (INPUTSCAN)
 // <id> adc_arch_inputscan
 #ifndef CONF_ADC_0_INPUTSCAN
-#define CONF_ADC_0_INPUTSCAN 3
+#define CONF_ADC_0_INPUTSCAN 0
 #endif
 
 // <o> Positive Mux Setting Offset <0-15>
@@ -258,7 +258,7 @@
 // <e> Event Control
 // <id> adc_arch_event_settings
 #ifndef CONF_ADC_0_EVENT_CONFIG
-#define CONF_ADC_0_EVENT_CONFIG 1
+#define CONF_ADC_0_EVENT_CONFIG 0
 #endif
 
 // <q> Window Monitor Event Out

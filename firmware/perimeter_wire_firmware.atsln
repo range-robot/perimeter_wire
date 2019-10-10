@@ -9,6 +9,8 @@ Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "generator", "generator\gene
 EndProject
 Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "sensor", "sensor\sensor.cproj", "{C5778686-0A41-42C6-872E-AA667A566499}"
 EndProject
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "sensor2", "sensor2\sensor2.cproj", "{5C1D1740-BE69-492C-BDE9-062DA474A7B5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM
@@ -35,6 +37,12 @@ Global
 		{C5778686-0A41-42C6-872E-AA667A566499}.Release|ARM.ActiveCfg = Release|ARM
 		{C5778686-0A41-42C6-872E-AA667A566499}.Release|ARM.Build.0 = Release|ARM
 		{C5778686-0A41-42C6-872E-AA667A566499}.Release|AVR.ActiveCfg = Release|ARM
+		{5C1D1740-BE69-492C-BDE9-062DA474A7B5}.Debug|ARM.ActiveCfg = Debug|ARM
+		{5C1D1740-BE69-492C-BDE9-062DA474A7B5}.Debug|ARM.Build.0 = Debug|ARM
+		{5C1D1740-BE69-492C-BDE9-062DA474A7B5}.Debug|AVR.ActiveCfg = Debug|ARM
+		{5C1D1740-BE69-492C-BDE9-062DA474A7B5}.Release|ARM.ActiveCfg = Release|ARM
+		{5C1D1740-BE69-492C-BDE9-062DA474A7B5}.Release|ARM.Build.0 = Release|ARM
+		{5C1D1740-BE69-492C-BDE9-062DA474A7B5}.Release|AVR.ActiveCfg = Release|ARM
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
