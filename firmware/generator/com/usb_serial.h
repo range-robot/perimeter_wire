@@ -9,7 +9,8 @@
  * Uses ASF4 CDC ACM driver
  */
 
-int32_t usb_serial_init(FUNC_PTR connect_cb);
+void usb_serial_init(FUNC_PTR connect_cb);
+int32_t usb_serial_task();
 
 /* 
  * Transmit data

@@ -82,6 +82,7 @@ int main(void)
 
 	while (1)
 	{
+		usb_serial_task();
 		app_layer_cycle();
 		if (send_hello)
 		{

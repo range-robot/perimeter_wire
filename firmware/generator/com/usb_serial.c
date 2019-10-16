@@ -126,18 +126,31 @@ static bool usb_device_cb_state_c(usb_cdc_control_signal_t state)
 	return false;
 }
 
+void usb_serial_init(FUNC_PTR connect_cb)
+{
+	connect_callback = connect_cb;
+}
+
 /**
  * \brief Hookup usb serial
  */
-int32_t usb_serial_init(FUNC_PTR connect_cb)
+int32_t usb_serial_task(void)
 {
-	while (!cdcdf_acm_is_enabled())
+	static bool enabled = false;
+	if (enabled)
 	{
-		// wait cdc acm to be installed
-	};
-
-	connect_callback = connect_cb;
-	return cdcdf_acm_register_callback(CDCDF_ACM_CB_STATE_C, (FUNC_PTR)usb_device_cb_state_c);
+		if (!cdcdf_acm_is_enabled())
+			enabled = false;
+	}
+	else
+	{
+		if (cdcdf_acm_is_enabled())
+		{
+			enabled = true;
+			return cdcdf_acm_register_callback(CDCDF_ACM_CB_STATE_C, (FUNC_PTR)usb_device_cb_state_c);
+		}
+	}
+	return ERR_NONE;
 }
 
 int16_t async_serial_get(void)
