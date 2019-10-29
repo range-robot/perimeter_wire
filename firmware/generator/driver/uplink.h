@@ -13,13 +13,13 @@ void uplink_set_reg_callback(uint8_t adr);
 
 inline static void uplink_read_generatorA_config(struct pwgen_config_t *const config)
 {
-	config->frequency = app_registers->channel_a.frequency.value;
+	config->divider = app_registers->channel_a.divider;
 	config->mode = app_registers->channel_a.mode;
 }
 
 inline static void uplink_read_generatorB_config(struct pwgen_config_t *const config)
 {
-	config->frequency = app_registers->channel_b.frequency.value;
+	config->divider = app_registers->channel_b.divider;
 	config->mode = app_registers->channel_b.mode;
 }
 

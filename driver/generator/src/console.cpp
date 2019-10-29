@@ -21,12 +21,12 @@ void usage()
 int main(int argc, char **argv)
 {
   bool chA = false, chB = false;
-  bool setFreq = false, setMode = false;
-  uint16_t freq = 0;
+  bool setDiv = false, setMode = false;
+  uint8_t div = 0;
   uint8_t mode = 0;
   int opt;
   std::string port("/dev/ttyUSB0");
-  while ((opt = getopt(argc, argv, "habp:m:f:")) != -1)
+  while ((opt = getopt(argc, argv, "habp:m:d:")) != -1)
   {
     switch (opt)
     {
@@ -47,9 +47,9 @@ int main(int argc, char **argv)
         setMode = true;
         mode = std::stoi(optarg);
         break;
-      case 'f':
-        setFreq = true;
-        freq = std::stoi(optarg);
+      case 'd':
+        setDiv = true;
+        div = std::stoi(optarg);
         break;
       default: /* '?' */
         usage();
@@ -68,21 +68,21 @@ int main(int argc, char **argv)
   else
     ROS_INFO("Firmware version: %d", (int)fw);
 
-  if (setFreq)
+  if (setDiv)
   {
     if (chA)
     {
-      if (!driver.setChannelAFrequency(freq))
-        ROS_WARN("Setting frequency for channel A failed.");
+      if (!driver.setChannelADivider(div))
+        ROS_WARN("Setting divider for channel A failed.");
       else
-        ROS_INFO("Frequency set for channel A");
+        ROS_INFO("Divder set for channel A");
     }
     if (chB)
     {
-      if (!driver.setChannelBFrequency(freq))
-        ROS_WARN("Setting frequency for channel B failed.");
+      if (!driver.setChannelBDivider(div))
+        ROS_WARN("Setting divider for channel B failed.");
       else
-        ROS_INFO("Frequency set for channel B");
+        ROS_INFO("Divder set for channel B");
     }
   }
 
@@ -117,10 +117,10 @@ int main(int argc, char **argv)
   else
     ROS_INFO("Mode:\t0x%x", mode);
 
-  if (!driver.getChannelAFrequency(freq))
-    ROS_WARN("Failed to read channel A frequency.");
+  if (!driver.getChannelADivider(div))
+    ROS_WARN("Failed to read channel A divider.");
   else
-    ROS_INFO("Frequency:\t%d", freq);
+    ROS_INFO("Divider:\t%d", div);
 
   ROS_INFO("Channel B:");
   if (!driver.getChannelBMode(mode))
@@ -128,10 +128,10 @@ int main(int argc, char **argv)
   else
     ROS_INFO("Mode:\t0x%x", mode);
 
-  if (!driver.getChannelBFrequency(freq))
-    ROS_WARN("Failed to read channel B frequency.");
+  if (!driver.getChannelBDivider(div))
+    ROS_WARN("Failed to read channel B divider.");
   else
-    ROS_INFO("Frequency:\t%d", freq);
+    ROS_INFO("Divider:\t%d", div);
 
   driver.stop();
   thread.join();

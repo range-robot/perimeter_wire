@@ -218,35 +218,34 @@ drivers:
         configuration: {}
   TIMER_0:
     user_label: TIMER_0
-    definition: Atmel:SAMD11_Drivers:0.0.1::SAMD11D14A-SSU::RTC::driver_config_definition::Timer::HAL:Driver:Timer
+    definition: Atmel:SAMD11_Drivers:0.0.1::SAMD11D14A-SSU::TC1::driver_config_definition::Timer::HAL:Driver:Timer
     functionality: Timer
     api: HAL:Driver:Timer
     configuration:
-      rtc_arch_comp_val: 1
-      rtc_arch_init_reset: true
-      rtc_arch_prescaler: Peripheral clock divided by 128
-      rtc_cmpeo0: false
-      rtc_event_control: false
-      rtc_ovfeo: false
-      rtc_pereo0: false
-      rtc_pereo1: false
-      rtc_pereo2: false
-      rtc_pereo3: false
-      rtc_pereo4: false
-      rtc_pereo5: false
-      rtc_pereo6: false
-      rtc_pereo7: false
+      tc_arch_dbgrun: false
+      tc_arch_evact: Event action disabled
+      tc_arch_mceo0: false
+      tc_arch_mceo1: false
+      tc_arch_ovfeo: false
+      tc_arch_presync: Reload or reset counter on next GCLK
+      tc_arch_runstdby: false
+      tc_arch_tcei: false
+      tc_arch_tceinv: false
+      timer_advanced_configuration: false
+      timer_event_control: false
+      timer_prescaler: Divide by 16
+      timer_tick: 9
     optional_signals: []
     variant: null
     clocks:
       domain_group:
         nodes:
-        - name: RTC
+        - name: TC
           input: Generic clock generator 0
           external: false
           external_frequency: 0
         configuration:
-          rtc_clk_selection: Generic clock generator 0
+          tc_gclk_selection: Generic clock generator 0
   DMAC:
     user_label: DMAC
     definition: Atmel:SAMD11_Drivers:0.0.1::SAMD11D14A-SSU::DMAC::driver_config_definition::DMAC::HAL:HPL:DMAC

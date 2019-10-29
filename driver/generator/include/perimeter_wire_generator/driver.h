@@ -38,10 +38,10 @@ public:
     bool setChannelAMode(uint8_t mode);
     bool getChannelBMode(uint8_t& mode);
     bool setChannelBMode(uint8_t mode);
-    bool getChannelAFrequency(uint16_t& frequency);
-    bool setChannelAFrequency(uint16_t frequency);
-    bool getChannelBFrequency(uint16_t& frequency);
-    bool setChannelBFrequency(uint16_t frequency);
+    bool getChannelADivider(uint8_t& divider);
+    bool setChannelADivider(uint8_t divider);
+    bool getChannelBDivider(uint8_t& divider);
+    bool setChannelBDivider(uint8_t divider);
 };
 
 }  // namespace perimeter_wire_generator

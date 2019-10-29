@@ -103,24 +103,24 @@ bool GeneratorDriver::setChannelBMode(uint8_t mode)
   return true;
 }
 
-bool GeneratorDriver::getChannelAFrequency(uint16_t& frequency)
+bool GeneratorDriver::getChannelADivider(uint8_t& divider)
 {
-  return app_->getReg16(REGISTER_A_FREQ, frequency);
+  return app_->getReg(REGISTER_A_DIV, divider);
 }
 
-bool GeneratorDriver::setChannelAFrequency(uint16_t frequency)
+bool GeneratorDriver::setChannelADivider(uint8_t divider)
 {
-  app_->setReg16(REGISTER_A_FREQ, frequency);
+  app_->setReg(REGISTER_A_DIV, divider);
   return true;
 }
 
-bool GeneratorDriver::getChannelBFrequency(uint16_t& frequency)
+bool GeneratorDriver::getChannelBDivider(uint8_t& divider)
 {
-  return app_->getReg16(REGISTER_B_FREQ, frequency);
+  return app_->getReg(REGISTER_B_DIV, divider);
 }
 
-bool GeneratorDriver::setChannelBFrequency(uint16_t frequency)
+bool GeneratorDriver::setChannelBDivider(uint8_t divider)
 {
-  app_->setReg16(REGISTER_B_FREQ, frequency);
+  app_->setReg(REGISTER_B_DIV, divider);
   return true;
 }

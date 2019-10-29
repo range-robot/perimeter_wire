@@ -25,6 +25,7 @@ void ADC_0_example(void)
 }
 
 static struct timer_task TIMER_0_task1, TIMER_0_task2;
+
 /**
  * Example of using TIMER_0.
  */

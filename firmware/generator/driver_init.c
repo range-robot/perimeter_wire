@@ -14,7 +14,6 @@
 #include <hpl_pm_base.h>
 
 #include <hpl_adc_base.h>
-#include <hpl_rtc_base.h>
 
 struct timer_descriptor TIMER_0;
 
@@ -44,9 +43,10 @@ void ADC_0_init(void)
  */
 static void TIMER_0_init(void)
 {
-	_pm_enable_bus_clock(PM_BUS_APBA, RTC);
-	_gclk_enable_channel(RTC_GCLK_ID, CONF_GCLK_RTC_SRC);
-	timer_init(&TIMER_0, RTC, _rtc_get_timer());
+	_pm_enable_bus_clock(PM_BUS_APBC, TC1);
+	_gclk_enable_channel(TC1_GCLK_ID, CONF_GCLK_TC1_SRC);
+
+	timer_init(&TIMER_0, TC1, _tc_get_timer());
 }
 
 void USB_DEVICE_INSTANCE_PORT_init(void)

@@ -40,8 +40,8 @@
 #define CONF_CPU_FREQUENCY 24002560
 #endif
 
-// <y> RTC Clock Source
-// <id> rtc_clk_selection
+// <y> TC Clock Source
+// <id> tc_gclk_selection
 
 // <GCLK_CLKCTRL_GEN_GCLK0_Val"> Generic clock generator 0
 
@@ -55,17 +55,17 @@
 
 // <GCLK_CLKCTRL_GEN_GCLK5_Val"> Generic clock generator 5
 
-// <i> Select the clock source for RTC.
-#ifndef CONF_GCLK_RTC_SRC
-#define CONF_GCLK_RTC_SRC GCLK_CLKCTRL_GEN_GCLK0_Val
+// <i> Select the clock source for TC.
+#ifndef CONF_GCLK_TC1_SRC
+#define CONF_GCLK_TC1_SRC GCLK_CLKCTRL_GEN_GCLK0_Val
 #endif
 
 /**
- * \def CONF_GCLK_RTC_FREQUENCY
- * \brief RTC's Clock frequency
+ * \def CONF_GCLK_TC1_FREQUENCY
+ * \brief TC1's Clock frequency
  */
-#ifndef CONF_GCLK_RTC_FREQUENCY
-#define CONF_GCLK_RTC_FREQUENCY 24002560
+#ifndef CONF_GCLK_TC1_FREQUENCY
+#define CONF_GCLK_TC1_FREQUENCY 24002560
 #endif
 
 // <y> USB Clock Source

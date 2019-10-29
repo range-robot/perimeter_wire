@@ -8,13 +8,9 @@ enum {
 	REGISTER_CONTROL = 0x00,
 	REGISTER_TEMP = 0x01,
 	REGISTER_A_MODE = 0x02,
-	REGISTER_A_FREQ_L = 0x04,
-	REGISTER_A_FREQ_H = 0x05,
-	REGISTER_A_FREQ = REGISTER_A_FREQ_L,
+	REGISTER_A_DIV = 0x04,
 	REGISTER_B_MODE = 0x06,
-	REGISTER_B_FREQ_L = 0x08,
-	REGISTER_B_FREQ_H = 0x09,
-	REGISTER_B_FREQ = REGISTER_B_FREQ_L,
+	REGISTER_B_DIV = 0x08,
 	REGISTER_COUNT = 0x0A
 };
 typedef union {
@@ -38,14 +34,16 @@ struct app_registers_t {
 
 	struct {
 		uint8_t mode;
-		uint8_t res;
-		regu16_t frequency;
+		uint8_t res1;
+		uint8_t divider;
+		uint8_t res2;
 	} channel_a;
 	
 	struct {
 		uint8_t mode;
-		uint8_t res;
-		regu16_t frequency;
+		uint8_t res1;
+		uint8_t divider;
+		uint8_t res2;
 	} channel_b;
 };
 

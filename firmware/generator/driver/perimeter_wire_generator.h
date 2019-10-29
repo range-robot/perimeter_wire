@@ -49,7 +49,7 @@ struct pwgen_t {
 struct pwgen_config_t
 {
 	enum pwgen_mode_t mode;
-	uint32_t frequency;	
+	uint32_t divider;	
 };
 
 void pwgen_init(struct pwgen_t* const gen, enum pwgen_channel_t channel);

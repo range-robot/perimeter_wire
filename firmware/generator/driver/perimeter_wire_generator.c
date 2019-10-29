@@ -64,7 +64,7 @@ void pwgen_init(struct pwgen_t* const gen, enum pwgen_channel_t channel)
 void pwgen_set_config(struct pwgen_t* const gen, const struct pwgen_config_t* const config, struct timer_descriptor* const timer)
 {
 	gen->mode = config->mode;
-	if (config->frequency == 0)
+	if (config->divider == 0)
 		gen->mode = PWGEN_MODE_DISABLED;
 
 	if (gen->mode == PWGEN_MODE_DISABLED)
@@ -87,7 +87,7 @@ void pwgen_set_config(struct pwgen_t* const gen, const struct pwgen_config_t* co
 			gpio_set_pin_level(gen->in2, false);
 			gen->state = _PWGEN_STATE_RUN;
 			
-			gen->task.interval = PGWEN_TIMER_FREQUENCY / 2 / config->frequency;
+			gen->task.interval = config->divider;
 			timer_add_task(timer, &gen->task);
 		}
 	}
