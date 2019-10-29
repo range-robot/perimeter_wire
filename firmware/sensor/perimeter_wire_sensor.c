@@ -21,9 +21,20 @@ struct
 		PWSENS_ANALYSE
 	} status;
 	uint8_t channel;
+	uint8_t divider[PWSENS_CHANNEL_COUNT];
 	uint16_t mag[PWSENS_CHANNEL_COUNT];
 } pwsens_state;
 
+static inline void pwsens_adc_set_channel(uint8_t channel)
+{
+	adc_pos_input_t channel_mux_map[PWSENS_CHANNEL_COUNT] = {
+		0x06, // AIN6
+		0x03, // AIN3
+		0x00, // AIN0
+		0x07, // AIN7
+	};
+	adc_dma_set_inputs(&PWSENS_ADC, channel_mux_map[channel], CONF_ADC_0_MUXNEG, 0);
+}
 
 void pwsens_start_conversion(void)
 {
@@ -44,7 +55,6 @@ void pwsens_init(void)
 	adc_dma_set_conversion_mode(&PWSENS_ADC, ADC_CONVERSION_MODE_FREERUN);
 	adc_dma_register_callback(&PWSENS_ADC, ADC_DMA_COMPLETE_CB, pwsens_convert_cb);
 	pwsens_adc_running = false;
-	pwsens_state.channel = 0;
 	pwsens_state.status = PWSENS_STOPPED;
 	pwsens_enable = 0;
 }
@@ -54,11 +64,16 @@ void pwsens_set_enable(uint8_t enable)
 	pwsens_enable = enable;
 	if (enable != 0 && pwsens_state.status == PWSENS_STOPPED)
 	{
+		pwsens_adc_set_channel(0);
+		pwsens_state.channel = 0;
 		pwsens_start_conversion();
 	}
 }
 
-
+void pwsens_set_divider(uint8_t channel, uint8_t divider)
+{
+	pwsens_state.divider[channel] = divider;
+}
 
 // digital matched filter (cross correlation)
 // http://en.wikipedia.org/wiki/Cross-correlation
@@ -118,11 +133,18 @@ int16_t corrFilter(const int8_t *H, int8_t subsample, int16_t M, const pwgen_sam
 
 void pwsens_task(void)
 {
-	static int i = 0;
 	if (pwsens_state.status == PWSENS_ANALYSE)
 	{
+		uint8_t channel = pwsens_state.channel;
+		// next channel
+		uint8_t next_channel = channel + 1;
+		if (next_channel >= PWSENS_CHANNEL_COUNT)
+			next_channel = 0;
+		pwsens_state.channel = next_channel;
+		pwsens_adc_set_channel(next_channel);
+
 		// oversampling factor
-		int8_t subSample = 5;
+		int8_t subSample = pwsens_state.divider[channel];
 		
 		uint16_t quality;
 		// magnitude for tracking (fast but inaccurate)
@@ -135,7 +157,8 @@ void pwsens_task(void)
 			ADC_buffer[i] = (ADC_buffer[i] - center) >> 4;
 		}
 		int16_t mag = corrFilter(sigcode, subSample, sigcode_size, ADC_buffer, PWSENS_SAMPLE_COUNT-sigcode_size*subSample, &quality);
-		pwsens_state.mag[pwsens_state.channel] = abs(mag);
+		uint16_t maga = abs(mag);
+		pwsens_state.mag[channel] = maga;
 
 		//if (swapCoilPolarity)
 		//	mag[idx] *= -1;
@@ -152,18 +175,13 @@ void pwsens_task(void)
 		//if (signalCounter[idx] < 0){
 		//	lastInsideTime[idx] = millis();
 		//}
-		
-		uplink_set_channel_a(pwsens_state.mag[0]);
-		uplink_set_channel_b(quality);
-		uplink_set_channel_c(ADC_buffer[5]);
-		uplink_set_channel_d(ADC_buffer[6]);
-		
-		i+=3;
-		if (i >= 1024) {
-			i = 0;
-		}
 
+				
+		uplink_set_channel(channel, maga);
+		
 		if (pwsens_enable != 0)
-		pwsens_start_conversion();
+		{
+			pwsens_start_conversion();
+		}
 	}
 }

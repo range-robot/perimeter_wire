@@ -28,9 +28,24 @@ static void ADC_0_init(void)
 	adc_dma_init(&ADC_0, ADC);
 
 	// Disable digital pin circuitry
+	gpio_set_pin_direction(SENSE_C, GPIO_DIRECTION_OFF);
+
+	gpio_set_pin_function(SENSE_C, PINMUX_PA02B_ADC_AIN0);
+
+	// Disable digital pin circuitry
+	gpio_set_pin_direction(SENSE_B, GPIO_DIRECTION_OFF);
+
+	gpio_set_pin_function(SENSE_B, PINMUX_PA05B_ADC_AIN3);
+
+	// Disable digital pin circuitry
 	gpio_set_pin_direction(SENSE_A, GPIO_DIRECTION_OFF);
 
 	gpio_set_pin_function(SENSE_A, PINMUX_PA14B_ADC_AIN6);
+
+	// Disable digital pin circuitry
+	gpio_set_pin_direction(SENSE_D, GPIO_DIRECTION_OFF);
+
+	gpio_set_pin_function(SENSE_D, PINMUX_PA15B_ADC_AIN7);
 }
 
 void USB_DEVICE_INSTANCE_PORT_init(void)

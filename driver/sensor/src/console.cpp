@@ -8,17 +8,19 @@ using namespace perimeter_wire_sensor;
 
 void usage()
 {
-  printf("Usage: console [-h] [-p port]\n");
+  printf("Usage: console [-h] [-p port] [-d divider]\n");
   printf("Options:\n");
   printf("-h\thelp\n");
+  printf("-d\tset frequency divider\n");
   printf("-p\tuse serial port\n");
 }
 
 int main(int argc, char **argv)
 {
   int opt;
+  int divider = 0;
   std::string port("/dev/ttyUSB0");
-  while ((opt = getopt(argc, argv, "hp:")) != -1)
+  while ((opt = getopt(argc, argv, "hp:d:")) != -1)
   {
     switch (opt)
     {
@@ -29,6 +31,9 @@ int main(int argc, char **argv)
       case 'p':
         port = optarg;
         break;
+      case 'd':
+        divider = std::stoi(optarg);
+        break;
       default: /* '?' */
         usage();
         exit(EXIT_FAILURE);
@@ -38,6 +43,14 @@ int main(int argc, char **argv)
   PerimeterWireDriver driver(port);
   // Spin thread for serial (required for sync api)
   std::thread thread([&driver]() { driver.run(); });
+
+  if (divider != 0)
+  {
+    driver.setDivider(0, divider);
+    driver.setDivider(1, divider);
+    driver.setDivider(2, divider);
+    driver.setDivider(3, divider);
+  }
 
   driver.setEnabled(0x0f);
   driver.setControl(true);

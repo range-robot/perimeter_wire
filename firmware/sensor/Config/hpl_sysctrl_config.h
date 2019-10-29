@@ -84,7 +84,7 @@
 // <i> Default: No Prescaling
 // <id> osc8m_presc
 #ifndef CONF_OSC8M_PRESC
-#define CONF_OSC8M_PRESC SYSCTRL_OSC8M_PRESC_3_Val
+#define CONF_OSC8M_PRESC SYSCTRL_OSC8M_PRESC_0_Val
 #endif
 
 // <q> Overwrite Default Osc Calibration
@@ -109,7 +109,7 @@
 // <i> Indicates whether configuration for OSC32K is enabled or not
 // <id> enable_osc32k
 #ifndef CONF_OSC32K_CONFIG
-#define CONF_OSC32K_CONFIG 0
+#define CONF_OSC32K_CONFIG 1
 #endif
 
 // <h> 32kHz Internal Oscillator (OSC32K) Control
@@ -117,7 +117,7 @@
 // <i> Indicates whether Internal 32K Oscillator is enabled or not
 // <id> osc32k_arch_enable
 #ifndef CONF_OSC32K_ENABLE
-#define CONF_OSC32K_ENABLE 0
+#define CONF_OSC32K_ENABLE 1
 #endif
 
 // <q> On Demand Control
@@ -142,7 +142,7 @@
 // <i> Enable 32 Khz Output
 // <id> osc32k_arch_en32k
 #ifndef CONF_OSC32K_EN32K
-#define CONF_OSC32K_EN32K 0
+#define CONF_OSC32K_EN32K 1
 #endif
 
 // <q> Enable 1K
@@ -197,7 +197,7 @@
 // <i> Indicates whether configuration for External 32K Osc is enabled or not
 // <id> enable_xosc32k
 #ifndef CONF_XOSC32K_CONFIG
-#define CONF_XOSC32K_CONFIG 1
+#define CONF_XOSC32K_CONFIG 0
 #endif
 
 // <h> 32kHz External Crystal Oscillator (XOSC32K) Control
@@ -205,7 +205,7 @@
 // <i> Indicates whether External 32K Oscillator is enabled or not
 // <id> xosc32k_arch_enable
 #ifndef CONF_XOSC32K_ENABLE
-#define CONF_XOSC32K_ENABLE 1
+#define CONF_XOSC32K_ENABLE 0
 #endif
 
 // <q> On Demand
@@ -274,7 +274,7 @@
 // <i> Default: 122 us
 // <id> xosc32k_arch_startup
 #ifndef CONF_XOSC32K_STARTUP
-#define CONF_XOSC32K_STARTUP CONF_XOSC32K_STARTUP_TIME_122MCS
+#define CONF_XOSC32K_STARTUP CONF_XOSC32K_STARTUP_TIME_1068MCS
 #endif
 
 // </h>

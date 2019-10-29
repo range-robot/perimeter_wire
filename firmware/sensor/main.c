@@ -11,6 +11,9 @@ void uplink_set_reg_callback(uint8_t adr) {
 	uint8_t enabled;
 	uplink_get_enabled(&enabled);
 	pwsens_set_enable(enabled);
+	
+	for (int i = 0; i < PWSENS_CHANNEL_COUNT; i++)
+		pwsens_set_divider(i, uplink_get_divider(i));
 }
 
 void usb_connect(void)

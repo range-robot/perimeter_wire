@@ -15,24 +15,14 @@ inline static void uplink_get_enabled(uint8_t* enabled)
 	*enabled = app_registers->enabled;
 }
 
-inline static void uplink_set_channel_a(uint16_t value)
+inline static uint8_t uplink_get_divider(uint8_t channel)
 {
-	app_registers->channel_a.value = value;
+	return app_registers->channel[channel].divider;
 }
 
-inline static void uplink_set_channel_b(uint16_t value)
+inline static void uplink_set_channel(uint8_t channel, uint16_t value)
 {
-	app_registers->channel_b.value = value;
-}
-
-inline static void uplink_set_channel_c(uint16_t value)
-{
-	app_registers->channel_c.value = value;
-}
-
-inline static void uplink_set_channel_d(uint16_t value)
-{
-	app_registers->channel_d.value = value;
+	app_registers->channel[channel].mag.value = value;
 }
 
 #endif /* UPLINK_H_ */
