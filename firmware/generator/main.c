@@ -61,9 +61,6 @@ int main(void)
 	led_task.mode = TIMER_TASK_REPEAT;
 	timer_add_task(&TIMER_0, &led_task);
 	
-	LED_mode_A = LM_ON;
-	LED_mode_B = LM_PULSE_2;
-
 	// setup adc
 	/*
 	adc_async_register_callback(&ADC_0, 0, ADC_ASYNC_CONVERT_CB, adc_convert_cb);

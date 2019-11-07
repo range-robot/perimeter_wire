@@ -47,9 +47,19 @@ public:
     }
     std_msgs::Float32MultiArray array;
     array.data.push_back(a);
+    array.data.push_back(fabs(a));
+
     array.data.push_back(b);
+    array.data.push_back(fabs(b));
+
     array.data.push_back(c);
+    array.data.push_back(fabs(c));
+
     array.data.push_back(d);
+    array.data.push_back(fabs(d));
+
+    array.data.push_back(sqrt(a*a + b*b));
+    array.data.push_back(fabs(c)-fabs(d));
     pub_.publish(array);
   }
 };

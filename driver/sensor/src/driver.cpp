@@ -26,6 +26,13 @@ const uint8_t divider_register_map[] = {
   REGISTER_CHANNEL_D_DIVIDER
 };
 
+const uint8_t code_register_map[] = {
+  REGISTER_CHANNEL_A_CODE,
+  REGISTER_CHANNEL_B_CODE,
+  REGISTER_CHANNEL_C_CODE,
+  REGISTER_CHANNEL_D_CODE
+};
+
 PerimeterWireDriver::PerimeterWireDriver(const std::string& com_port)
 {
   using namespace std::placeholders;
@@ -97,7 +104,7 @@ bool PerimeterWireDriver::getChannel(int channel, float& value)
   uint8_t reg = channel_register_map[channel];
   uint16_t val16;
   bool res = app_->getReg16(reg, val16);
-  value = val16 / ADC_MAX;
+  value = static_cast<int16_t>(val16) / ADC_MAX;
   return res;
 }
 
@@ -106,5 +113,13 @@ bool PerimeterWireDriver::setDivider(int channel, uint8_t divider)
   if (channel < 0 || channel >= sizeof(divider_register_map))
     return false;
   app_->setReg(divider_register_map[channel], divider);
+  return true;
+}
+
+bool PerimeterWireDriver::setCode(int channel, uint16_t code)
+{
+  if (channel < 0 || channel >= sizeof(code_register_map))
+    return false;
+  app_->setReg16(code_register_map[channel], code);
   return true;
 }

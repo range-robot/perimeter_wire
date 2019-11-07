@@ -13,12 +13,12 @@ void uplink_set_reg_callback(uint8_t adr) {
 	pwsens_set_enable(enabled);
 	
 	for (int i = 0; i < PWSENS_CHANNEL_COUNT; i++)
-		pwsens_set_divider(i, uplink_get_divider(i));
+		pwsens_set_channel(i, uplink_get_divider(i), uplink_get_code(i));
 }
 
 void usb_connect(void)
 {
-	send_hello = true;
+//	send_hello = true;
 }
 
 int main(void)

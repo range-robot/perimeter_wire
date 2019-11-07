@@ -42,6 +42,10 @@ public:
     bool setChannelADivider(uint8_t divider);
     bool getChannelBDivider(uint8_t& divider);
     bool setChannelBDivider(uint8_t divider);
+    bool getChannelACode(uint16_t& code);
+    bool setChannelACode(uint16_t code);
+    bool getChannelBCode(uint16_t& code);
+    bool setChannelBCode(uint16_t code);
 };
 
 }  // namespace perimeter_wire_generator

@@ -124,3 +124,25 @@ bool GeneratorDriver::setChannelBDivider(uint8_t divider)
   app_->setReg(REGISTER_B_DIV, divider);
   return true;
 }
+
+bool GeneratorDriver::getChannelACode(uint16_t& code)
+{
+  return app_->getReg16(REGISTER_A_CODE, code);
+}
+
+bool GeneratorDriver::setChannelACode(uint16_t code)
+{
+  app_->setReg16(REGISTER_A_CODE, code);
+  return true;
+}
+
+bool GeneratorDriver::getChannelBCode(uint16_t& code)
+{
+  return app_->getReg16(REGISTER_B_CODE, code);
+}
+
+bool GeneratorDriver::setChannelBCode(uint16_t code)
+{
+  app_->setReg16(REGISTER_B_CODE, code);
+  return true;
+}

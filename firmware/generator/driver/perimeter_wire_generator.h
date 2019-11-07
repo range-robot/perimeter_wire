@@ -18,9 +18,10 @@
 /* END CONFIG */
 
 enum pwgen_mode_t {
-	PWGEN_MODE_DISABLED,
-	PWGEN_MODE_H,
-	PWGEN_MODE_SINGLE
+	PWGEN_MODE_DISABLED = 0,
+	PWGEN_MODE_ENABLED = 0x01,
+	PWGEN_MODE_H = 0x2,
+	PWGEN_MODE_CODE = 0x4
 };
 
 enum pwgen_channel_t {
@@ -44,12 +45,15 @@ struct pwgen_t {
 	} state;
 	enum pwgen_mode_t mode;
 	struct timer_task task;
+	uint8_t pos;	// position in code or true/false if no code
+	uint16_t code;
 };
 
 struct pwgen_config_t
 {
 	enum pwgen_mode_t mode;
-	uint32_t divider;	
+	uint8_t divider;
+	uint16_t code;
 };
 
 void pwgen_init(struct pwgen_t* const gen, enum pwgen_channel_t channel);

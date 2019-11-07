@@ -20,7 +20,12 @@ inline static uint8_t uplink_get_divider(uint8_t channel)
 	return app_registers->channel[channel].divider;
 }
 
-inline static void uplink_set_channel(uint8_t channel, uint16_t value)
+inline static uint16_t uplink_get_code(uint8_t channel)
+{
+	return app_registers->channel[channel].code;
+}
+
+inline static void uplink_set_channel(uint8_t channel, int16_t value)
 {
 	app_registers->channel[channel].mag.value = value;
 }

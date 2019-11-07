@@ -14,6 +14,6 @@
 void pwsens_init(void);
 void pwsens_task(void);
 void pwsens_set_enable(uint8_t enable);
-void pwsens_set_divider(uint8_t channel, uint8_t divider);
+void pwsens_set_channel(uint8_t channel, uint8_t divider, uint16_t code);
 
 #endif /* PERIMETER_WIRE_SENSOR_H_ */

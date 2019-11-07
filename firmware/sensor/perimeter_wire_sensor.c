@@ -4,10 +4,11 @@
 #include <hpl_adc_config.h>
 #include <stdlib.h>
 
+#define CODE_SIZE (16)
+
 /*! The buffer size for ADC */
 typedef int16_t pwgen_sample_type;
 static pwgen_sample_type ADC_buffer[PWSENS_SAMPLE_COUNT];
-int8_t sigcode[] = { 1,-1, 1,-1, 1,-1, 1,-1, 1,-1, 1,-1, 1,-1, 1,-1, 1,-1, 1,-1, 1,-1, 1,-1 };
 
 bool pwsens_adc_running;
 uint8_t pwsens_enable;
@@ -22,7 +23,8 @@ struct
 	} status;
 	uint8_t channel;
 	uint8_t divider[PWSENS_CHANNEL_COUNT];
-	uint16_t mag[PWSENS_CHANNEL_COUNT];
+	uint16_t code[PWSENS_CHANNEL_COUNT];
+	int16_t mag[PWSENS_CHANNEL_COUNT];
 } pwsens_state;
 
 static inline void pwsens_adc_set_channel(uint8_t channel)
@@ -70,9 +72,10 @@ void pwsens_set_enable(uint8_t enable)
 	}
 }
 
-void pwsens_set_divider(uint8_t channel, uint8_t divider)
+void pwsens_set_channel(uint8_t channel, uint8_t divider, uint16_t code)
 {
 	pwsens_state.divider[channel] = divider;
+	pwsens_state.code[channel] = code;
 }
 
 // digital matched filter (cross correlation)
@@ -81,7 +84,6 @@ void pwsens_set_divider(uint8_t channel, uint8_t divider)
 // subsample is the number of times for each filter coeff to repeat
 // ip[] holds input data (length > nPts + M )
 // nPts is the length of the required output data
-
 int16_t corrFilter(const int8_t *H, int8_t subsample, int16_t M, const pwgen_sample_type *ip, int16_t nPts, uint16_t* quality)
 {
 	int16_t sumMax = 0; // max correlation sum
@@ -148,7 +150,12 @@ void pwsens_task(void)
 		
 		uint16_t quality;
 		// magnitude for tracking (fast but inaccurate)
-		int16_t sigcode_size = sizeof sigcode;
+		uint16_t code = pwsens_state.code[channel];
+		int8_t sigcode[CODE_SIZE];
+		for (int i = 0; i < CODE_SIZE; i++)
+		{
+			sigcode[i] =  ((code & (1 << i)) == 0) ? -1 : 1;
+		}
 		
 		// center
 		int16_t center = 1 << 11;
@@ -156,9 +163,8 @@ void pwsens_task(void)
 		{
 			ADC_buffer[i] = (ADC_buffer[i] - center) >> 4;
 		}
-		int16_t mag = corrFilter(sigcode, subSample, sigcode_size, ADC_buffer, PWSENS_SAMPLE_COUNT-sigcode_size*subSample, &quality);
-		uint16_t maga = abs(mag);
-		pwsens_state.mag[channel] = maga;
+		int16_t mag = corrFilter(sigcode, subSample, CODE_SIZE, ADC_buffer, PWSENS_SAMPLE_COUNT - CODE_SIZE * subSample, &quality);
+		pwsens_state.mag[channel] = mag;
 
 		//if (swapCoilPolarity)
 		//	mag[idx] *= -1;
@@ -177,7 +183,7 @@ void pwsens_task(void)
 		//}
 
 				
-		uplink_set_channel(channel, maga);
+		uplink_set_channel(channel, mag);
 		
 		if (pwsens_enable != 0)
 		{

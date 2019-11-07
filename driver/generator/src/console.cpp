@@ -1,6 +1,7 @@
 #include <getopt.h>
 #include <string>
 #include <thread>
+#include <unistd.h>
 #include <perimeter_wire_generator/driver.h>
 #include "console.h"
 
@@ -8,12 +9,13 @@ using namespace perimeter_wire_generator;
 
 void usage()
 {
-  printf("Usage: console [-h] [-ab] [-m mode] [-f freq] [-p port]\n");
+  printf("Usage: console [-h] [-ab] [-m mode] [-d div] [-c code] [-p port]\n");
   printf("Options:\n");
   printf("-h\thelp\n");
   printf("-p\tuse serial port\n");
   printf("-m\tset mode\n");
-  printf("-f\tset frequency\n");
+  printf("-d\tset divider\n");
+  printf("-c\tset code\n");
   printf("-a\tconfigure channel a\n");
   printf("-b\tconfigure channel b\n");
 }
@@ -21,12 +23,13 @@ void usage()
 int main(int argc, char **argv)
 {
   bool chA = false, chB = false;
-  bool setDiv = false, setMode = false;
+  bool setDiv = false, setMode = false, setCode = false;
   uint8_t div = 0;
   uint8_t mode = 0;
+  uint16_t code = 0;
   int opt;
   std::string port("/dev/ttyUSB0");
-  while ((opt = getopt(argc, argv, "habp:m:d:")) != -1)
+  while ((opt = getopt(argc, argv, "habp:m:d:c:")) != -1)
   {
     switch (opt)
     {
@@ -51,6 +54,10 @@ int main(int argc, char **argv)
         setDiv = true;
         div = std::stoi(optarg);
         break;
+      case 'c':
+        setCode = true;
+        code = std::stoi(optarg);
+        break;
       default: /* '?' */
         usage();
         exit(EXIT_FAILURE);
@@ -68,6 +75,49 @@ int main(int argc, char **argv)
   else
     ROS_INFO("Firmware version: %d", (int)fw);
 
+  if ((setDiv || setCode))
+  {
+    // modifying div or code required the generator to be disabled.
+    if (chA)
+    {
+      uint8_t curMode;
+      if (!driver.getChannelAMode(curMode))
+        ROS_WARN("Failed to read channel A mode.");
+      if (curMode != 0)
+      {
+        if (!driver.setChannelAMode(0))
+          ROS_WARN("Setting mode for channel A failed.");
+        else
+          ROS_INFO("Disabled channel A");
+        if (!setMode)
+        {
+          setMode = true;
+          mode = curMode;
+        }
+      }
+      usleep(10000);
+    }
+    if (chB)
+    {
+      uint8_t curMode;
+      if (!driver.getChannelBMode(curMode))
+        ROS_WARN("Failed to read channel B mode.");
+      if (curMode != 0)
+      {
+        if (!driver.setChannelBMode(0))
+          ROS_WARN("Setting mode for channel B failed.");
+        else
+          ROS_INFO("Disabled channel B");
+        if (!setMode)
+        {
+          setMode = true;
+          mode = curMode;
+        }
+      }
+    }
+    usleep(10000);
+  }
+
   if (setDiv)
   {
     if (chA)
@@ -75,15 +125,35 @@ int main(int argc, char **argv)
       if (!driver.setChannelADivider(div))
         ROS_WARN("Setting divider for channel A failed.");
       else
-        ROS_INFO("Divder set for channel A");
+        ROS_INFO("Divider set for channel A");
     }
     if (chB)
     {
       if (!driver.setChannelBDivider(div))
         ROS_WARN("Setting divider for channel B failed.");
       else
-        ROS_INFO("Divder set for channel B");
+        ROS_INFO("Divider set for channel B");
     }
+    usleep(10000);
+  }
+
+  if (setCode)
+  {
+    if (chA)
+    {
+      if (!driver.setChannelACode(code))
+        ROS_WARN("Setting code for channel A failed.");
+      else
+        ROS_INFO("Code set for channel A");
+    }
+    if (chB)
+    {
+      if (!driver.setChannelBCode(code))
+        ROS_WARN("Setting code for channel B failed.");
+      else
+        ROS_INFO("Code set for channel B");
+    }
+    usleep(10000);
   }
 
   if (setMode)
@@ -93,15 +163,16 @@ int main(int argc, char **argv)
       if (!driver.setChannelAMode(mode))
         ROS_WARN("Setting mode for channel A failed.");
       else
-        ROS_INFO("Mode set for channel A");
+        ROS_INFO("Set mode for channel A to 0x%x", mode);
     }
     if (chB)
     {
       if (!driver.setChannelBMode(mode))
         ROS_WARN("Setting mode for channel B failed.");
       else
-        ROS_INFO("Mode set for channel B");
+        ROS_INFO("Set mode for channel B to 0x%x", mode);
     }
+    usleep(10000);
   }
 
   float temp;
@@ -122,6 +193,11 @@ int main(int argc, char **argv)
   else
     ROS_INFO("Divider:\t%d", div);
 
+  if (!driver.getChannelACode(code))
+    ROS_WARN("Failed to read channel A code.");
+  else
+    ROS_INFO("Code:\t0x%x", code);
+
   ROS_INFO("Channel B:");
   if (!driver.getChannelBMode(mode))
     ROS_WARN("Failed to read channel B mode.");
@@ -132,6 +208,11 @@ int main(int argc, char **argv)
     ROS_WARN("Failed to read channel B divider.");
   else
     ROS_INFO("Divider:\t%d", div);
+
+  if (!driver.getChannelBCode(code))
+    ROS_WARN("Failed to read channel B code.");
+  else
+    ROS_INFO("Code:\t0x%x", code);
 
   driver.stop();
   thread.join();

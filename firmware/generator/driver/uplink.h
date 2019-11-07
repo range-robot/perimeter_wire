@@ -15,12 +15,14 @@ inline static void uplink_read_generatorA_config(struct pwgen_config_t *const co
 {
 	config->divider = app_registers->channel_a.divider;
 	config->mode = app_registers->channel_a.mode;
+	config->code = app_registers->channel_a.code.value;
 }
 
 inline static void uplink_read_generatorB_config(struct pwgen_config_t *const config)
 {
 	config->divider = app_registers->channel_b.divider;
 	config->mode = app_registers->channel_b.mode;
+	config->code = app_registers->channel_b.code.value;
 }
 
 inline static void uplink_write_temp(uint8_t temp)

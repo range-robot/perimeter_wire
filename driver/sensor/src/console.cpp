@@ -12,6 +12,7 @@ void usage()
   printf("Options:\n");
   printf("-h\thelp\n");
   printf("-d\tset frequency divider\n");
+  printf("-c\tset code\n");
   printf("-p\tuse serial port\n");
 }
 
@@ -19,8 +20,9 @@ int main(int argc, char **argv)
 {
   int opt;
   int divider = 0;
+  int code = 0;
   std::string port("/dev/ttyUSB0");
-  while ((opt = getopt(argc, argv, "hp:d:")) != -1)
+  while ((opt = getopt(argc, argv, "hp:d:c:")) != -1)
   {
     switch (opt)
     {
@@ -34,6 +36,9 @@ int main(int argc, char **argv)
       case 'd':
         divider = std::stoi(optarg);
         break;
+      case 'c':
+        code = std::stoi(optarg);
+        break;
       default: /* '?' */
         usage();
         exit(EXIT_FAILURE);
@@ -46,11 +51,24 @@ int main(int argc, char **argv)
 
   if (divider != 0)
   {
+    ROS_INFO("Using divider %d", divider);
     for (int i = 0; i < 4; i++)
     {
       if (!driver.setDivider(i, divider))
       {
         ROS_ERROR("Failed to set divider for channel %d", i);
+      }
+      usleep(10000);
+    }
+  }
+  if (code != 0)
+  {
+    ROS_INFO("Using code 0x%x", code);
+    for (int i = 0; i < 4; i++)
+    {
+      if (!driver.setCode(i, code))
+      {
+        ROS_ERROR("Failed to set code for channel %d", i);
       }
       usleep(10000);
     }

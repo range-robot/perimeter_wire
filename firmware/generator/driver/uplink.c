@@ -5,14 +5,14 @@
 uint8_t registers[REGISTER_COUNT] = {
 	0,  // REGISTER_CONTROL
 	0,  // REGISTER_TEMP
-	1,  // REGISTER_A_MODE
-	0,  // reserved
-	5,  // REGISTER_A_DIV
-	0,  // reserved
+	0x07,  // REGISTER_A_MODE
+	4,  // REGISTER_A_DIV
+	0x53,  // code
+	0x53,  // code
 	0, 	// REGISTER_B_MODE
-	0,  // reserved
 	0,  // REGISTER_B_DIV
-	0   // reserved
+	0,  // code
+	0   // code
 };
 
 struct app_registers_t * app_registers = (struct app_registers_t*)registers;

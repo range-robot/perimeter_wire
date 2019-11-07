@@ -11,12 +11,13 @@ namespace perimeter_wire_sensor {
 struct PerimeterWireDriverConfig {
   std::string com_port;
   int divider;
-
+  int code;
 
   void fromParam(const ros::NodeHandle& privateNh)
   {
     privateNh.param("port", com_port, std::string("/dev/ttyO2"));
     privateNh.param("divider", divider, 10);
+    privateNh.param("code", code, 0x5555);
   }
 };
 
@@ -41,6 +42,13 @@ int main(int argc, char **argv)
     if (!driver.setDivider(i, config.divider))
     {
       ROS_ERROR("Failed to set divider for channel %d", i);
+      return EXIT_FAILURE;
+    }
+    // avoid overflow
+    usleep(10000);
+    if (!driver.setCode(i, config.code))
+    {
+      ROS_ERROR("Failed to set code for channel %d", i);
       return EXIT_FAILURE;
     }
     // avoid overflow

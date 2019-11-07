@@ -33,6 +33,7 @@ public:
     bool setEnabled(uint8_t channels);
 
     bool setDivider(int channel, uint8_t divider);
+    bool setCode(int channel, uint16_t code);
     bool getChannel(int channel, float& value);
 };
 

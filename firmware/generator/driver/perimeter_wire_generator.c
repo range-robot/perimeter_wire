@@ -1,19 +1,32 @@
 #include "perimeter_wire_generator.h"
 #include "leds.h"
-void _pwgen_timer_tick(struct pwgen_t* const gen)
+
+static void _pwgen_set_driver_input(struct pwgen_t* const gen)
 {
-	switch (gen->mode)
+	uint8_t mode = gen->mode;
+	if ((mode & PWGEN_MODE_ENABLED) != PWGEN_MODE_ENABLED)
 	{
-		case PWGEN_MODE_H:
-			gpio_toggle_pin_level(gen->in1);
-			gpio_toggle_pin_level(gen->in2);
-			break;
-		case PWGEN_MODE_SINGLE:
-			gpio_toggle_pin_level(gen->in1);
-		break;
-			default:
-		case PWGEN_MODE_DISABLED:
-			break;
+		gpio_set_pin_level(gen->in1, false);
+		gpio_set_pin_level(gen->in2, false);
+	}
+
+	uint8_t pos = gen->pos;
+	bool state;
+	if ((mode & PWGEN_MODE_CODE) == PWGEN_MODE_CODE)
+	{
+		state = (gen->code & (1 << pos)) != 0;
+		gen->pos = (pos + 1) % 16;
+	}
+	else
+	{
+		state = pos;
+		gen->pos = !state;
+	}
+
+	gpio_set_pin_level(gen->in1, state);
+	if ((mode & PWGEN_MODE_H) == PWGEN_MODE_H)
+	{
+		gpio_set_pin_level(gen->in2, !state);
 	}
 }
 
@@ -21,11 +34,11 @@ struct pwgen_t *_pwgenA, *_pwgenB;
 
 void _pwgenA_timer_cb(const struct timer_task *const timer_task)
 {
-	_pwgen_timer_tick(_pwgenA);
+	_pwgen_set_driver_input(_pwgenA);
 }
 void _pwgenB_timer_cb(const struct timer_task *const timer_task)
 {
-	_pwgen_timer_tick(_pwgenB);
+	_pwgen_set_driver_input(_pwgenB);
 }
 
 void pwgen_init(struct pwgen_t* const gen, enum pwgen_channel_t channel)
@@ -67,7 +80,7 @@ void pwgen_set_config(struct pwgen_t* const gen, const struct pwgen_config_t* co
 	if (config->divider == 0)
 		gen->mode = PWGEN_MODE_DISABLED;
 
-	if (gen->mode == PWGEN_MODE_DISABLED)
+	if ((gen->mode & PWGEN_MODE_ENABLED) != PWGEN_MODE_ENABLED)
 	{
 		if (gen->state != _PWGEN_STATE_IDLE)
 		{
@@ -83,8 +96,9 @@ void pwgen_set_config(struct pwgen_t* const gen, const struct pwgen_config_t* co
 		if (gen->state == _PWGEN_STATE_IDLE)
 		{
 			gpio_set_pin_level(gen->enable, true);
-			gpio_set_pin_level(gen->in1, true);
-			gpio_set_pin_level(gen->in2, false);
+			gen->pos = 0;
+			gen->code = config->code;
+			_pwgen_set_driver_input(gen);
 			gen->state = _PWGEN_STATE_RUN;
 			
 			gen->task.interval = config->divider;
