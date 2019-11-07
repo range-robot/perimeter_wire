@@ -46,14 +46,20 @@ int main(int argc, char **argv)
 
   if (divider != 0)
   {
-    driver.setDivider(0, divider);
-    driver.setDivider(1, divider);
-    driver.setDivider(2, divider);
-    driver.setDivider(3, divider);
+    for (int i = 0; i < 4; i++)
+    {
+      if (!driver.setDivider(i, divider))
+      {
+        ROS_ERROR("Failed to set divider for channel %d", i);
+      }
+      usleep(10000);
+    }
   }
 
   driver.setEnabled(0x0f);
+  usleep(10000);
   driver.setControl(true);
+  usleep(10000);
 
   printf("A\tB\tC\tD\n");
   float a, b, c, d;

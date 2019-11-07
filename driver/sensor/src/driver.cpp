@@ -105,5 +105,6 @@ bool PerimeterWireDriver::setDivider(int channel, uint8_t divider)
 {
   if (channel < 0 || channel >= sizeof(divider_register_map))
     return false;
-  app_->setReg(divider_register_map[channel], divider); 
+  app_->setReg(divider_register_map[channel], divider);
+  return true;
 }

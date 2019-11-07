@@ -20,10 +20,6 @@ public:
     driver_(driver)
   {
     pub_ = nh.advertise<std_msgs::Float32MultiArray>("perimeter_wire", 1);
-
-    driver_.reset();
-    driver_.setEnabled(0x0f);
-    driver_.setControl(true);
   }
 
   void cycle()
