@@ -1,3 +1,4 @@
 (sym_lib_table
   (lib (name local)(type Legacy)(uri /home/michael/golfcart/workspace/src/perimeter_wire/pcb/local.lib)(options "")(descr ""))
+  (lib (name sensor-rescue)(type Legacy)(uri ${KIPRJMOD}/sensor-rescue.lib)(options "")(descr ""))
 )
