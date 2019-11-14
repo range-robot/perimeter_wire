@@ -3,7 +3,7 @@
 
 #include "hpl_reset.h"
 #include "uplink.h"
-#include <perimeter_wire_sensor/registers.h>
+#include <perimeter_wire_sensor_firmware/registers.h>
 #include <perimeter_wire_sensor/messages.h>
 
 // macro for software reset

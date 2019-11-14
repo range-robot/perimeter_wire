@@ -2,7 +2,7 @@
 #include <string>
 #include <ros/console.h>
 #include <perimeter_wire_sensor/driver.h>
-#include <perimeter_wire_sensor/registers.h>
+#include <perimeter_wire_sensor_firmware/registers.h>
 #include "async_serial.h"
 #include "data_link_layer.h"
 #include "app_layer.h"
