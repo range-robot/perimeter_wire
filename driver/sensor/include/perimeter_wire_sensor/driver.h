@@ -30,10 +30,11 @@ public:
     void reset(void);
 
     bool setControl(bool enable);
-    bool setEnabled(uint8_t channels);
+    bool setFlags(uint8_t flags);
 
     bool setDivider(int channel, uint8_t divider);
     bool setCode(int channel, uint16_t code);
+    bool setRepeat(int channel, uint8_t repeat);
     bool getChannel(int channel, float& value);
 };
 

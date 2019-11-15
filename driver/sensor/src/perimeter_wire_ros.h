@@ -13,53 +13,36 @@ class PerimeterWireRos
 private:
   PerimeterWireDriver driver_;
   ros::Publisher pub_;
+  float last_[4];
+  float filter_;
 
 public:
   PerimeterWireRos(ros::NodeHandle nh,
-    PerimeterWireDriver& driver) :
-    driver_(driver)
+    PerimeterWireDriver& driver, float filter) :
+    driver_(driver),
+    filter_(filter)
   {
     pub_ = nh.advertise<std_msgs::Float32MultiArray>("perimeter_wire", 1);
   }
 
   void cycle()
   {
-    float a, b, c, d;
-    if (!driver_.getChannel(0, a))
-    {
-      ROS_WARN("Reading channel a failed.");
-      return;
-    }
-    if (!driver_.getChannel(1, b))
-    {
-      ROS_WARN("Reading channel b failed.");
-      return;
-    }
-    if (!driver_.getChannel(2, c))
-    {
-      ROS_WARN("Reading channel c failed.");
-      return;
-    }
-    if (!driver_.getChannel(3, d))
-    {
-      ROS_WARN("Reading channel d failed.");
-      return;
-    }
+    float value[4];
     std_msgs::Float32MultiArray array;
-    array.data.push_back(a);
-    array.data.push_back(fabs(a));
 
-    array.data.push_back(b);
-    array.data.push_back(fabs(b));
+    for (int i = 0; i < 4; i++)
+    {
+      if (!driver_.getChannel(i, value[i]))
+      {
+        ROS_WARN("Reading channel %d failed.", i);
+        return;
+      }
+      last_[i] = (1.0 - filter_) * value[i] + filter_ * last_[i];
+      array.data.push_back(value[i]);
+      array.data.push_back(last_[i]);
+    }
 
-    array.data.push_back(c);
-    array.data.push_back(fabs(c));
-
-    array.data.push_back(d);
-    array.data.push_back(fabs(d));
-
-    array.data.push_back(sqrt(a*a + b*b));
-    array.data.push_back(fabs(c)-fabs(d));
+    array.data.push_back(sqrt(value[0]*value[0] + value[1]*value[1]));
     pub_.publish(array);
   }
 };

@@ -33,6 +33,13 @@ const uint8_t code_register_map[] = {
   REGISTER_CHANNEL_D_CODE
 };
 
+const uint8_t repeat_register_map[] = {
+  REGISTER_CHANNEL_A_REPEAT,
+  REGISTER_CHANNEL_B_REPEAT,
+  REGISTER_CHANNEL_C_REPEAT,
+  REGISTER_CHANNEL_D_REPEAT
+};
+
 PerimeterWireDriver::PerimeterWireDriver(const std::string& com_port)
 {
   using namespace std::placeholders;
@@ -92,9 +99,9 @@ bool PerimeterWireDriver::setControl(bool enabled)
   app_->setReg(REGISTER_CONTROL, control);
 }
 
-bool PerimeterWireDriver::setEnabled(uint8_t enabled)
+bool PerimeterWireDriver::setFlags(uint8_t flags)
 {
-  app_->setReg(REGISTER_ENABLED, enabled);
+  app_->setReg(REGISTER_FLAGS, flags);
 }
 
 bool PerimeterWireDriver::getChannel(int channel, float& value)
@@ -121,5 +128,13 @@ bool PerimeterWireDriver::setCode(int channel, uint16_t code)
   if (channel < 0 || channel >= sizeof(code_register_map))
     return false;
   app_->setReg16(code_register_map[channel], code);
+  return true;
+}
+
+bool PerimeterWireDriver::setRepeat(int channel, uint8_t repeat)
+{
+  if (channel < 0 || channel >= sizeof(repeat_register_map))
+    return false;
+  app_->setReg(repeat_register_map[channel], repeat);
   return true;
 }

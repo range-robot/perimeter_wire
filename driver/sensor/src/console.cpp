@@ -8,11 +8,13 @@ using namespace perimeter_wire_sensor;
 
 void usage()
 {
-  printf("Usage: console [-h] [-p port] [-d divider]\n");
+  printf("Usage: console [-hD] [-p port] [-d divider]\n");
   printf("Options:\n");
   printf("-h\thelp\n");
+  printf("-D\tuse differntial mode\n");
   printf("-d\tset frequency divider\n");
   printf("-c\tset code\n");
+  printf("-r\tset repeat\n");
   printf("-p\tuse serial port\n");
 }
 
@@ -21,14 +23,19 @@ int main(int argc, char **argv)
   int opt;
   int divider = 0;
   int code = 0;
+  int repeat = 0;
+  bool differential = false;
   std::string port("/dev/ttyUSB0");
-  while ((opt = getopt(argc, argv, "hp:d:c:")) != -1)
+  while ((opt = getopt(argc, argv, "hDp:d:c:r:")) != -1)
   {
     switch (opt)
     {
       case 'h':
         usage();
         exit(EXIT_SUCCESS);
+        break;
+      case 'D':
+        differential = true;
         break;
       case 'p':
         port = optarg;
@@ -38,6 +45,9 @@ int main(int argc, char **argv)
         break;
       case 'c':
         code = std::stoi(optarg);
+        break;
+      case 'r':
+        repeat = std::stoi(optarg);
         break;
       default: /* '?' */
         usage();
@@ -73,8 +83,22 @@ int main(int argc, char **argv)
       usleep(10000);
     }
   }
-
-  driver.setEnabled(0x0f);
+  if (repeat != 0)
+  {
+    ROS_INFO("Using repeat 0x%x", repeat);
+    for (int i = 0; i < 4; i++)
+    {
+      if (!driver.setRepeat(i, repeat))
+      {
+        ROS_ERROR("Failed to set repeat for channel %d", i);
+      }
+      usleep(10000);
+    }
+  }
+  if (differential)
+    driver.setFlags(0x81);
+  else
+    driver.setFlags(0x01);
   usleep(10000);
   driver.setControl(true);
   usleep(10000);

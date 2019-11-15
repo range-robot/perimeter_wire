@@ -12,12 +12,19 @@ struct PerimeterWireDriverConfig {
   std::string com_port;
   int divider;
   int code;
+  int repeat;
+  bool differential;
+  float filter;
 
   void fromParam(const ros::NodeHandle& privateNh)
   {
     privateNh.param("port", com_port, std::string("/dev/ttyO2"));
     privateNh.param("divider", divider, 10);
     privateNh.param("code", code, 0x5555);
+    privateNh.param("repeat", repeat, 1);
+    privateNh.param("differential", differential, true);
+    privateNh.param("filter", filter, 0.8f);
+    ROS_INFO("perimeter_wire configuration: divider: %d, code: 0x%x, repeat: %d, diff: %d", divider, code, repeat, differential);
   }
 };
 
@@ -53,13 +60,20 @@ int main(int argc, char **argv)
     }
     // avoid overflow
     usleep(10000);
+    if (!driver.setRepeat(i, config.repeat))
+    {
+      ROS_ERROR("Failed to set repeat for channel %d", i);
+      return EXIT_FAILURE;
+    }
+    // avoid overflow
+    usleep(10000);
   }
 
-  driver.setEnabled(0x0f);
+  driver.setFlags(config.differential ? 0x8f : 0x0f);
   usleep(10000);
   driver.setControl(true);
   usleep(10000);
-  PerimeterWireRos rosDrv(nh, driver);
+  PerimeterWireRos rosDrv(nh, driver, config.filter);
   
   diagnostic_updater::Updater updater;
   updater.setHardwareID(config.com_port);

@@ -1,5 +1,5 @@
 
-#include <perimeter_wire_sensor/registers.h>
+#include <perimeter_wire_sensor_firmware/registers.h>
 
 // hookup app layer
 uint8_t registers[REGISTER_COUNT] = {};

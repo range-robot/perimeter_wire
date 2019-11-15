@@ -11,10 +11,25 @@ typedef int16_t pwgen_sample_type;
 static pwgen_sample_type ADC_buffer[PWSENS_SAMPLE_COUNT];
 
 bool pwsens_adc_running;
-uint8_t pwsens_enable;
+uint8_t pwsens_flags;
+enum
+{
+	PWSENS_FLAGS_ENABLE = 0x01,
+	PWSENS_FLAGS_DIFFERENTIAL = 0x80
+};
+
+typedef struct
+{
+	int16_t mag;		// resulting magnitude
+	uint16_t code;		// match code
+	uint8_t repeat;		// repeat code
+	uint8_t divider;	// freq divider
+	uint16_t reserved;
+} channel_state_t;
 
 struct
 {
+	channel_state_t ch[PWSENS_CHANNEL_COUNT];
 	enum
 	{
 		PWSENS_STOPPED,
@@ -22,9 +37,6 @@ struct
 		PWSENS_ANALYSE
 	} status;
 	uint8_t channel;
-	uint8_t divider[PWSENS_CHANNEL_COUNT];
-	uint16_t code[PWSENS_CHANNEL_COUNT];
-	int16_t mag[PWSENS_CHANNEL_COUNT];
 } pwsens_state;
 
 static inline void pwsens_adc_set_channel(uint8_t channel)
@@ -58,13 +70,13 @@ void pwsens_init(void)
 	adc_dma_register_callback(&PWSENS_ADC, ADC_DMA_COMPLETE_CB, pwsens_convert_cb);
 	pwsens_adc_running = false;
 	pwsens_state.status = PWSENS_STOPPED;
-	pwsens_enable = 0;
+	pwsens_flags = 0;
 }
 
-void pwsens_set_enable(uint8_t enable)
+void pwsens_set_flags(uint8_t flags)
 {
-	pwsens_enable = enable;
-	if (enable != 0 && pwsens_state.status == PWSENS_STOPPED)
+	pwsens_flags = flags;
+	if (((flags & PWSENS_FLAGS_ENABLE) != 0) && pwsens_state.status == PWSENS_STOPPED)
 	{
 		pwsens_adc_set_channel(0);
 		pwsens_state.channel = 0;
@@ -72,48 +84,48 @@ void pwsens_set_enable(uint8_t enable)
 	}
 }
 
-void pwsens_set_channel(uint8_t channel, uint8_t divider, uint16_t code)
+void pwsens_set_channel(uint8_t channel, uint8_t divider, uint16_t code, uint8_t repeat)
 {
-	pwsens_state.divider[channel] = divider;
-	pwsens_state.code[channel] = code;
+	pwsens_state.ch[channel].divider = divider;
+	pwsens_state.ch[channel].code = code;
+	pwsens_state.ch[channel].repeat = repeat;
 }
 
 // digital matched filter (cross correlation)
 // http://en.wikipedia.org/wiki/Cross-correlation
 // H[] holds the double sided filter coeffs, M = H.length (number of points in FIR)
 // subsample is the number of times for each filter coeff to repeat
+// repeat is the number of time for each code to repeat
 // ip[] holds input data (length > nPts + M )
 // nPts is the length of the required output data
-int16_t corrFilter(const int8_t *H, int8_t subsample, int16_t M, const pwgen_sample_type *ip, int16_t nPts, uint16_t* quality)
+int16_t corrFilter(const int8_t *H, int8_t subsample, uint8_t repeat, int16_t M, const pwgen_sample_type *ip, int16_t nPts, uint16_t* quality)
 {
 	int16_t sumMax = 0; // max correlation sum
 	int16_t sumMin = 0; // min correlation sum
 	int16_t Ms = M * subsample; // number of filter coeffs including subsampling
-
-	// compute sum of absolute filter coeffs
-	int16_t Hsum = 0;
-	for (int16_t i=0; i<M; i++)
-		Hsum += abs(H[i]);
-	Hsum *= subsample;
 
 	// compute correlation
 	// for each input value
 	for (int16_t j=0; j<nPts; j++)
 	{
 		int16_t sum = 0;
-		const int8_t *Hi = H;
-		int8_t ss = 0;
 		const pwgen_sample_type *ipi = ip;
-		// for each filter coeffs
-		for (int16_t i=0; i<Ms; i++)
+		
+		for (uint8_t ri = 0; ri < repeat; ++ri)
 		{
-			sum += ((int16_t)(*Hi)) * ((int16_t)(*ipi));
-			ss++;
-			if (ss == subsample) {
-				ss=0;
-				Hi++; // next filter coeffs
+			const int8_t *Hi = H;
+			int8_t ss = 0;
+			// for each filter coeffs
+			for (int16_t i=0; i<Ms; i++)
+			{
+				sum += ((int16_t)(*Hi)) * ((int16_t)(*ipi));
+				ss++;
+				if (ss == subsample) {
+					ss=0;
+					Hi++; // next filter coeffs
+				}
+				ipi++;
 			}
-			ipi++;
 		}
 		if (sum > sumMax) sumMax = sum;
 		if (sum < sumMin) sumMin = sum;
@@ -146,46 +158,50 @@ void pwsens_task(void)
 		pwsens_adc_set_channel(next_channel);
 
 		// oversampling factor
-		int8_t subSample = pwsens_state.divider[channel];
+		channel_state_t* channel_state = &pwsens_state.ch[channel];
+		int8_t subSample = channel_state->divider;
 		
-		uint16_t quality;
-		// magnitude for tracking (fast but inaccurate)
-		uint16_t code = pwsens_state.code[channel];
+		// generate signature code, could be stored
+		// TODO (when more ram is available)
+		uint16_t code = channel_state->code;
 		int8_t sigcode[CODE_SIZE];
+		bool differentiate = (pwsens_flags & PWSENS_FLAGS_DIFFERENTIAL) != 0;
+		int8_t lastvalue = ((code & (1 << (CODE_SIZE-1))) == 0) ? -1 : 1;
 		for (int i = 0; i < CODE_SIZE; i++)
 		{
-			sigcode[i] =  ((code & (1 << i)) == 0) ? -1 : 1;
+			int8_t val = ((code & (1 << i)) == 0) ? -1 : 1;
+			if (differentiate && val == lastvalue)
+			    sigcode[i] = 0;
+			else
+				sigcode[i] = val;
+			lastvalue = val;
 		}
 		
 		// center
-		int16_t center = 1 << 11;
+		int32_t sum = 0;
 		for (int i = 0; i < PWSENS_SAMPLE_COUNT; i++)
 		{
-			ADC_buffer[i] = (ADC_buffer[i] - center) >> 4;
+			// reduce resolution
+			ADC_buffer[i] = ADC_buffer[i] >> 4;
+			sum += ADC_buffer[i];
 		}
-		int16_t mag = corrFilter(sigcode, subSample, CODE_SIZE, ADC_buffer, PWSENS_SAMPLE_COUNT - CODE_SIZE * subSample, &quality);
-		pwsens_state.mag[channel] = mag;
+		int16_t center = sum / PWSENS_SAMPLE_COUNT;
+		for (int i = 0; i < PWSENS_SAMPLE_COUNT; i++)
+		{
+			// adjust center position
+			ADC_buffer[i] = ADC_buffer[i] - center;
+		}
+		
 
-		//if (swapCoilPolarity)
-		//	mag[idx] *= -1;
-
-		// smoothed magnitude used for signal-off detection
-		//smoothMag[idx] = 0.99 * smoothMag[idx] + 0.01 * ((float)abs(mag[idx]));
-
-		// perimeter inside/outside detection
-		//if (mag[idx] > 0){
-		//	signalCounter[idx] = min(signalCounter[idx]+1, 3);
-		//	} else {
-		//	signalCounter[idx] = max(signalCounter[idx]-1, -3);
-		//}
-		//if (signalCounter[idx] < 0){
-		//	lastInsideTime[idx] = millis();
-		//}
+		uint16_t quality;
+		uint8_t repeat = channel_state->repeat;
+		int16_t mag = corrFilter(sigcode, subSample, repeat, CODE_SIZE, ADC_buffer, PWSENS_SAMPLE_COUNT - CODE_SIZE * subSample * repeat, &quality);
+		channel_state->mag = mag;
 
 				
 		uplink_set_channel(channel, mag);
 		
-		if (pwsens_enable != 0)
+		if ((pwsens_flags & PWSENS_FLAGS_ENABLE) != 0)
 		{
 			pwsens_start_conversion();
 		}

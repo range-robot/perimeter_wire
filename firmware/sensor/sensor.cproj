@@ -728,10 +728,10 @@
     <Compile Include="hri\hri_wdt_d11.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="include\perimeter_wire_sensor\messages.h">
+    <Compile Include="include\perimeter_wire_sensor_firmware\messages.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="include\perimeter_wire_sensor\registers.h">
+    <Compile Include="include\perimeter_wire_sensor_firmware\registers.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="main.c">
@@ -813,7 +813,8 @@
     <Folder Include="hpl\usb\" />
     <Folder Include="hri\" />
     <Folder Include="include\" />
-    <Folder Include="include\perimeter_wire_sensor\" />
+    <Folder Include="include\perimeter_wire_sensor_firmware\" />
+    <Folder Include="include\perimeter_wire_sensor_firmware\" />
     <Folder Include="usb\" />
     <Folder Include="usb\class\" />
     <Folder Include="usb\class\cdc\" />
