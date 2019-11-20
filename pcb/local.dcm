@@ -1,5 +1,11 @@
 EESchema-DOCLIB  Version 2.0
 #
+$CMP ATSAMD21E
+D SAM D21 Microchip SMART ARM-based Flash MCU, 48Mhz
+K 32-bit ARM Cortex-M0+ MCU Microcontroller
+F http://ww1.microchip.com/downloads/en/DeviceDoc/SAMD21-Family-DataSheet-DS40001882D.pdf
+$ENDCMP
+#
 $CMP TLV9064IPWT
 D 4 channel, 10-MHz, Low-Noise, RRIO, CMOS Operational Amplifier for Cost-Sensitive Systems 14-TSSOP -40 to 125
 $ENDCMP

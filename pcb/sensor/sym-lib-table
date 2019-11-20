@@ -1,4 +1,5 @@
 (sym_lib_table
   (lib (name local)(type Legacy)(uri /home/michael/golfcart/workspace/src/perimeter_wire/pcb/local.lib)(options "")(descr ""))
   (lib (name sensor-rescue)(type Legacy)(uri ${KIPRJMOD}/sensor-rescue.lib)(options "")(descr ""))
+  (lib (name MCU_Microchip_SAMD)(type Legacy)(uri ${KICAD_SYMBOL_DIR}/MCU_Microchip_SAMD.lib)(options "")(descr ""))
 )
