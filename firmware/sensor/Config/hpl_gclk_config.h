@@ -106,7 +106,7 @@
 // <i> Indicates whether Output Enable is enabled or not
 // <id> gclk_arch_gen_1_oe
 #ifndef CONF_GCLK_GEN_1_OE
-#define CONF_GCLK_GEN_1_OE 0
+#define CONF_GCLK_GEN_1_OE 1
 #endif
 
 // <q> Output Off Value
@@ -142,7 +142,7 @@
 // <i> This defines the clock source for generic clock generator 1
 // <id> gclk_gen_1_oscillator
 #ifndef CONF_GCLK_GEN_1_SRC
-#define CONF_GCLK_GEN_1_SRC GCLK_GENCTRL_SRC_OSC32K
+#define CONF_GCLK_GEN_1_SRC GCLK_GENCTRL_SRC_XOSC32K
 #endif
 // </h>
 

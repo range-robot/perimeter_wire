@@ -156,9 +156,9 @@
           <AcmeProjectActionInfo Action="File" Source="atmel_start.c" IsConfig="false" Hash="cPHebvG8xgdrV+XTYs6EeA" />
           <AcmeProjectActionInfo Action="File" Source="config/hpl_adc_config.h" IsConfig="true" Hash="lbpghCbMf5vNjuJSbP0s0w" />
           <AcmeProjectActionInfo Action="File" Source="config/hpl_dmac_config.h" IsConfig="true" Hash="Y4OV/kWaE79dUjWsAazMAQ" />
-          <AcmeProjectActionInfo Action="File" Source="config/hpl_gclk_config.h" IsConfig="true" Hash="EEaEpLaOzZBg31WlppkhZQ" />
+          <AcmeProjectActionInfo Action="File" Source="config/hpl_gclk_config.h" IsConfig="true" Hash="dSri7lbn2T5Ldsr1VH+Ucg" />
           <AcmeProjectActionInfo Action="File" Source="config/hpl_pm_config.h" IsConfig="true" Hash="GH0DautnKY3X7yLEFG4tgA" />
-          <AcmeProjectActionInfo Action="File" Source="config/hpl_sysctrl_config.h" IsConfig="true" Hash="3hLqnu8Sc+6U0otlF+Xlpg" />
+          <AcmeProjectActionInfo Action="File" Source="config/hpl_sysctrl_config.h" IsConfig="true" Hash="Inb1B0nrXN5i0D3CxWJBCg" />
           <AcmeProjectActionInfo Action="File" Source="config/hpl_usb_config.h" IsConfig="true" Hash="OTnXMB+/o/b7gPmkxUTUeQ" />
           <AcmeProjectActionInfo Action="File" Source="config/peripheral_clk_config.h" IsConfig="true" Hash="0A8RC2Z7aUAyGBWe4212pA" />
           <AcmeProjectActionInfo Action="File" Source="config/usbd_config.h" IsConfig="true" Hash="W5m2swIDDnyVSERQEu1qww" />
