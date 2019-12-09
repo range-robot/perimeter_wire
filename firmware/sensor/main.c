@@ -8,12 +8,17 @@ static bool send_hello = false;
 
 
 void uplink_set_reg_callback(uint8_t adr) {
-	uint8_t flags;
-	uplink_get_flags(&flags);
-	pwsens_set_flags(flags);
-	
-	for (int i = 0; i < PWSENS_CHANNEL_COUNT; i++)
-		pwsens_set_channel(i, uplink_get_divider(i), uplink_get_code(i), uplink_get_repeat(i));
+	if (adr == REGISTER_FLAGS)
+	{
+		uint8_t flags;
+		uplink_get_flags(&flags);
+		pwsens_set_flags(flags);
+	}
+	else if (adr >= REGISTER_CHANNEL_A_DIVIDER && adr < REGISTER_COUNT)
+	{
+		for (int i = 0; i < PWSENS_CHANNEL_COUNT; i++)
+			pwsens_set_channel(i, uplink_get_divider(i), uplink_get_code(i), uplink_get_repeat(i));
+	}
 }
 
 void usb_connect(void)
