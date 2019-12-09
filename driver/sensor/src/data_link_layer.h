@@ -126,6 +126,9 @@ private:
 
     inline void putToBuffer(std::vector<uint8_t>& buffer, uint8_t& checksum, uint8_t c)
     {
+#ifdef DEBUG_DDL
+        ROS_INFO("OUT CHAR: %x (%c)", (int)c, (c > ' ') ? c : ' ');
+#endif
         checksum ^= c;
         if (c == DATALINK_START_FLAG ||
             c == DATALINK_END_FLAG ||
