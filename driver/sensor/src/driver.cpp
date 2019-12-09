@@ -93,6 +93,14 @@ void PerimeterWireDriver::reset() {
   app_->reset();
 }
 
+bool PerimeterWireDriver::getControl(bool& enabled)
+{
+  uint8_t control;
+  bool res = app_->getReg(REGISTER_CONTROL, control);
+  enabled = control & 0x01 != 0;
+  return res;
+}
+
 bool PerimeterWireDriver::setControl(bool enabled)
 {
   uint8_t control = enabled ? 0x01 : 0x00;

@@ -102,6 +102,15 @@ int main(int argc, char **argv)
   usleep(10000);
   driver.setControl(true);
   usleep(10000);
+  bool control;
+  if (!driver.getControl(control))
+  {
+    ROS_ERROR("Failed to read control.");
+  }
+  else if (!control)
+  {
+    ROS_ERROR("Failed to enable device.");
+  }
 
   printf("A\tB\tC\tD\n");
   float a, b, c, d;

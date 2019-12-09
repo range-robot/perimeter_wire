@@ -29,6 +29,7 @@ public:
     bool getFWVersion(uint16_t& version);
     void reset(void);
 
+    bool getControl(bool& enabled);
     bool setControl(bool enable);
     bool setFlags(uint8_t flags);
 
