@@ -99,11 +99,11 @@ X ~ 2 0 -150 110 U 50 50 1 1 P
 ENDDRAW
 ENDDEF
 #
-# Device_Crystal_GND23
+# Device_Crystal_GND24
 #
-DEF Device_Crystal_GND23 Y 0 40 Y N 1 F N
+DEF Device_Crystal_GND24 Y 0 40 Y N 1 F N
 F0 "Y" 125 200 50 H V L CNN
-F1 "Device_Crystal_GND23" 125 125 50 H V L CNN
+F1 "Device_Crystal_GND24" 125 125 50 H V L CNN
 F2 "" 0 0 50 H I C CNN
 F3 "" 0 0 50 H I C CNN
 $FPLIST
@@ -121,8 +121,8 @@ P 4 0 1 0 -100 -90 -100 -140 100 -140 100 -90 N
 P 4 0 1 0 -100 90 -100 140 100 140 100 90 N
 X 1 1 -150 0 50 R 50 50 1 1 P
 X 2 2 0 200 50 D 50 50 1 1 P
-X 3 3 0 -200 50 U 50 50 1 1 P
-X 4 4 150 0 50 L 50 50 1 1 P
+X 3 3 150 0 50 L 50 50 1 1 P
+X 4 4 0 -200 50 U 50 50 1 1 P
 ENDDRAW
 ENDDEF
 #
@@ -270,37 +270,6 @@ $FPLIST
 $ENDFPLIST
 DRAW
 C 0 0 50 0 1 20 f
-ENDDRAW
-ENDDEF
-#
-# Mechanical_MountingHole
-#
-DEF Mechanical_MountingHole H 0 40 Y Y 1 F N
-F0 "H" 0 200 50 H V C CNN
-F1 "Mechanical_MountingHole" 0 125 50 H V C CNN
-F2 "" 0 0 50 H I C CNN
-F3 "" 0 0 50 H I C CNN
-$FPLIST
- MountingHole*
-$ENDFPLIST
-DRAW
-C 0 0 50 0 1 50 N
-ENDDRAW
-ENDDEF
-#
-# Mechanical_MountingHole_Pad
-#
-DEF Mechanical_MountingHole_Pad H 0 40 N N 1 F N
-F0 "H" 0 250 50 H V C CNN
-F1 "Mechanical_MountingHole_Pad" 0 175 50 H V C CNN
-F2 "" 0 0 50 H I C CNN
-F3 "" 0 0 50 H I C CNN
-$FPLIST
- MountingHole*Pad*
-$ENDFPLIST
-DRAW
-C 0 50 50 0 1 50 N
-X 1 1 0 -100 100 U 50 50 1 1 I
 ENDDRAW
 ENDDEF
 #

@@ -16,13 +16,13 @@ $EndDescr
 $Comp
 L Device:C C19
 U 1 1 5CDF70E9
-P 8500 1400
-F 0 "C19" H 8550 1500 50  0000 L CNN
-F 1 "4µ7" H 8550 1300 50  0000 L CNN
-F 2 "Capacitor_SMD:C_0805_2012Metric" H 8538 1250 50  0001 C CNN
-F 3 "~" H 8500 1400 50  0001 C CNN
-F 4 "CL21A475KOFNNNE" H 8500 1400 50  0001 C CNN "Partnumber"
-	1    8500 1400
+P 8700 1400
+F 0 "C19" H 8750 1500 50  0000 L CNN
+F 1 "4µ7" H 8750 1300 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0805_2012Metric" H 8738 1250 50  0001 C CNN
+F 3 "~" H 8700 1400 50  0001 C CNN
+F 4 "CL21A475KOFNNNE" H 8700 1400 50  0001 C CNN "Partnumber"
+	1    8700 1400
 	1    0    0    -1  
 $EndComp
 Text Label 8250 1250 0    50   ~ 0
@@ -92,60 +92,6 @@ Wire Wire Line
 Wire Wire Line
 	9400 1650 9700 1650
 $Comp
-L Device:R R4
-U 1 1 5CEA09D7
-P 1300 5750
-F 0 "R4" V 1200 5700 50  0000 L CNN
-F 1 "47k" V 1300 5650 50  0000 L CNN
-F 2 "Resistor_SMD:R_0805_2012Metric" V 1230 5750 50  0001 C CNN
-F 3 "~" H 1300 5750 50  0001 C CNN
-F 4 "RMCF0805FT47K0" H 1300 5750 50  0001 C CNN "Partnumber"
-	1    1300 5750
-	0    1    1    0   
-$EndComp
-Text Label 3150 6150 2    50   ~ 0
-V_GND
-$Comp
-L Device:R R5
-U 1 1 5CEA0A06
-P 2100 5550
-F 0 "R5" V 2000 5500 50  0000 C CNN
-F 1 "47k" V 2100 5550 50  0000 C CNN
-F 2 "Resistor_SMD:R_0805_2012Metric" V 2030 5550 50  0001 C CNN
-F 3 "~" H 2100 5550 50  0001 C CNN
-F 4 "RMCF0805FT47K0" H 2100 5550 50  0001 C CNN "Partnumber"
-	1    2100 5550
-	0    -1   -1   0   
-$EndComp
-$Comp
-L local:TLV9064IPWT U2
-U 3 1 5CEA0A1A
-P 1950 5850
-F 0 "U2" H 2000 5700 50  0000 C CNN
-F 1 "TLV9064" H 2100 6050 50  0000 C CNN
-F 2 "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm" H 1500 5850 50  0001 L BNN
-F 3 "" H 1950 5850 50  0001 L BNN
-F 4 "TLV9064IDR" H 1950 5850 50  0001 C CNN "Partnumber"
-	3    1950 5850
-	1    0    0    1   
-$EndComp
-$Comp
-L local:TLV9064IPWT U2
-U 4 1 5CEA0A21
-P 3600 5750
-F 0 "U2" H 3600 5950 50  0000 C CNN
-F 1 "TLV9064" H 3700 5550 50  0000 C CNN
-F 2 "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm" H 3150 5750 50  0001 L BNN
-F 3 "" H 3600 5750 50  0001 L BNN
-F 4 "TLV9064IDR" H 3600 5750 50  0001 C CNN "Partnumber"
-	4    3600 5750
-	1    0    0    -1  
-$EndComp
-Text Label 4350 5750 2    50   ~ 0
-SENSE_D
-Wire Wire Line
-	4350 5750 4000 5750
-$Comp
 L local:TLV9064IPWT U2
 U 5 1 5CEA766C
 P 10400 1350
@@ -177,13 +123,11 @@ Wire Wire Line
 	10100 1500 10100 1650
 Wire Wire Line
 	10100 1650 10400 1650
-Text Label 7600 3750 0    50   ~ 0
+Text Label 7600 3650 0    50   ~ 0
 SENSE_B
 Text Label 7600 3850 0    50   ~ 0
 SENSE_C
-Text Label 7600 3950 0    50   ~ 0
-SENSE_D
-Text Label 7600 3650 0    50   ~ 0
+Text Label 7600 3750 0    50   ~ 0
 SENSE_A
 Wire Wire Line
 	7600 3850 8050 3850
@@ -192,65 +136,65 @@ Wire Wire Line
 Wire Wire Line
 	8050 3650 7600 3650
 $Comp
-L Device:Crystal_GND23 Y1
+L Device:Crystal_GND24 Y1
 U 1 1 5CEF17FE
-P 6950 3300
-F 0 "Y1" V 6800 3400 50  0000 R CNN
-F 1 "32.768kHz" V 6700 3700 50  0000 R CNN
-F 2 "Crystal:Crystal_SMD_SeikoEpson_MC146-4Pin_6.7x1.5mm_HandSoldering" H 6950 3300 50  0001 C CNN
-F 3 "~" H 6950 3300 50  0001 C CNN
-F 4 "MC-146 32.7680KA-A5: PURE SN" H 6950 3300 50  0001 C CNN "Partnumber"
-	1    6950 3300
-	0    1    -1   0   
+P 6950 4500
+F 0 "Y1" V 6800 4600 50  0000 R CNN
+F 1 "16MHz" V 7100 4800 50  0000 R CNN
+F 2 "Crystal:Crystal_SMD_SeikoEpson_TSX3225-4Pin_3.2x2.5mm" H 6950 4500 50  0001 C CNN
+F 3 "~" H 6950 4500 50  0001 C CNN
+F 4 "TSX-3225 16.0000MF10U-B0" H 6950 4500 50  0001 C CNN "Partnumber"
+	1    6950 4500
+	0    1    1    0   
 $EndComp
 $Comp
 L Device:C C15
 U 1 1 5CEF2370
-P 6700 3050
-F 0 "C15" V 6448 3050 50  0000 C CNN
-F 1 "20p" V 6539 3050 50  0000 C CNN
-F 2 "Capacitor_SMD:C_0805_2012Metric" H 6738 2900 50  0001 C CNN
-F 3 "~" H 6700 3050 50  0001 C CNN
-F 4 "C0805C200K5GACTU" H 6700 3050 50  0001 C CNN "Partnumber"
-	1    6700 3050
-	0    1    1    0   
+P 6700 4800
+F 0 "C15" V 6448 4800 50  0000 C CNN
+F 1 "22p" V 6539 4800 50  0000 C CNN
+F 2 "Capacitor_SMD:C_0805_2012Metric" H 6738 4650 50  0001 C CNN
+F 3 "~" H 6700 4800 50  0001 C CNN
+F 4 "C0805C220K5GACTU" H 6700 4800 50  0001 C CNN "Partnumber"
+	1    6700 4800
+	0    -1   -1   0   
 $EndComp
 $Comp
 L Device:C C14
 U 1 1 5CEF38C8
-P 6700 3600
-F 0 "C14" V 6950 3600 50  0000 C CNN
-F 1 "20p" V 6850 3600 50  0000 C CNN
-F 2 "Capacitor_SMD:C_0805_2012Metric" H 6738 3450 50  0001 C CNN
-F 3 "~" H 6700 3600 50  0001 C CNN
-F 4 "C0805C200K5GACTU" H 6700 3600 50  0001 C CNN "Partnumber"
-	1    6700 3600
-	0    1    1    0   
+P 6700 4250
+F 0 "C14" V 6950 4250 50  0000 C CNN
+F 1 "22p" V 6850 4250 50  0000 C CNN
+F 2 "Capacitor_SMD:C_0805_2012Metric" H 6738 4100 50  0001 C CNN
+F 3 "~" H 6700 4250 50  0001 C CNN
+F 4 "C0805C220K5GACTU" H 6700 4250 50  0001 C CNN "Partnumber"
+	1    6700 4250
+	0    -1   -1   0   
 $EndComp
 Wire Wire Line
-	6550 3050 6550 3300
+	6550 4250 6550 4500
 Wire Wire Line
-	6850 3050 6950 3050
+	6850 4250 6950 4250
 Wire Wire Line
-	6950 3050 6950 3150
+	6950 4250 6950 4350
 Wire Wire Line
-	6950 3450 6950 3600
+	6950 4650 6950 4800
 Wire Wire Line
-	6950 3600 6850 3600
+	6950 4800 6850 4800
 Wire Wire Line
-	6950 3050 7350 3050
+	6950 4250 7350 4250
 Wire Wire Line
-	7350 3050 7350 3250
+	7350 4250 7350 4450
 Wire Wire Line
-	7350 3250 8050 3250
-Connection ~ 6950 3050
+	7350 4450 8050 4450
+Connection ~ 6950 4250
 Wire Wire Line
-	6950 3600 7400 3600
+	6950 4800 7400 4800
 Wire Wire Line
-	7400 3600 7400 3350
+	7400 4800 7400 4550
 Wire Wire Line
-	7400 3350 8050 3350
-Connection ~ 6950 3600
+	7400 4550 8050 4550
+Connection ~ 6950 4800
 Text Label 9950 4250 2    50   ~ 0
 SWCLK
 Text Label 9950 4550 2    50   ~ 0
@@ -286,8 +230,6 @@ Text Label 10000 3850 2    50   ~ 0
 USB_D-
 Text Label 10000 3950 2    50   ~ 0
 USB_D+
-Wire Wire Line
-	7600 3950 8050 3950
 $Comp
 L Regulator_Linear:MCP1700-3302E_SOT23 U4
 U 1 1 5CEC76E4
@@ -393,40 +335,6 @@ Text Label 8250 5750 2    50   ~ 0
 USB_D-
 Text Label 8250 5850 2    50   ~ 0
 USB_D+
-Text Label 1650 6150 2    50   ~ 0
-V_GND
-Wire Wire Line
-	1000 6050 1000 6150
-Wire Wire Line
-	2250 5550 2250 5650
-Wire Wire Line
-	1650 6150 1650 5950
-$Comp
-L Device:R R20
-U 1 1 5CE68DC9
-P 3600 5400
-F 0 "R20" V 3700 5400 50  0000 C CNN
-F 1 "787k" V 3600 5400 50  0000 C CNN
-F 2 "Resistor_SMD:R_0805_2012Metric" V 3530 5400 50  0001 C CNN
-F 3 "~" H 3600 5400 50  0001 C CNN
-F 4 "RMCF0805FT787K" H 3600 5400 50  0001 C CNN "Partnumber"
-	1    3600 5400
-	0    -1   -1   0   
-$EndComp
-$Comp
-L Device:R R16
-U 1 1 5CE90F33
-P 2700 5650
-F 0 "R16" V 2600 5600 50  0000 L CNN
-F 1 "787" V 2700 5550 50  0000 L CNN
-F 2 "Resistor_SMD:R_0805_2012Metric" V 2630 5650 50  0001 C CNN
-F 3 "~" H 2700 5650 50  0001 C CNN
-F 4 "RMCF0805FT787R" H 2700 5650 50  0001 C CNN "Partnumber"
-	1    2700 5650
-	0    1    1    0   
-$EndComp
-Wire Wire Line
-	2850 5650 2900 5650
 $Comp
 L Connector_Generic:Conn_02x05_Odd_Even J2
 U 1 1 5CEA5E6A
@@ -469,154 +377,8 @@ F 3 "" H 10300 2300 50  0001 C CNN
 $EndComp
 Text Notes 7650 850  0    50   ~ 0
 Virtual ground at 0.5V
-$Comp
-L Device:C C12
-U 1 1 5CE75028
-P 3050 5650
-F 0 "C12" V 3100 5750 50  0000 C CNN
-F 1 "10n" V 2950 5750 50  0000 C CNN
-F 2 "Capacitor_SMD:C_0805_2012Metric" H 3088 5500 50  0001 C CNN
-F 3 "~" H 3050 5650 50  0001 C CNN
-F 4 "CL21B103KBANNNC" H 3050 5650 50  0001 C CNN "Partnumber"
-	1    3050 5650
-	0    1    1    0   
-$EndComp
-Text Notes 2750 6900 0    50   ~ 0
-Sallen key bandpass,\nhpf eliminates offset and 50Hz\nlpf is anti aliasing filter\nconfigurable gain 1-20
-$Comp
-L Device:C C4
-U 1 1 5CEC435B
-P 1950 5350
-F 0 "C4" V 2050 5450 50  0000 L CNN
-F 1 "4p7" V 1900 5400 50  0000 L CNN
-F 2 "Capacitor_SMD:C_0805_2012Metric" H 1988 5200 50  0001 C CNN
-F 3 "~" H 1950 5350 50  0001 C CNN
-F 4 "C0805C479D5GACTU" H 1950 5350 50  0001 C CNN "Partnumber"
-	1    1950 5350
-	0    1    1    0   
-$EndComp
-Wire Wire Line
-	2100 5350 2250 5350
-Wire Wire Line
-	2250 5350 2250 5550
-Connection ~ 2250 5550
-Wire Wire Line
-	1450 5750 1550 5750
-Wire Wire Line
-	1000 6150 1650 6150
-Text Notes 1000 6850 0    50   ~ 0
+Text Notes 1000 5700 0    50   ~ 0
 LR Low-Pass\nC dampens resonants\ngain -21
-$Comp
-L Device:R R35
-U 1 1 5CF64310
-P 4000 5900
-F 0 "R35" H 4100 5950 50  0000 C CNN
-F 1 "10k" V 4000 5900 50  0000 C CNN
-F 2 "Resistor_SMD:R_0805_2012Metric" V 3930 5900 50  0001 C CNN
-F 3 "~" H 4000 5900 50  0001 C CNN
-F 4 "RMCF0805FT10K0" H 4000 5900 50  0001 C CNN "Partnumber"
-	1    4000 5900
-	1    0    0    -1  
-$EndComp
-Connection ~ 4000 5750
-Wire Wire Line
-	4000 5750 3900 5750
-$Comp
-L Device:R R36
-U 1 1 5CF64776
-P 4000 6500
-F 0 "R36" H 4070 6546 50  0000 L CNN
-F 1 "10k" V 4000 6400 50  0000 L CNN
-F 2 "Resistor_SMD:R_0805_2012Metric" V 3930 6500 50  0001 C CNN
-F 3 "~" H 4000 6500 50  0001 C CNN
-F 4 "RMCF0805FT10K0" H 4000 6500 50  0001 C CNN "Partnumber"
-	1    4000 6500
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:R_POT_TRIM R28
-U 1 1 5CF73A50
-P 4000 6200
-F 0 "R28" V 4050 6400 50  0000 C CNN
-F 1 "200k" V 4000 6200 50  0000 C CNN
-F 2 "Potentiometer_SMD:Potentiometer_Bourns_TC33X_Vertical" V 3930 6200 50  0001 C CNN
-F 3 "~" H 4000 6200 50  0001 C CNN
-F 4 "TC33X-2-204E" V 4000 6200 50  0001 C CNN "Partnumber"
-	1    4000 6200
-	0    1    1    0   
-$EndComp
-Text Label 3700 6650 0    50   ~ 0
-V_GND
-Wire Wire Line
-	4000 6650 3700 6650
-Wire Wire Line
-	3300 5850 3300 6350
-Wire Wire Line
-	3300 6350 4000 6350
-Connection ~ 4000 6350
-Wire Wire Line
-	2550 5650 2250 5650
-Connection ~ 2250 5650
-Wire Wire Line
-	2250 5650 2250 5850
-Wire Wire Line
-	3200 5650 3300 5650
-Wire Wire Line
-	3750 5400 4000 5400
-Wire Wire Line
-	4000 5400 4000 5750
-Wire Wire Line
-	3450 5400 2900 5400
-Wire Wire Line
-	2900 5400 2900 5650
-Connection ~ 2900 5650
-$Comp
-L Device:C C8
-U 1 1 5CFB3DCC
-P 2900 5900
-F 0 "C8" H 2950 5800 50  0000 C CNN
-F 1 "10n" H 3000 6000 50  0000 C CNN
-F 2 "Capacitor_SMD:C_0805_2012Metric" H 2938 5750 50  0001 C CNN
-F 3 "~" H 2900 5900 50  0001 C CNN
-F 4 "CL21B103KBANNNC" H 2900 5900 50  0001 C CNN "Partnumber"
-	1    2900 5900
-	-1   0    0    1   
-$EndComp
-Wire Wire Line
-	2900 5650 2900 5750
-Wire Wire Line
-	2900 6050 2900 6150
-$Comp
-L Device:R R24
-U 1 1 5CFC1323
-P 3200 5900
-F 0 "R24" H 3100 5850 50  0000 C CNN
-F 1 "15k8" V 3200 5900 50  0000 C CNN
-F 2 "Resistor_SMD:R_0805_2012Metric" V 3130 5900 50  0001 C CNN
-F 3 "~" H 3200 5900 50  0001 C CNN
-F 4 "RMCF0805FT15K8" H 3200 5900 50  0001 C CNN "Partnumber"
-	1    3200 5900
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	3200 6050 3200 6150
-Wire Wire Line
-	2900 6150 3200 6150
-Wire Wire Line
-	3200 5750 3200 5650
-Connection ~ 3200 5650
-$Comp
-L Device:L_Core_Ferrite L4
-U 1 1 5CEA09E9
-P 1000 5900
-F 0 "L4" H 956 5854 50  0000 R CNN
-F 1 "100mH" H 956 5945 50  0000 R CNN
-F 2 "Inductor_THT:L_Axial_L12.0mm_D5.0mm_P5.08mm_Vertical_Fastron_MISC" H 1000 5900 50  0001 C CNN
-F 3 "~" H 1000 5900 50  0001 C CNN
-F 4 "B82144A2107J000 " H 1000 5900 50  0001 C CNN "Partnumber"
-	1    1000 5900
-	-1   0    0    1   
-$EndComp
 $Comp
 L power:GND #PWR05
 U 1 1 5D01890E
@@ -684,21 +446,6 @@ F 3 "" H 7050 1150 50  0001 C CNN
 	1    7050 1150
 	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	4000 6050 4000 6100
-Wire Wire Line
-	4000 6100 4150 6100
-Wire Wire Line
-	4150 6100 4150 6200
-NoConn ~ 3850 6200
-Wire Wire Line
-	1550 5350 1550 5750
-Wire Wire Line
-	1550 5350 1800 5350
-Connection ~ 1550 5750
-Wire Wire Line
-	1550 5750 1650 5750
-Connection ~ 1800 5350
 $Comp
 L Device:R R3
 U 1 1 5D101CB8
@@ -998,8 +745,6 @@ F 4 "TLV9064IDR" H 3600 2700 50  0001 C CNN "Partnumber"
 	4    3600 2700
 	1    0    0    -1  
 $EndComp
-Text Label 4350 2700 2    50   ~ 0
-SENSE_B
 Wire Wire Line
 	4350 2700 4000 2700
 Text Label 1650 3100 2    50   ~ 0
@@ -1247,8 +992,6 @@ F 4 "TLV9064IDR" H 3600 1200 50  0001 C CNN "Partnumber"
 	2    3600 1200
 	1    0    0    -1  
 $EndComp
-Text Label 4350 1200 2    50   ~ 0
-SENSE_A
 Wire Wire Line
 	4350 1200 4000 1200
 Text Label 1650 1600 2    50   ~ 0
@@ -1503,78 +1246,6 @@ Wire Wire Line
 	9050 1650 9400 1650
 Connection ~ 9400 1650
 $Comp
-L Device:L_Core_Ferrite L5
-U 1 1 5D1DFBCB
-P 800 5900
-F 0 "L5" H 750 5950 50  0000 R CNN
-F 1 "100mH" H 800 5850 50  0000 R CNN
-F 2 "Inductor_THT:L_Axial_L12.0mm_D5.0mm_P5.08mm_Vertical_Fastron_MISC" H 800 5900 50  0001 C CNN
-F 3 "~" H 800 5900 50  0001 C CNN
-F 4 "B82144A2107J000 " H 800 5900 50  0001 C CNN "Partnumber"
-	1    800  5900
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	800  5750 800  5650
-Wire Wire Line
-	800  5650 1050 5650
-Wire Wire Line
-	1050 5650 1050 5750
-Wire Wire Line
-	1050 5750 1150 5750
-Wire Wire Line
-	800  6050 900  6050
-Wire Wire Line
-	900  6050 900  5750
-Wire Wire Line
-	900  5750 1000 5750
-Text Notes 550  6350 0    50   ~ 0
-L5 is optional differential choke\nreplace with bridge if unused
-$Comp
-L Mechanical:MountingHole_Pad H1
-U 1 1 5CF4CDBE
-P 5950 6550
-F 0 "H1" H 6050 6596 50  0000 L CNN
-F 1 "MountingHole" H 6050 6505 50  0000 L CNN
-F 2 "MountingHole:MountingHole_3.2mm_M3_Pad" H 5950 6550 50  0001 C CNN
-F 3 "~" H 5950 6550 50  0001 C CNN
-	1    5950 6550
-	1    0    0    -1  
-$EndComp
-$Comp
-L Mechanical:MountingHole H2
-U 1 1 5CF4D5A4
-P 5950 6850
-F 0 "H2" H 6050 6896 50  0000 L CNN
-F 1 "MountingHole" H 6050 6805 50  0000 L CNN
-F 2 "MountingHole:MountingHole_3.2mm_M3" H 5950 6850 50  0001 C CNN
-F 3 "~" H 5950 6850 50  0001 C CNN
-	1    5950 6850
-	1    0    0    -1  
-$EndComp
-$Comp
-L Mechanical:MountingHole H3
-U 1 1 5CF4D94C
-P 5950 7050
-F 0 "H3" H 6050 7096 50  0000 L CNN
-F 1 "MountingHole" H 6050 7005 50  0000 L CNN
-F 2 "MountingHole:MountingHole_3.2mm_M3" H 5950 7050 50  0001 C CNN
-F 3 "~" H 5950 7050 50  0001 C CNN
-	1    5950 7050
-	1    0    0    -1  
-$EndComp
-$Comp
-L Mechanical:MountingHole H4
-U 1 1 5CF4DCE9
-P 5950 7250
-F 0 "H4" H 6050 7296 50  0000 L CNN
-F 1 "MountingHole" H 6050 7205 50  0000 L CNN
-F 2 "MountingHole:MountingHole_3.2mm_M3" H 5950 7250 50  0001 C CNN
-F 3 "~" H 5950 7250 50  0001 C CNN
-	1    5950 7250
-	1    0    0    -1  
-$EndComp
-$Comp
 L power:+3.3V #PWR0101
 U 1 1 5CF5DD1E
 P 10300 4250
@@ -1734,9 +1405,9 @@ U 1 1 5D179262
 P 8400 5800
 F 0 "D1" V 8354 5879 50  0000 L CNN
 F 1 "5V" V 8445 5879 50  0000 L CNN
-F 2 "Diode_SMD:D_SOD-323" H 8400 5800 50  0001 C CNN
+F 2 "Diode_SMD:D_SMB" H 8400 5800 50  0001 C CNN
 F 3 "~" H 8400 5800 50  0001 C CNN
-F 4 "ESDA8V2-1J" V 8400 5800 50  0001 C CNN "Partnumber"
+F 4 "SMBJ5.0A-TR" V 8400 5800 50  0001 C CNN "Partnumber"
 	1    8400 5800
 	0    1    1    0   
 $EndComp
@@ -1836,17 +1507,17 @@ N/C pins used for better routing\n(see datasheet)
 $Comp
 L power:GND #PWR0102
 U 1 1 5D269FFB
-P 6550 3300
-F 0 "#PWR0102" H 6550 3050 50  0001 C CNN
-F 1 "GND" H 6555 3127 50  0000 C CNN
-F 2 "" H 6550 3300 50  0001 C CNN
-F 3 "" H 6550 3300 50  0001 C CNN
-	1    6550 3300
+P 6550 4500
+F 0 "#PWR0102" H 6550 4250 50  0001 C CNN
+F 1 "GND" H 6555 4327 50  0000 C CNN
+F 2 "" H 6550 4500 50  0001 C CNN
+F 3 "" H 6550 4500 50  0001 C CNN
+	1    6550 4500
 	0    1    1    0   
 $EndComp
-Connection ~ 6550 3300
+Connection ~ 6550 4500
 Wire Wire Line
-	6550 3300 6550 3600
+	6550 4500 6550 4800
 $Comp
 L Device:C C25
 U 1 1 5D2B2919
@@ -1875,12 +1546,12 @@ Wire Wire Line
 	7900 1250 8200 1250
 Connection ~ 8200 1250
 Wire Wire Line
-	8200 1250 8500 1250
+	8200 1250 8450 1250
 Wire Wire Line
 	7900 1550 8200 1550
 Connection ~ 8200 1550
 Wire Wire Line
-	8200 1550 8500 1550
+	8200 1550 8450 1550
 $Comp
 L power:+3.3VA #PWR019
 U 1 1 5D2F7156
@@ -1909,24 +1580,24 @@ Wire Wire Line
 	4850 1450 5300 1450
 Connection ~ 5300 1450
 Wire Wire Line
-	6800 3300 6750 3300
-Connection ~ 6750 3300
+	6800 4500 6750 4500
+Connection ~ 6750 4500
 Wire Wire Line
-	6750 3300 6550 3300
+	6750 4500 6550 4500
 Wire Wire Line
-	7150 3300 7150 2700
+	7150 4500 7150 3900
 Wire Wire Line
-	7150 2700 6550 2700
+	7150 3900 6550 3900
 Wire Wire Line
-	6550 2700 6550 3050
-Connection ~ 6550 3050
+	6550 3900 6550 4250
+Connection ~ 6550 4250
 $Comp
 L Mechanical:Fiducial FID1
 U 1 1 5D7BC1CE
 P 5950 7450
 F 0 "FID1" H 6035 7496 50  0000 L CNN
 F 1 "Fiducial" H 6035 7405 50  0000 L CNN
-F 2 "Fiducial:Fiducial_1.5mm_Mask3mm" H 5950 7450 50  0001 C CNN
+F 2 "Fiducial:Fiducial_0.5mm_Mask1mm" H 5950 7450 50  0001 C CNN
 F 3 "~" H 5950 7450 50  0001 C CNN
 	1    5950 7450
 	1    0    0    -1  
@@ -1937,20 +1608,9 @@ U 1 1 5D7BD808
 P 5950 7650
 F 0 "FID2" H 6035 7696 50  0000 L CNN
 F 1 "Fiducial" H 6035 7605 50  0000 L CNN
-F 2 "Fiducial:Fiducial_1.5mm_Mask3mm" H 5950 7650 50  0001 C CNN
+F 2 "Fiducial:Fiducial_0.5mm_Mask1mm" H 5950 7650 50  0001 C CNN
 F 3 "~" H 5950 7650 50  0001 C CNN
 	1    5950 7650
-	1    0    0    -1  
-$EndComp
-$Comp
-L power:GND #PWR0103
-U 1 1 5D6D4C0D
-P 5950 6650
-F 0 "#PWR0103" H 5950 6400 50  0001 C CNN
-F 1 "GND" H 6100 6600 50  0000 C CNN
-F 2 "" H 5950 6650 50  0001 C CNN
-F 3 "" H 5950 6650 50  0001 C CNN
-	1    5950 6650
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -2365,9 +2025,6 @@ NoConn ~ 9650 3650
 NoConn ~ 9650 3750
 NoConn ~ 9650 4050
 NoConn ~ 9650 4150
-NoConn ~ 8050 4350
-NoConn ~ 8050 4450
-NoConn ~ 8050 4550
 Wire Wire Line
 	1800 1000 1950 1000
 Wire Wire Line
@@ -2380,8 +2037,32 @@ Wire Wire Line
 	1800 4050 1950 4050
 Wire Wire Line
 	1800 3850 1800 4050
+Text Notes 2750 5750 0    50   ~ 0
+Sallen key bandpass,\nhpf eliminates offset and 50Hz\nlpf is anti aliasing filter\nconfigurable gain 1-20
+NoConn ~ 8050 3250
+NoConn ~ 8050 3350
+NoConn ~ 8050 4350
+Text Label 4350 2700 2    50   ~ 0
+SENSE_B
+Text Label 4350 1200 2    50   ~ 0
+SENSE_A
+$Comp
+L Device:C C34
+U 1 1 5E0B1AFE
+P 8450 1400
+F 0 "C34" H 8500 1500 50  0000 L CNN
+F 1 "100n" H 8500 1300 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0805_2012Metric" H 8488 1250 50  0001 C CNN
+F 3 "~" H 8450 1400 50  0001 C CNN
+F 4 "CL21B104MBCNNNC" H 8450 1400 50  0001 C CNN "Partnumber"
+	1    8450 1400
+	1    0    0    -1  
+$EndComp
+Connection ~ 8450 1250
 Wire Wire Line
-	1800 5550 1950 5550
+	8450 1250 8700 1250
+Connection ~ 8450 1550
 Wire Wire Line
-	1800 5350 1800 5550
+	8450 1550 8700 1550
+NoConn ~ 8050 3950
 $EndSCHEMATC
