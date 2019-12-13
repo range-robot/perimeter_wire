@@ -1,4 +1,4 @@
-update=Mi 11 Dez 2019 17:57:50 CET
+update=Fr 13 Dez 2019 21:19:35 CET
 version=1
 last_client=kicad
 [general]
@@ -15,7 +15,7 @@ LibDir=
 [schematic_editor]
 version=1
 PageLayoutDescrFile=
-PlotDirectoryName=
+PlotDirectoryName=out
 SubpartIdSeparator=0
 SubpartFirstId=65
 NetFmtName=
@@ -67,9 +67,9 @@ CopperTextUpright=1
 EdgeCutLineWidth=0.05
 CourtyardLineWidth=0.05
 OthersLineWidth=0.15
-OthersTextSizeV=1
-OthersTextSizeH=1
-OthersTextSizeThickness=0.15
+OthersTextSizeV=0.6
+OthersTextSizeH=0.6
+OthersTextSizeThickness=0.09
 OthersTextItalic=0
 OthersTextUpright=1
 SolderMaskClearance=0.15

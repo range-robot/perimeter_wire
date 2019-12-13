@@ -5,7 +5,7 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 1
 Title "Perimter Wire Sensor"
-Date "2019-11-20"
+Date "2019-12-13"
 Rev "2"
 Comp "Meadow Robotics GmbH"
 Comment1 ""
