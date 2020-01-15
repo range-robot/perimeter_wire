@@ -79,9 +79,12 @@ static inline int32_t _pm_get_ahb_index(const void *const module)
 		return 4;
 	} else if ((uint32_t)module == (uint32_t)DMAC) {
 		return 5;
-	} else if ((uint32_t)module == (uint32_t)USB) {
+	}
+#ifdef USB
+	else if ((uint32_t)module == (uint32_t)USB) {
 		return 6;
 	}
+#endif
 
 	return ERR_INVALID_ARG;
 }
@@ -106,9 +109,12 @@ static inline int32_t _pm_get_apbb_index(const void *const module)
 		return 3;
 	} else if ((uint32_t)module == (uint32_t)DMAC) {
 		return 4;
-	} else if ((uint32_t)module == (uint32_t)USB) {
+	}
+#ifdef USB
+	else if ((uint32_t)module == (uint32_t)USB) {
 		return 5;
 	}
+#endif
 
 	return ERR_INVALID_ARG;
 }

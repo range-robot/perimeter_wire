@@ -28,24 +28,39 @@ static void ADC_0_init(void)
 	adc_dma_init(&ADC_0, ADC);
 
 	// Disable digital pin circuitry
-	gpio_set_pin_direction(SENSE_C, GPIO_DIRECTION_OFF);
+	gpio_set_pin_direction(V_GND, GPIO_DIRECTION_OFF);
 
-	gpio_set_pin_function(SENSE_C, PINMUX_PA02B_ADC_AIN0);
+	gpio_set_pin_function(V_GND, PINMUX_PA02B_ADC_AIN0);
 
 	// Disable digital pin circuitry
-	gpio_set_pin_direction(SENSE_B, GPIO_DIRECTION_OFF);
+	gpio_set_pin_direction(SENSA_B, GPIO_DIRECTION_OFF);
 
-	gpio_set_pin_function(SENSE_B, PINMUX_PA05B_ADC_AIN3);
+	gpio_set_pin_function(SENSA_B, PINMUX_PA04B_ADC_AIN4);
 
 	// Disable digital pin circuitry
 	gpio_set_pin_direction(SENSE_A, GPIO_DIRECTION_OFF);
 
-	gpio_set_pin_function(SENSE_A, PINMUX_PA14B_ADC_AIN6);
+	gpio_set_pin_function(SENSE_A, PINMUX_PA05B_ADC_AIN5);
 
 	// Disable digital pin circuitry
-	gpio_set_pin_direction(SENSE_D, GPIO_DIRECTION_OFF);
+	gpio_set_pin_direction(SENSE_C, GPIO_DIRECTION_OFF);
 
-	gpio_set_pin_function(SENSE_D, PINMUX_PA15B_ADC_AIN7);
+	gpio_set_pin_function(SENSE_C, PINMUX_PA06B_ADC_AIN6);
+
+	// Disable digital pin circuitry
+	gpio_set_pin_direction(MAG_A, GPIO_DIRECTION_OFF);
+
+	gpio_set_pin_function(MAG_A, PINMUX_PA08B_ADC_AIN16);
+
+	// Disable digital pin circuitry
+	gpio_set_pin_direction(MAG_B, GPIO_DIRECTION_OFF);
+
+	gpio_set_pin_function(MAG_B, PINMUX_PA09B_ADC_AIN17);
+
+	// Disable digital pin circuitry
+	gpio_set_pin_direction(MAG_C, GPIO_DIRECTION_OFF);
+
+	gpio_set_pin_function(MAG_C, PINMUX_PA10B_ADC_AIN18);
 }
 
 void USB_DEVICE_INSTANCE_PORT_init(void)

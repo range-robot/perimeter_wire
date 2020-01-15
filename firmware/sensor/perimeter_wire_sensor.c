@@ -42,10 +42,10 @@ struct
 static inline void pwsens_adc_set_channel(uint8_t channel)
 {
 	adc_pos_input_t channel_mux_map[PWSENS_CHANNEL_COUNT] = {
-		0x06, // AIN6
-		0x03, // AIN3
-		0x00, // AIN0
-		0x07, // AIN7
+		0x02, // AIN2 ref
+		0x05, // AIN4 A (X)
+		0x04, // AIN3 B (Y)
+		0x06, // AIN6 C (Z)
 	};
 	adc_dma_set_inputs(&PWSENS_ADC, channel_mux_map[channel], CONF_ADC_0_MUXNEG, 0);
 }

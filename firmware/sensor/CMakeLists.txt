@@ -11,9 +11,9 @@ set(ARM_UPLOADTOOL_PORT usb)
 ##########################################################################
 # ARM and fuses needs to be set
 ##########################################################################
-set(ARM_MCU ATSAMD11D14A)
+set(ARM_MCU ATSAMD21E17D)
 set(ARM_CPU cortex-m0plus)
-set(ARM_LINKER_OPTIONS "--specs=nano.specs -Wl,--start-group -lm  -Wl,--end-group -L${CMAKE_SOURCE_DIR}/Device_Startup -Tsamd11c14a_flash.ld")
+set(ARM_LINKER_OPTIONS "--specs=nano.specs -Wl,--start-group -lm  -Wl,--end-group -L${CMAKE_SOURCE_DIR}/Device_Startup -Tsamd21e17d_flash.ld")
 
 ### END TOOLCHAIN SETUP AREA #############################################
 
@@ -59,7 +59,7 @@ endif(CMAKE_BUILD_TYPE MATCHES Debug)
 ##########################################################################
 # compiler options for all build types
 ##########################################################################
-add_definitions("-D__SAMD11D14AS__")
+add_definitions("-D__SAMD21E17D__")
 add_definitions("-x c")
 
 add_definitions("-Wall")
@@ -91,7 +91,7 @@ add_definitions("-std=gnu99")
 
 include_directories(
   # DFP
-  samd11/include
+  samd21/samd21d/include
   cmsis/CMSIS/Core/Include
 
   # Project
@@ -115,8 +115,8 @@ add_arm_executable(firmware
 ./atmel_start.c
 ./com/app_layer.c
 ./com/usb_serial.c
-./Device_Startup/startup_samd11.c
-./Device_Startup/system_samd11.c
+./Device_Startup/startup_samd21.c
+./Device_Startup/system_samd21.c
 ./driver_init.c
 ./error.c
 ./examples/driver_examples.c

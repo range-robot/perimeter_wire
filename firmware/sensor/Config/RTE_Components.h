@@ -40,7 +40,7 @@
  * \acme_license_stop
  *
  * Project: sensor
- * Target:  ATSAMD11C14A 
+ * Target:  ATSAMD21E17D 
  *
  **/
 

@@ -84,7 +84,7 @@
 // <i> Default: No Prescaling
 // <id> osc8m_presc
 #ifndef CONF_OSC8M_PRESC
-#define CONF_OSC8M_PRESC SYSCTRL_OSC8M_PRESC_0_Val
+#define CONF_OSC8M_PRESC SYSCTRL_OSC8M_PRESC_3_Val
 #endif
 
 // <q> Overwrite Default Osc Calibration
@@ -142,7 +142,7 @@
 // <i> Enable 32 Khz Output
 // <id> osc32k_arch_en32k
 #ifndef CONF_OSC32K_EN32K
-#define CONF_OSC32K_EN32K 1
+#define CONF_OSC32K_EN32K 0
 #endif
 
 // <q> Enable 1K
@@ -172,7 +172,7 @@
 // <i> Default: 10 Clock Cycles (305us)
 // <id> osc32k_arch_startup
 #ifndef CONF_OSC32K_STARTUP
-#define CONF_OSC32K_STARTUP CONF_OSC_STARTUP_TIME_3967MCS
+#define CONF_OSC32K_STARTUP CONF_OSC_STARTUP_TIME_92MCS
 #endif
 
 // <q> Overwrite Default Osc Calibration
@@ -197,7 +197,7 @@
 // <i> Indicates whether configuration for External 32K Osc is enabled or not
 // <id> enable_xosc32k
 #ifndef CONF_XOSC32K_CONFIG
-#define CONF_XOSC32K_CONFIG 1
+#define CONF_XOSC32K_CONFIG 0
 #endif
 
 // <h> 32kHz External Crystal Oscillator (XOSC32K) Control
@@ -205,7 +205,7 @@
 // <i> Indicates whether External 32K Oscillator is enabled or not
 // <id> xosc32k_arch_enable
 #ifndef CONF_XOSC32K_ENABLE
-#define CONF_XOSC32K_ENABLE 1
+#define CONF_XOSC32K_ENABLE 0
 #endif
 
 // <q> On Demand
@@ -237,14 +237,14 @@
 // <i> Enable 32 Khz Output
 // <id> xosc32k_arch_en32k
 #ifndef CONF_XOSC32K_EN32K
-#define CONF_XOSC32K_EN32K 1
+#define CONF_XOSC32K_EN32K 0
 #endif
 
 // <q> Enable XTAL
 // <i> Enable XTAL
 // <id> xosc32k_arch_xtalen
 #ifndef CONF_XOSC32K_XTALEN
-#define CONF_XOSC32K_XTALEN 1
+#define CONF_XOSC32K_XTALEN 0
 #endif
 
 // <q> Write Lock
@@ -274,7 +274,7 @@
 // <i> Default: 122 us
 // <id> xosc32k_arch_startup
 #ifndef CONF_XOSC32K_STARTUP
-#define CONF_XOSC32K_STARTUP CONF_XOSC32K_STARTUP_TIME_65592MCS
+#define CONF_XOSC32K_STARTUP CONF_XOSC32K_STARTUP_TIME_122MCS
 #endif
 
 // </h>
@@ -284,14 +284,14 @@
 // <i> Indicates whether configuration for External Multipurpose Osc is enabled or not
 // <id> enable_xosc
 #ifndef CONF_XOSC_CONFIG
-#define CONF_XOSC_CONFIG 0
+#define CONF_XOSC_CONFIG 1
 #endif
 
 // <o> Frequency <400000-32000000>
 // <i> Oscillation frequency of the resonator connected to the External Multipurpose Crystal Oscillator.
 // <id> xosc_frequency
 #ifndef CONF_XOSC_FREQUENCY
-#define CONF_XOSC_FREQUENCY 400000
+#define CONF_XOSC_FREQUENCY 16000000
 #endif
 
 // <h> External Multipurpose Crystal Oscillator (XOSC) Control
@@ -299,7 +299,7 @@
 // <i> Indicates whether External Multipurpose Oscillator is enabled or not
 // <id> xosc_arch_enable
 #ifndef CONF_XOSC_ENABLE
-#define CONF_XOSC_ENABLE 0
+#define CONF_XOSC_ENABLE 1
 #endif
 
 // <q> On Demand
@@ -324,7 +324,7 @@
 // <i> Enable XTAL
 // <id> xosc_arch_xtalen
 #ifndef CONF_XOSC_XTALEN
-#define CONF_XOSC_XTALEN 0
+#define CONF_XOSC_XTALEN 1
 #endif
 
 // <q> Automatic Amplitude Control Enable
@@ -343,7 +343,7 @@
 // <i> Select the Gain of the oscillator
 // <id> xosc_arch_gain
 #ifndef CONF_XOSC_GAIN
-#define CONF_XOSC_GAIN SYSCTRL_XOSC_GAIN_0_Val
+#define CONF_XOSC_GAIN SYSCTRL_XOSC_GAIN_3_Val
 #endif
 
 // <y> Start up time for the External Oscillator
@@ -367,7 +367,7 @@
 // <i> Default: 31 us
 // <id> xosc_arch_startup
 #ifndef CONF_XOSC_STARTUP
-#define CONF_XOSC_STARTUP CONF_XOSC_STARTUP_TIME_31MCS
+#define CONF_XOSC_STARTUP CONF_XOSC_STARTUP_TIME_122MCS
 #endif
 
 // </h>
@@ -410,7 +410,7 @@
 // <i> Indicates whether configuration for DFLL is enabled or not
 // <id> enable_dfll48m
 #ifndef CONF_DFLL_CONFIG
-#define CONF_DFLL_CONFIG 1
+#define CONF_DFLL_CONFIG 0
 #endif
 
 // <y> Reference Clock Source
@@ -425,7 +425,7 @@
 // <i> Select the clock source.
 // <id> dfll48m_ref_clock
 #ifndef CONF_DFLL_GCLK
-#define CONF_DFLL_GCLK GCLK_CLKCTRL_GEN_GCLK1_Val
+#define CONF_DFLL_GCLK GCLK_CLKCTRL_GEN_GCLK3_Val
 #endif
 
 // <h> DFLL Control
@@ -433,7 +433,7 @@
 // <i> Indicates whether DFLL is enabled or not
 // <id> dfll48m_arch_enable
 #ifndef CONF_DFLL_ENABLE
-#define CONF_DFLL_ENABLE 1
+#define CONF_DFLL_ENABLE 0
 #endif
 
 // <q> Wait Lock
@@ -470,7 +470,7 @@
 // <i> If this bit is 1: the DFLL will only be running when requested by a peripheral.
 // <id> dfll48m_arch_ondemand
 #ifndef CONF_DFLL_ONDEMAND
-#define CONF_DFLL_ONDEMAND 1
+#define CONF_DFLL_ONDEMAND 0
 #endif
 
 // <q> Run In Standby
@@ -540,7 +540,7 @@
 //  <i> Default: 0
 //  <id> dfll48m_mul
 #ifndef CONF_DFLL_MUL
-#define CONF_DFLL_MUL 1465
+#define CONF_DFLL_MUL 0
 #endif
 
 // <e> DFLL Calibration Overwrite
@@ -583,7 +583,7 @@
 // <i> Indicates whether configuration for DPLL is enabled or not
 // <id> enable_fdpll96m
 #ifndef CONF_DPLL_CONFIG
-#define CONF_DPLL_CONFIG 0
+#define CONF_DPLL_CONFIG 1
 #endif
 
 // <y> Reference Clock Source
@@ -600,7 +600,7 @@
 // <i> Select the clock source.
 // <id> fdpll96m_ref_clock
 #ifndef CONF_DPLL_GCLK
-#define CONF_DPLL_GCLK GCLK_CLKCTRL_GEN_GCLK3_Val
+#define CONF_DPLL_GCLK GCLK_CLKCTRL_GEN_GCLK1_Val
 #endif
 
 #if (CONF_DPLL_GCLK == GCLK_GENCTRL_SRC_XOSC32K)
@@ -618,7 +618,7 @@
 // <i> If this bit is 1: the DFLL will only be running when requested by a peripheral.
 // <id> fdpll96m_arch_ondemand
 #ifndef CONF_DPLL_ONDEMAND
-#define CONF_DPLL_ONDEMAND 1
+#define CONF_DPLL_ONDEMAND 0
 #endif
 
 // <q> Run In Standby
@@ -634,7 +634,7 @@
 // <i> Indicates whether DPLL is enabled or not
 // <id> fdpll96m_arch_enable
 #ifndef CONF_DPLL_ENABLE
-#define CONF_DPLL_ENABLE 0
+#define CONF_DPLL_ENABLE 1
 #endif
 
 // <q> Lock ByPass
@@ -655,20 +655,20 @@
 // <i> Set the  fractional part of the frequency multiplier.
 // <id> fdpll96m_ldrfrac
 #ifndef CONF_DPLL_LDRFRAC
-#define CONF_DPLL_LDRFRAC 13
+#define CONF_DPLL_LDRFRAC 0
 #endif
 
 // <o>DPLL LDR <0-4095>
 // <i> Set the  integer part of the frequency multiplier.
 // <id> fdpll96m_ldr
 #ifndef CONF_DPLL_LDR
-#define CONF_DPLL_LDR 1463
+#define CONF_DPLL_LDR 23
 #endif
 
 // </h>
 // </e>
 
-#define CONF_DPLL_LTIME SYSCTRL_DPLLCTRLB_LTIME_NONE_Val
+#define CONF_DPLL_LTIME SYSCTRL_DPLLCTRLB_LTIME_DEFAULT_Val
 #define CONF_DPLL_WUF 0
 #define CONF_DPLL_LPEN 0
 #define CONF_DPLL_FILTER SYSCTRL_DPLLCTRLB_FILTER_DEFAULT_Val

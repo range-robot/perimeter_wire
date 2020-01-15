@@ -2,15 +2,20 @@ format_version: '2'
 name: My Project
 versions:
   api: '1.0'
-  backend: 1.6.148
-  commit: 605f106ab95776472e3febf2fac2471441fb1816
-  content: 1.0.1686
-  content_pack_name: acme-packs-all
+  backend: 1.7.279
+  commit: 1e07622763d149970fd8808a8f12ff3b1e84e0d7
+  content: unknown
+  content_pack_name: unknown
   format: '2'
-  frontend: 1.6.1894
+  frontend: 1.7.279
+  packs_version_avr8: 1.0.1401
+  packs_version_qtouch: unknown
+  packs_version_sam: 1.0.1373
+  version_backend: 1.7.279
+  version_frontend: ''
 board:
   identifier: CustomBoard
-  device: SAMD11C14A-SSU
+  device: SAMD21E17D-AF
 details: null
 application: null
 middlewares:
@@ -85,7 +90,7 @@ middlewares:
 drivers:
   ADC_0:
     user_label: ADC_0
-    definition: Atmel:SAMD11_Drivers:0.0.1::SAMD11C14A-SSU::ADC::driver_config_definition::ADC::HAL:Driver:ADC.DMA
+    definition: Atmel:SAMD21D_Drivers:0.0.1::SAMD21E17D-AF::ADC::driver_config_definition::ADC::HAL:Driver:ADC.DMA
     functionality: ADC
     api: HAL:Driver:ADC_DMA
     configuration:
@@ -123,30 +128,51 @@ drivers:
       pad: PA02
       mode: Enabled
       configuration: null
-      definition: Atmel:SAMD11_Drivers:0.0.1::SAMD11C14A-SSU::optional_signal_definition::ADC.AIN.0
+      definition: Atmel:SAMD21D_Drivers:0.0.1::SAMD21E17D-AF::optional_signal_definition::ADC.AIN.0
       name: ADC/AIN/0
       label: AIN/0
-    - identifier: ADC_0:AIN/3
+    - identifier: ADC_0:AIN/4
+      pad: PA04
+      mode: Enabled
+      configuration: null
+      definition: Atmel:SAMD21D_Drivers:0.0.1::SAMD21E17D-AF::optional_signal_definition::ADC.AIN.4
+      name: ADC/AIN/4
+      label: AIN/4
+    - identifier: ADC_0:AIN/5
       pad: PA05
       mode: Enabled
       configuration: null
-      definition: Atmel:SAMD11_Drivers:0.0.1::SAMD11C14A-SSU::optional_signal_definition::ADC.AIN.3
-      name: ADC/AIN/3
-      label: AIN/3
+      definition: Atmel:SAMD21D_Drivers:0.0.1::SAMD21E17D-AF::optional_signal_definition::ADC.AIN.5
+      name: ADC/AIN/5
+      label: AIN/5
     - identifier: ADC_0:AIN/6
-      pad: PA14
+      pad: PA06
       mode: Enabled
       configuration: null
-      definition: Atmel:SAMD11_Drivers:0.0.1::SAMD11C14A-SSU::optional_signal_definition::ADC.AIN.6
+      definition: Atmel:SAMD21D_Drivers:0.0.1::SAMD21E17D-AF::optional_signal_definition::ADC.AIN.6
       name: ADC/AIN/6
       label: AIN/6
-    - identifier: ADC_0:AIN/7
-      pad: PA15
+    - identifier: ADC_0:AIN/16
+      pad: PA08
       mode: Enabled
       configuration: null
-      definition: Atmel:SAMD11_Drivers:0.0.1::SAMD11C14A-SSU::optional_signal_definition::ADC.AIN.7
-      name: ADC/AIN/7
-      label: AIN/7
+      definition: Atmel:SAMD21D_Drivers:0.0.1::SAMD21E17D-AF::optional_signal_definition::ADC.AIN.16
+      name: ADC/AIN/16
+      label: AIN/16
+    - identifier: ADC_0:AIN/17
+      pad: PA09
+      mode: Enabled
+      configuration: null
+      definition: Atmel:SAMD21D_Drivers:0.0.1::SAMD21E17D-AF::optional_signal_definition::ADC.AIN.17
+      name: ADC/AIN/17
+      label: AIN/17
+    - identifier: ADC_0:AIN/18
+      pad: PA10
+      mode: Enabled
+      configuration: null
+      definition: Atmel:SAMD21D_Drivers:0.0.1::SAMD21E17D-AF::optional_signal_definition::ADC.AIN.18
+      name: ADC/AIN/18
+      label: AIN/18
     variant: null
     clocks:
       domain_group:
@@ -159,16 +185,26 @@ drivers:
           adc_gclk_selection: Generic clock generator 0
   GCLK:
     user_label: GCLK
-    definition: Atmel:SAMD11_Drivers:0.0.1::SAMD11C14A-SSU::GCLK::driver_config_definition::GCLK::HAL:HPL:GCLK
+    definition: Atmel:SAMD21D_Drivers:0.0.1::SAMD21E17D-AF::GCLK::driver_config_definition::GCLK::HAL:HPL:GCLK
     functionality: System
     api: HAL:HPL:GCLK
     configuration:
       enable_gclk_gen_0: true
+      enable_gclk_gen_0__externalclock: 1000000
       enable_gclk_gen_1: true
+      enable_gclk_gen_1__externalclock: 1000000
       enable_gclk_gen_2: true
+      enable_gclk_gen_2__externalclock: 1000000
       enable_gclk_gen_3: false
+      enable_gclk_gen_3__externalclock: 1000000
       enable_gclk_gen_4: false
+      enable_gclk_gen_4__externalclock: 1000000
       enable_gclk_gen_5: false
+      enable_gclk_gen_5__externalclock: 1000000
+      enable_gclk_gen_6: false
+      enable_gclk_gen_6__externalclock: 1000000
+      enable_gclk_gen_7: false
+      enable_gclk_gen_7__externalclock: 1000000
       gclk_arch_gen_0_RUNSTDBY: false
       gclk_arch_gen_0_enable: true
       gclk_arch_gen_0_idc: false
@@ -199,15 +235,25 @@ drivers:
       gclk_arch_gen_5_idc: false
       gclk_arch_gen_5_oe: false
       gclk_arch_gen_5_oov: false
+      gclk_arch_gen_6_RUNSTDBY: false
+      gclk_arch_gen_6_enable: false
+      gclk_arch_gen_6_idc: false
+      gclk_arch_gen_6_oe: false
+      gclk_arch_gen_6_oov: false
+      gclk_arch_gen_7_RUNSTDBY: false
+      gclk_arch_gen_7_enable: false
+      gclk_arch_gen_7_idc: false
+      gclk_arch_gen_7_oe: false
+      gclk_arch_gen_7_oov: false
       gclk_gen_0_div: 2
       gclk_gen_0_div_sel: false
-      gclk_gen_0_oscillator: Digital Frequency Locked Loop (DFLL48M)
-      gclk_gen_1_div: 1
+      gclk_gen_0_oscillator: Fractional Digital Phase Locked Loop (FDPLL96M)
+      gclk_gen_1_div: 8
       gclk_gen_1_div_sel: false
-      gclk_gen_1_oscillator: 32kHz External Crystal Oscillator (XOSC32K)
+      gclk_gen_1_oscillator: External Crystal Oscillator 0.4-32MHz (XOSC)
       gclk_gen_2_div: 1
       gclk_gen_2_div_sel: false
-      gclk_gen_2_oscillator: Digital Frequency Locked Loop (DFLL48M)
+      gclk_gen_2_oscillator: Fractional Digital Phase Locked Loop (FDPLL96M)
       gclk_gen_3_div: 1
       gclk_gen_3_div_sel: false
       gclk_gen_3_oscillator: External Crystal Oscillator 0.4-32MHz (XOSC)
@@ -217,13 +263,19 @@ drivers:
       gclk_gen_5_div: 1
       gclk_gen_5_div_sel: false
       gclk_gen_5_oscillator: External Crystal Oscillator 0.4-32MHz (XOSC)
+      gclk_gen_6_div: 1
+      gclk_gen_6_div_sel: false
+      gclk_gen_6_oscillator: External Crystal Oscillator 0.4-32MHz (XOSC)
+      gclk_gen_7_div: 1
+      gclk_gen_7_div_sel: false
+      gclk_gen_7_oscillator: External Crystal Oscillator 0.4-32MHz (XOSC)
     optional_signals: []
     variant: null
     clocks:
       domain_group: null
   PM:
     user_label: PM
-    definition: Atmel:SAMD11_Drivers:0.0.1::SAMD11C14A-SSU::PM::driver_config_definition::PM::HAL:HPL:PM
+    definition: Atmel:SAMD21D_Drivers:0.0.1::SAMD21E17D-AF::PM::driver_config_definition::PM::HAL:HPL:PM
     functionality: System
     api: HAL:HPL:PM
     configuration:
@@ -246,7 +298,7 @@ drivers:
         configuration: {}
   DMAC:
     user_label: DMAC
-    definition: Atmel:SAMD11_Drivers:0.0.1::SAMD11C14A-SSU::DMAC::driver_config_definition::DMAC::HAL:HPL:DMAC
+    definition: Atmel:SAMD21D_Drivers:0.0.1::SAMD21E17D-AF::DMAC::driver_config_definition::DMAC::HAL:HPL:DMAC
     functionality: System
     api: HAL:HPL:DMAC
     configuration:
@@ -526,7 +578,7 @@ drivers:
       domain_group: null
   SYSCTRL:
     user_label: SYSCTRL
-    definition: Atmel:SAMD11_Drivers:0.0.1::SAMD11C14A-SSU::SYSCTRL::driver_config_definition::SYSCTRL::HAL:HPL:SYSCTRL
+    definition: Atmel:SAMD21D_Drivers:0.0.1::SAMD21E17D-AF::SYSCTRL::driver_config_definition::SYSCTRL::HAL:HPL:SYSCTRL
     functionality: System
     api: HAL:HPL:SYSCTRL
     configuration:
@@ -534,77 +586,77 @@ drivers:
       dfll48m_arch_calibration: false
       dfll48m_arch_ccdis: false
       dfll48m_arch_coarse: 31
-      dfll48m_arch_enable: true
+      dfll48m_arch_enable: false
       dfll48m_arch_fine: 512
       dfll48m_arch_llaw: false
-      dfll48m_arch_ondemand: true
+      dfll48m_arch_ondemand: false
       dfll48m_arch_qldis: false
       dfll48m_arch_runstdby: false
       dfll48m_arch_stable: false
       dfll48m_arch_usbcrm: false
       dfll48m_arch_waitlock: false
       dfll48m_mode: Closed Loop Mode
-      dfll48m_mul: 1465
-      dfll48m_ref_clock: Generic clock generator 1
+      dfll48m_mul: 0
+      dfll48m_ref_clock: Generic clock generator 3
       dfll_arch_cstep: 1
       dfll_arch_fstep: 1
-      enable_dfll48m: true
-      enable_fdpll96m: false
+      enable_dfll48m: false
+      enable_fdpll96m: true
       enable_osc32k: false
       enable_osc8m: false
       enable_osculp32k: true
-      enable_xosc: false
-      enable_xosc32k: true
-      fdpll96m_arch_enable: false
+      enable_xosc: true
+      enable_xosc32k: false
+      fdpll96m_arch_enable: true
       fdpll96m_arch_lbypass: false
-      fdpll96m_arch_ondemand: true
+      fdpll96m_arch_ondemand: false
       fdpll96m_arch_runstdby: false
       fdpll96m_clock_div: 0
-      fdpll96m_ldr: 1463
-      fdpll96m_ldrfrac: 13
-      fdpll96m_ref_clock: Generic clock generator 3
+      fdpll96m_ldr: 23
+      fdpll96m_ldrfrac: 0
+      fdpll96m_ref_clock: Generic clock generator 1
       osc32k_arch_calib: 0
       osc32k_arch_en1k: false
-      osc32k_arch_en32k: true
+      osc32k_arch_en32k: false
       osc32k_arch_enable: false
       osc32k_arch_ondemand: true
       osc32k_arch_overwrite_calibration: false
       osc32k_arch_runstdby: false
-      osc32k_arch_startup: 130 Clock Cycles (3967us)
+      osc32k_arch_startup: 3 Clock Cycles (92us)
       osc32k_arch_wrtlock: false
       osc8m_arch_calib: 0
       osc8m_arch_enable: false
       osc8m_arch_ondemand: true
       osc8m_arch_overwrite_calibration: false
       osc8m_arch_runstdby: false
-      osc8m_presc: '1'
+      osc8m_presc: '8'
       osculp32k_arch_calib: 0
       osculp32k_arch_overwrite_calibration: false
       osculp32k_arch_wrtlock: false
       xosc32k_arch_aampen: false
       xosc32k_arch_en1k: false
-      xosc32k_arch_en32k: true
-      xosc32k_arch_enable: true
+      xosc32k_arch_en32k: false
+      xosc32k_arch_enable: false
       xosc32k_arch_ondemand: true
       xosc32k_arch_runstdby: false
-      xosc32k_arch_startup: 62592 us
+      xosc32k_arch_startup: 122 us
       xosc32k_arch_wrtlock: false
-      xosc32k_arch_xtalen: true
+      xosc32k_arch_xtalen: false
       xosc_arch_ampgc: false
-      xosc_arch_enable: false
-      xosc_arch_gain: 2Mhz
+      xosc_arch_enable: true
+      xosc_arch_gain: 16Mhz
       xosc_arch_ondemand: true
       xosc_arch_runstdby: false
-      xosc_arch_startup: 31 us
-      xosc_arch_xtalen: false
-      xosc_frequency: 400000
+      xosc_arch_startup: 122 us
+      xosc_arch_xtalen: true
+      xosc_frequency: 16000000
     optional_signals: []
     variant: null
     clocks:
       domain_group: null
   USB_DEVICE_INSTANCE:
     user_label: USB_DEVICE_INSTANCE
-    definition: Atmel:SAMD11_Drivers:0.0.1::SAMD11C14A-SSU::USB::driver_config_definition::USB.Device::HAL:Driver:USB.Device
+    definition: Atmel:SAMD21D_Drivers:0.0.1::SAMD21E17D-AF::USB::driver_config_definition::USB.Device::HAL:Driver:USB.Device
     functionality: USB
     api: HAL:Driver:USB_Device
     configuration:
@@ -646,40 +698,58 @@ drivers:
         configuration:
           usb_gclk_selection: Generic clock generator 2
 pads:
-  SENSE_B:
-    name: PA05
-    definition: Atmel:SAMD11_Drivers:0.0.1::SAMD11C14A-SSU::pad::PA05
+  V_GND:
+    name: PA02
+    definition: Atmel:SAMD21D_Drivers:0.0.1::SAMD21E17D-AF::pad::PA02
     mode: Analog
-    user_label: SENSE_B
+    user_label: V_GND
+    configuration: null
+  SENSA_B:
+    name: PA04
+    definition: Atmel:SAMD21D_Drivers:0.0.1::SAMD21E17D-AF::pad::PA04
+    mode: Analog
+    user_label: SENSA_B
     configuration: null
   SENSE_A:
-    name: PA14
-    definition: Atmel:SAMD11_Drivers:0.0.1::SAMD11C14A-SSU::pad::PA14
+    name: PA05
+    definition: Atmel:SAMD21D_Drivers:0.0.1::SAMD21E17D-AF::pad::PA05
     mode: Analog
     user_label: SENSE_A
     configuration: null
-  SENSE_D:
-    name: PA15
-    definition: Atmel:SAMD11_Drivers:0.0.1::SAMD11C14A-SSU::pad::PA15
+  SENSE_C:
+    name: PA06
+    definition: Atmel:SAMD21D_Drivers:0.0.1::SAMD21E17D-AF::pad::PA06
     mode: Analog
-    user_label: SENSE_D
+    user_label: SENSE_C
+    configuration: null
+  MAG_A:
+    name: PA08
+    definition: Atmel:SAMD21D_Drivers:0.0.1::SAMD21E17D-AF::pad::PA08
+    mode: Analog
+    user_label: MAG_A
+    configuration: null
+  MAG_B:
+    name: PA09
+    definition: Atmel:SAMD21D_Drivers:0.0.1::SAMD21E17D-AF::pad::PA09
+    mode: Analog
+    user_label: MAG_B
+    configuration: null
+  MAG_C:
+    name: PA10
+    definition: Atmel:SAMD21D_Drivers:0.0.1::SAMD21E17D-AF::pad::PA10
+    mode: Analog
+    user_label: MAG_C
     configuration: null
   PA24:
     name: PA24
-    definition: Atmel:SAMD11_Drivers:0.0.1::SAMD11C14A-SSU::pad::PA24
+    definition: Atmel:SAMD21D_Drivers:0.0.1::SAMD21E17D-AF::pad::PA24
     mode: Advanced
     user_label: PA24
     configuration: null
   PA25:
     name: PA25
-    definition: Atmel:SAMD11_Drivers:0.0.1::SAMD11C14A-SSU::pad::PA25
+    definition: Atmel:SAMD21D_Drivers:0.0.1::SAMD21E17D-AF::pad::PA25
     mode: Advanced
     user_label: PA25
-    configuration: null
-  SENSE_C:
-    name: PA02
-    definition: Atmel:SAMD11_Drivers:0.0.1::SAMD11C14A-SSU::pad::PA02
-    mode: Analog
-    user_label: SENSE_C
     configuration: null
 toolchain_options: []

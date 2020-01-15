@@ -163,7 +163,7 @@
 				</d4p1:KeyValueOfstringstring>
 				<d4p1:KeyValueOfstringstring>
 					<d4p1:Key>MiscellaneousSettings</d4p1:Key>
-					<d4p1:Value>-Tsamd11c14a_flash.ld</d4p1:Value>
+					<d4p1:Value>-Tsamd21e17d_flash.ld</d4p1:Value>
 				</d4p1:KeyValueOfstringstring>
 				<d4p1:KeyValueOfstringstring>
 					<d4p1:Key>armgcc.linker.general.DoNotUseStandardStartFiles</d4p1:Key>
@@ -398,7 +398,7 @@
 				</d4p1:KeyValueOfstringstring>
 				<d4p1:KeyValueOfstringstring>
 					<d4p1:Key>MiscellaneousSettings</d4p1:Key>
-					<d4p1:Value>-Tsamd11c14a_flash.ld</d4p1:Value>
+					<d4p1:Value>-Tsamd21e17d_flash.ld</d4p1:Value>
 				</d4p1:KeyValueOfstringstring>
 				<d4p1:KeyValueOfstringstring>
 					<d4p1:Key>armgcc.linker.general.DoNotUseStandardStartFiles</d4p1:Key>

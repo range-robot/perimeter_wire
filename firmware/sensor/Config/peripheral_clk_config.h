@@ -19,6 +19,10 @@
 
 // <GCLK_CLKCTRL_GEN_GCLK5_Val"> Generic clock generator 5
 
+// <GCLK_CLKCTRL_GEN_GCLK6_Val"> Generic clock generator 6
+
+// <GCLK_CLKCTRL_GEN_GCLK7_Val"> Generic clock generator 7
+
 // <i> Select the clock source for ADC.
 #ifndef CONF_GCLK_ADC_SRC
 #define CONF_GCLK_ADC_SRC GCLK_CLKCTRL_GEN_GCLK0_Val
@@ -29,7 +33,7 @@
  * \brief ADC's Clock frequency
  */
 #ifndef CONF_GCLK_ADC_FREQUENCY
-#define CONF_GCLK_ADC_FREQUENCY 24002560
+#define CONF_GCLK_ADC_FREQUENCY 24000000
 #endif
 
 /**
@@ -37,7 +41,7 @@
  * \brief CPU's Clock frequency
  */
 #ifndef CONF_CPU_FREQUENCY
-#define CONF_CPU_FREQUENCY 24002560
+#define CONF_CPU_FREQUENCY 24000000
 #endif
 
 // <y> USB Clock Source
@@ -55,6 +59,10 @@
 
 // <GCLK_CLKCTRL_GEN_GCLK5_Val"> Generic clock generator 5
 
+// <GCLK_CLKCTRL_GEN_GCLK6_Val"> Generic clock generator 6
+
+// <GCLK_CLKCTRL_GEN_GCLK7_Val"> Generic clock generator 7
+
 // <i> Select the clock source for USB.
 #ifndef CONF_GCLK_USB_SRC
 #define CONF_GCLK_USB_SRC GCLK_CLKCTRL_GEN_GCLK2_Val
@@ -65,7 +73,7 @@
  * \brief USB's Clock frequency
  */
 #ifndef CONF_GCLK_USB_FREQUENCY
-#define CONF_GCLK_USB_FREQUENCY 48005120
+#define CONF_GCLK_USB_FREQUENCY 48000000
 #endif
 
 // <<< end of configuration section >>>
