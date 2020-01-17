@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 2.8.3)
 ##########################################################################
 # tools to beused for programming the ARM
 ##########################################################################
-set(ARM_UPLOADTOOL avrdude)
+set(ARM_UPLOADTOOL openocd)
 # jtag ice mkII settings
 set(ARM_PROGRAMMER jtag2isp)
 set(ARM_UPLOADTOOL_PORT usb)

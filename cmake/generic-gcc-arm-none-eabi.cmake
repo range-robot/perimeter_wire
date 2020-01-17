@@ -9,7 +9,7 @@
 #     the LOW fuse value for the MCU used
 # ARM_H_FUSE (NO DEFAULT)
 #     the HIGH fuse value for the MCU used
-# ARM_UPLOADTOOL (default: avrdude)
+# ARM_UPLOADTOOL (default: openocd)
 #     the application used to upload to the MCU
 #     NOTE: The toolchain is currently quite specific about
 #           the commands used, so it needs tweaking.
@@ -51,37 +51,19 @@ set(ARM 1)
 # some necessary tools and variables for ARM builds, which may not
 # defined yet
 # - ARM_UPLOADTOOL
-# - ARM_UPLOADTOOL_PORT
-# - ARM_PROGRAMMER
 # - ARM_MCU
 # - ARM_CPU
 # - ARM_SIZE_ARGS
 ##########################################################################
 
 # default upload tool
-#if(NOT ARM_UPLOADTOOL)
-#   set(
-#      ARM_UPLOADTOOL avrdude
-#      CACHE STRING "Set default upload tool: avrdude"
-#   )
-#   find_program(ARM_UPLOADTOOL avrdude)
-#endif(NOT ARM_UPLOADTOOL)
-
-# default upload tool port
-#if(NOT ARM_UPLOADTOOL_PORT)
-#   set(
-#      ARM_UPLOADTOOL_PORT usb
-#      CACHE STRING "Set default upload tool port: usb"
-#   )
-#endif(NOT ARM_UPLOADTOOL_PORT)
-
-# default programmer (hardware)
-#if(NOT ARM_PROGRAMMER)
-#   set(
-#      ARM_PROGRAMMER avrispmkII
-#      CACHE STRING "Set default programmer hardware model: avrispmkII"
-#   )
-#endif(NOT ARM_PROGRAMMER)
+if(NOT ARM_UPLOADTOOL)
+   set(
+      ARM_UPLOADTOOL openocd
+      CACHE STRING "Set default upload tool: openocd"
+   )
+   find_program(ARM_UPLOADTOOL openocd)
+endif(NOT ARM_UPLOADTOOL)
 
 # default MCU (chip)
 if(NOT ARM_MCU)
@@ -199,7 +181,7 @@ function(add_arm_executable EXECUTABLE_NAME)
    add_custom_command(
       OUTPUT ${hex_file_path}
       COMMAND
-         ${ARM_OBJCOPY} -j .text -j .data -O ihex ${elf_file_path} ${hex_file_path}
+         ${ARM_OBJCOPY} -O ihex -R .eeprom -R .fuse -R .lock -R .signature ${elf_file_path} ${hex_file_path}
       COMMAND
          ${ARM_SIZE_TOOL} ${ARM_SIZE_ARGS} ${elf_file_path}
       DEPENDS ${elf_file_path}
@@ -237,70 +219,9 @@ function(add_arm_executable EXECUTABLE_NAME)
    # upload
    add_custom_target(
       upload_${EXECUTABLE_NAME}
-      ${ARM_UPLOADTOOL} -p ${ARM_MCU} -c ${ARM_PROGRAMMER} ${ARM_UPLOADTOOL_OPTIONS}
-         -U flash:w:${hex_file_path}
-         -P ${ARM_UPLOADTOOL_PORT}
+      ${ARM_UPLOADTOOL}  -f ${CMAKE_SOURCE_DIR}/openocd.cfg -c "program ${hex_file_path} verify reset exit"
       DEPENDS ${hex_file_path}
-      COMMENT "Uploading ${hex_file} to ${ARM_MCU} using ${ARM_PROGRAMMER}"
-   )
-
-   # upload eeprom only
-   # see also bug http://savannah.nongnu.org/bugs/?40142
-   add_custom_target(
-      upload_eeprom
-      ${ARM_UPLOADTOOL} -p ${ARM_MCU} -c ${ARM_PROGRAMMER} ${ARM_UPLOADTOOL_OPTIONS}
-         -U eeprom:w:${eeprom_image_path}
-         -P ${ARM_UPLOADTOOL_PORT}
-      DEPENDS ${eeprom_image_path}
-      COMMENT "Uploading ${eeprom_image} to ${ARM_MCU} using ${ARM_PROGRAMMER}"
-   )
-
-   # get status
-   add_custom_target(
-      get_status
-      ${ARM_UPLOADTOOL} -p ${ARM_MCU} -c ${ARM_PROGRAMMER} -P ${ARM_UPLOADTOOL_PORT} -n -v
-      COMMENT "Get status from ${ARM_MCU}"
-   )
-
-   # get fuses
-   add_custom_target(
-      get_fuses
-      ${ARM_UPLOADTOOL} -p ${ARM_MCU} -c ${ARM_PROGRAMMER} -P ${ARM_UPLOADTOOL_PORT} -n
-         -U lfuse:r:-:b
-         -U hfuse:r:-:b
-      COMMENT "Get fuses from ${ARM_MCU}"
-   )
-
-   # set fuses
-   add_custom_target(
-      set_fuses
-      ${ARM_UPLOADTOOL} -p ${ARM_MCU} -c ${ARM_PROGRAMMER} -P ${ARM_UPLOADTOOL_PORT}
-         -U lfuse:w:${ARM_L_FUSE}:m
-         -U hfuse:w:${ARM_H_FUSE}:m
-         COMMENT "Setup: High Fuse: ${ARM_H_FUSE} Low Fuse: ${ARM_L_FUSE}"
-   )
-
-   # get oscillator calibration
-   add_custom_target(
-      get_calibration
-         ${ARM_UPLOADTOOL} -p ${ARM_MCU} -c ${ARM_PROGRAMMER} -P ${ARM_UPLOADTOOL_PORT}
-         -U calibration:r:${ARM_MCU}_calib.tmp:r
-         COMMENT "Write calibration status of internal oscillator to ${ARM_MCU}_calib.tmp."
-   )
-
-   # set oscillator calibration
-   add_custom_target(
-      set_calibration
-      ${ARM_UPLOADTOOL} -p ${ARM_MCU} -c ${ARM_PROGRAMMER} -P ${ARM_UPLOADTOOL_PORT}
-         -U calibration:w:${ARM_MCU}_calib.hex
-         COMMENT "Program calibration status of internal oscillator from ${ARM_MCU}_calib.hex."
-   )
-
-   # disassemble
-   add_custom_target(
-      disassemble_${EXECUTABLE_NAME}
-      ${ARM_OBJDUMP} -h -S ${elf_file_path} > ${EXECUTABLE_NAME}.lst
-      DEPENDS ${elf_file_path}
+      COMMENT "Uploading ${hex_file}"
    )
 
 endfunction(add_arm_executable)
