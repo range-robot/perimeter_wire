@@ -13,7 +13,7 @@ set(ARM_UPLOADTOOL_PORT usb)
 ##########################################################################
 set(ARM_MCU ATSAMD21E17D)
 set(ARM_CPU cortex-m0plus)
-set(ARM_LINKER_OPTIONS "--specs=nano.specs -Wl,--start-group -lm  -Wl,--end-group -L${CMAKE_SOURCE_DIR}/Device_Startup -Tsamd21e17d_flash.ld")
+set(ARM_LINKER_OPTIONS "--specs=nano.specs -Wl,--start-group -lm  -Wl,--end-group -L${CMAKE_SOURCE_DIR}/Device_Startup -Tsamd21e17d_flash_bl.ld")
 
 ### END TOOLCHAIN SETUP AREA #############################################
 
@@ -149,10 +149,12 @@ add_arm_executable(firmware
 ./usb_start.c
 )
 
-#find_library(C_LIB c)
-#avr_target_link_libraries(firmware
-#  ${C_LIB})
-
+add_custom_target(
+  upload_with_bootloader
+  bossac --offset 0x2000 -i -U -e -w ${firmware_BIN} -v -R
+  DEPENDS ${firmware_BIN}
+  COMMENT "Uploading ${firmware_BIN}"
+)
 
 #############
 ## Install ##

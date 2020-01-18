@@ -1,7 +1,7 @@
 /**
  * \file
  *
- * \brief Linker script for running in internal SRAM on the SAMD21E17D
+ * \brief Linker script for running in internal FLASH on the SAMD21E17D
  *
  * Copyright (c) 2018 Microchip Technology Inc.
  *
@@ -35,6 +35,7 @@ SEARCH_DIR(.)
 /* Memory Spaces Definitions */
 MEMORY
 {
+  rom      (rx)  : ORIGIN = 0x00000000+0x2000, LENGTH = 0x00020000-0x2000 /* First 8KB used by bootloader */
   ram      (rwx) : ORIGIN = 0x20000000, LENGTH = 0x00004000
 }
 
@@ -46,7 +47,7 @@ SECTIONS
 {
     .text :
     {
-        . = ALIGN(4);
+        . = ALIGN(0x2000);
         _sfixed = .;
         KEEP(*(.vectors .vectors.*))
         *(.text .text.* .gnu.linkonce.t.*)
@@ -91,14 +92,14 @@ SECTIONS
 
         . = ALIGN(4);
         _efixed = .;            /* End of text section */
-    } > ram
+    } > rom
 
     /* .ARM.exidx is sorted, so has to go in its own output section.  */
     PROVIDE_HIDDEN (__exidx_start = .);
     .ARM.exidx :
     {
       *(.ARM.exidx* .gnu.linkonce.armexidx.*)
-    } > ram
+    } > rom
     PROVIDE_HIDDEN (__exidx_end = .);
 
     . = ALIGN(4);
