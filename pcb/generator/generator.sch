@@ -5,8 +5,8 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 1
 Title "Perimeter Wire Generator"
-Date "2019-09-02"
-Rev "R1"
+Date "2020-01-18"
+Rev "R2"
 Comp "Meadow Robotics GmbH"
 Comment1 ""
 Comment2 ""
@@ -1445,6 +1445,7 @@ F 0 "U1" H 3850 5600 50  0000 C CNN
 F 1 "ATSAMD21E" H 3300 6300 50  0000 C CNN
 F 2 "Package_QFP:TQFP-32_7x7mm_P0.8mm" H 2650 5600 50  0001 C CNN
 F 3 "http://ww1.microchip.com/downloads/en/DeviceDoc/SAMD21-Family-DataSheet-DS40001882D.pdf" H 3350 7350 50  0001 C CNN
+F 4 "ATSAMD21E17D" H 3350 6350 50  0001 C CNN "Partnumber"
 	1    3350 6350
 	1    0    0    -1  
 $EndComp
