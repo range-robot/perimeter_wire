@@ -1711,7 +1711,7 @@ F 0 "U3" H 9400 3200 50  0000 C CNN
 F 1 "ATSAMD21E" H 8850 3950 50  0000 C CNN
 F 2 "Package_QFP:TQFP-32_7x7mm_P0.8mm" H 8150 3200 50  0001 C CNN
 F 3 "http://ww1.microchip.com/downloads/en/DeviceDoc/SAMD21-Family-DataSheet-DS40001882D.pdf" H 8850 4950 50  0001 C CNN
-F 4 "ATSAMD21E17A-AU" H 8850 3950 50  0001 C CNN "Partnumber"
+F 4 "ATSAMD21E17D-AU" H 8850 3950 50  0001 C CNN "Partnumber"
 	1    8850 3950
 	1    0    0    -1  
 $EndComp
