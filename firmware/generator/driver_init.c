@@ -15,25 +15,43 @@
 
 #include <hpl_adc_base.h>
 
-struct timer_descriptor TIMER_0;
+/* The channel amount for ADC */
+#define ADC_0_CH_AMOUNT 1
 
-struct adc_sync_descriptor ADC_0;
+/* The buffer size for ADC */
+#define ADC_0_BUFFER_SIZE 16
 
-void ADC_0_PORT_init(void)
-{
-}
+/* The maximal channel number of enabled channels */
+#define ADC_0_CH_MAX 0
 
-void ADC_0_CLOCK_init(void)
+struct adc_async_descriptor         ADC_0;
+struct adc_async_channel_descriptor ADC_0_ch[ADC_0_CH_AMOUNT];
+struct timer_descriptor             TIMER_0;
+
+static uint8_t ADC_0_buffer[ADC_0_BUFFER_SIZE];
+static uint8_t ADC_0_map[ADC_0_CH_MAX + 1];
+
+/**
+ * \brief ADC initialization function
+ *
+ * Enables ADC peripheral, clocks and initializes ADC driver
+ */
+void ADC_0_init(void)
 {
 	_pm_enable_bus_clock(PM_BUS_APBC, ADC);
 	_gclk_enable_channel(ADC_GCLK_ID, CONF_GCLK_ADC_SRC);
-}
+	adc_async_init(&ADC_0, ADC, ADC_0_map, ADC_0_CH_MAX, ADC_0_CH_AMOUNT, &ADC_0_ch[0], (void *)NULL);
+	adc_async_register_channel_buffer(&ADC_0, 0, ADC_0_buffer, ADC_0_BUFFER_SIZE);
 
-void ADC_0_init(void)
-{
-	ADC_0_CLOCK_init();
-	ADC_0_PORT_init();
-	adc_sync_init(&ADC_0, ADC, (void *)NULL);
+	// Disable digital pin circuitry
+	gpio_set_pin_direction(V_SENSE, GPIO_DIRECTION_OFF);
+
+	gpio_set_pin_function(V_SENSE, PINMUX_PA04B_ADC_AIN4);
+
+	// Disable digital pin circuitry
+	gpio_set_pin_direction(R_TEMP, GPIO_DIRECTION_OFF);
+
+	gpio_set_pin_function(R_TEMP, PINMUX_PA05B_ADC_AIN5);
 }
 
 /**
@@ -43,16 +61,16 @@ void ADC_0_init(void)
  */
 static void TIMER_0_init(void)
 {
-	_pm_enable_bus_clock(PM_BUS_APBC, TC1);
-	_gclk_enable_channel(TC1_GCLK_ID, CONF_GCLK_TC1_SRC);
+	_pm_enable_bus_clock(PM_BUS_APBC, TC3);
+	_gclk_enable_channel(TC3_GCLK_ID, CONF_GCLK_TC3_SRC);
 
-	timer_init(&TIMER_0, TC1, _tc_get_timer());
+	timer_init(&TIMER_0, TC3, _tc_get_timer());
 }
 
 void USB_DEVICE_INSTANCE_PORT_init(void)
 {
 
-	gpio_set_pin_direction(PA24,
+	gpio_set_pin_direction(USB_DM,
 	                       // <y> Pin direction
 	                       // <id> pad_direction
 	                       // <GPIO_DIRECTION_OFF"> Off
@@ -60,14 +78,14 @@ void USB_DEVICE_INSTANCE_PORT_init(void)
 	                       // <GPIO_DIRECTION_OUT"> Out
 	                       GPIO_DIRECTION_OUT);
 
-	gpio_set_pin_level(PA24,
+	gpio_set_pin_level(USB_DM,
 	                   // <y> Initial level
 	                   // <id> pad_initial_level
 	                   // <false"> Low
 	                   // <true"> High
 	                   false);
 
-	gpio_set_pin_pull_mode(PA24,
+	gpio_set_pin_pull_mode(USB_DM,
 	                       // <y> Pull configuration
 	                       // <id> pad_pull_config
 	                       // <GPIO_PULL_OFF"> Off
@@ -75,7 +93,7 @@ void USB_DEVICE_INSTANCE_PORT_init(void)
 	                       // <GPIO_PULL_DOWN"> Pull-down
 	                       GPIO_PULL_OFF);
 
-	gpio_set_pin_function(PA24,
+	gpio_set_pin_function(USB_DM,
 	                      // <y> Pin function
 	                      // <id> pad_function
 	                      // <i> Auto : use driver pinmux if signal is imported by driver, else turn off function
@@ -91,7 +109,7 @@ void USB_DEVICE_INSTANCE_PORT_init(void)
 	                      // <GPIO_PIN_FUNCTION_H"> H
 	                      PINMUX_PA24G_USB_DM);
 
-	gpio_set_pin_direction(PA25,
+	gpio_set_pin_direction(USB_DP,
 	                       // <y> Pin direction
 	                       // <id> pad_direction
 	                       // <GPIO_DIRECTION_OFF"> Off
@@ -99,14 +117,14 @@ void USB_DEVICE_INSTANCE_PORT_init(void)
 	                       // <GPIO_DIRECTION_OUT"> Out
 	                       GPIO_DIRECTION_OUT);
 
-	gpio_set_pin_level(PA25,
+	gpio_set_pin_level(USB_DP,
 	                   // <y> Initial level
 	                   // <id> pad_initial_level
 	                   // <false"> Low
 	                   // <true"> High
 	                   false);
 
-	gpio_set_pin_pull_mode(PA25,
+	gpio_set_pin_pull_mode(USB_DP,
 	                       // <y> Pull configuration
 	                       // <id> pad_pull_config
 	                       // <GPIO_PULL_OFF"> Off
@@ -114,7 +132,7 @@ void USB_DEVICE_INSTANCE_PORT_init(void)
 	                       // <GPIO_PULL_DOWN"> Pull-down
 	                       GPIO_PULL_OFF);
 
-	gpio_set_pin_function(PA25,
+	gpio_set_pin_function(USB_DP,
 	                      // <y> Pin function
 	                      // <id> pad_function
 	                      // <i> Auto : use driver pinmux if signal is imported by driver, else turn off function
@@ -156,7 +174,7 @@ void system_init(void)
 {
 	init_mcu();
 
-	// GPIO on PA02
+	// GPIO on PA00
 
 	gpio_set_pin_level(EN_B,
 	                   // <y> Initial level
@@ -170,7 +188,7 @@ void system_init(void)
 
 	gpio_set_pin_function(EN_B, GPIO_PIN_FUNCTION_OFF);
 
-	// GPIO on PA03
+	// GPIO on PA01
 
 	// Set pin direction to input
 	gpio_set_pin_direction(ERROR_B, GPIO_DIRECTION_IN);
@@ -185,7 +203,7 @@ void system_init(void)
 
 	gpio_set_pin_function(ERROR_B, GPIO_PIN_FUNCTION_OFF);
 
-	// GPIO on PA04
+	// GPIO on PA02
 
 	gpio_set_pin_level(IN1_B,
 	                   // <y> Initial level
@@ -199,7 +217,7 @@ void system_init(void)
 
 	gpio_set_pin_function(IN1_B, GPIO_PIN_FUNCTION_OFF);
 
-	// GPIO on PA05
+	// GPIO on PA03
 
 	gpio_set_pin_level(IN2_B,
 	                   // <y> Initial level
@@ -241,7 +259,7 @@ void system_init(void)
 
 	gpio_set_pin_function(IN2_A, GPIO_PIN_FUNCTION_OFF);
 
-	// GPIO on PA14
+	// GPIO on PA08
 
 	gpio_set_pin_level(EN_A,
 	                   // <y> Initial level
@@ -255,7 +273,7 @@ void system_init(void)
 
 	gpio_set_pin_function(EN_A, GPIO_PIN_FUNCTION_OFF);
 
-	// GPIO on PA15
+	// GPIO on PA09
 
 	// Set pin direction to input
 	gpio_set_pin_direction(ERROR_A, GPIO_DIRECTION_IN);
@@ -270,33 +288,89 @@ void system_init(void)
 
 	gpio_set_pin_function(ERROR_A, GPIO_PIN_FUNCTION_OFF);
 
-	// GPIO on PA22
+	// GPIO on PA16
 
-	gpio_set_pin_level(LED_A,
+	gpio_set_pin_level(LED2_B,
 	                   // <y> Initial level
 	                   // <id> pad_initial_level
 	                   // <false"> Low
 	                   // <true"> High
-	                   false);
+	                   true);
 
 	// Set pin direction to output
-	gpio_set_pin_direction(LED_A, GPIO_DIRECTION_OUT);
+	gpio_set_pin_direction(LED2_B, GPIO_DIRECTION_OUT);
 
-	gpio_set_pin_function(LED_A, GPIO_PIN_FUNCTION_OFF);
+	gpio_set_pin_function(LED2_B, GPIO_PIN_FUNCTION_OFF);
+
+	// GPIO on PA17
+
+	gpio_set_pin_level(LED2_G,
+	                   // <y> Initial level
+	                   // <id> pad_initial_level
+	                   // <false"> Low
+	                   // <true"> High
+	                   true);
+
+	// Set pin direction to output
+	gpio_set_pin_direction(LED2_G, GPIO_DIRECTION_OUT);
+
+	gpio_set_pin_function(LED2_G, GPIO_PIN_FUNCTION_OFF);
+
+	// GPIO on PA18
+
+	gpio_set_pin_level(LED2_R,
+	                   // <y> Initial level
+	                   // <id> pad_initial_level
+	                   // <false"> Low
+	                   // <true"> High
+	                   true);
+
+	// Set pin direction to output
+	gpio_set_pin_direction(LED2_R, GPIO_DIRECTION_OUT);
+
+	gpio_set_pin_function(LED2_R, GPIO_PIN_FUNCTION_OFF);
+
+	// GPIO on PA19
+
+	gpio_set_pin_level(LED1_B,
+	                   // <y> Initial level
+	                   // <id> pad_initial_level
+	                   // <false"> Low
+	                   // <true"> High
+	                   true);
+
+	// Set pin direction to output
+	gpio_set_pin_direction(LED1_B, GPIO_DIRECTION_OUT);
+
+	gpio_set_pin_function(LED1_B, GPIO_PIN_FUNCTION_OFF);
+
+	// GPIO on PA22
+
+	gpio_set_pin_level(LED1_G,
+	                   // <y> Initial level
+	                   // <id> pad_initial_level
+	                   // <false"> Low
+	                   // <true"> High
+	                   true);
+
+	// Set pin direction to output
+	gpio_set_pin_direction(LED1_G, GPIO_DIRECTION_OUT);
+
+	gpio_set_pin_function(LED1_G, GPIO_PIN_FUNCTION_OFF);
 
 	// GPIO on PA23
 
-	gpio_set_pin_level(LED_B,
+	gpio_set_pin_level(LED1_R,
 	                   // <y> Initial level
 	                   // <id> pad_initial_level
 	                   // <false"> Low
 	                   // <true"> High
-	                   false);
+	                   true);
 
 	// Set pin direction to output
-	gpio_set_pin_direction(LED_B, GPIO_DIRECTION_OUT);
+	gpio_set_pin_direction(LED1_R, GPIO_DIRECTION_OUT);
 
-	gpio_set_pin_function(LED_B, GPIO_PIN_FUNCTION_OFF);
+	gpio_set_pin_function(LED1_R, GPIO_PIN_FUNCTION_OFF);
 
 	ADC_0_init();
 

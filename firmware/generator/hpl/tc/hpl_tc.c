@@ -38,27 +38,36 @@
 #include <utils_assert.h>
 #include <hpl_tc_base.h>
 
-#ifndef CONF_TC1_ENABLE
-#define CONF_TC1_ENABLE 0
+#ifndef CONF_TC3_ENABLE
+#define CONF_TC3_ENABLE 0
 #endif
-#ifndef CONF_TC2_ENABLE
-#define CONF_TC2_ENABLE 0
+#ifndef CONF_TC4_ENABLE
+#define CONF_TC4_ENABLE 0
+#endif
+#ifndef CONF_TC5_ENABLE
+#define CONF_TC5_ENABLE 0
+#endif
+#ifndef CONF_TC6_ENABLE
+#define CONF_TC6_ENABLE 0
+#endif
+#ifndef CONF_TC7_ENABLE
+#define CONF_TC7_ENABLE 0
 #endif
 
 /**
  * \brief TC IRQ base index
  */
-#define TC_IRQ_BASE_INDEX ((uint8_t)TC1_IRQn)
+#define TC_IRQ_BASE_INDEX ((uint8_t)TC3_IRQn)
 
 /**
  * \brief TC base address
  */
-#define TC_HW_BASE_ADDR ((uint32_t)TC1)
+#define TC_HW_BASE_ADDR ((uint32_t)TC3)
 
 /**
  * \brief TC number offset
  */
-#define TC_NUMBER_OFFSET 1
+#define TC_NUMBER_OFFSET 3
 
 /**
  * \brief Macro is used to fill usart configuration structure based on its
@@ -96,15 +105,24 @@ struct tc_configuration {
  * \brief Array of TC configurations
  */
 static struct tc_configuration _tcs[] = {
-#if CONF_TC1_ENABLE == 1
-    TC_CONFIGURATION(1),
+#if CONF_TC3_ENABLE == 1
+    TC_CONFIGURATION(3),
 #endif
-#if CONF_TC2_ENABLE == 1
-    TC_CONFIGURATION(2),
+#if CONF_TC4_ENABLE == 1
+    TC_CONFIGURATION(4),
+#endif
+#if CONF_TC5_ENABLE == 1
+    TC_CONFIGURATION(5),
+#endif
+#if CONF_TC6_ENABLE == 1
+    TC_CONFIGURATION(6),
+#endif
+#if CONF_TC7_ENABLE == 1
+    TC_CONFIGURATION(7),
 #endif
 };
 
-static struct _timer_device *_tc1_dev = NULL;
+static struct _timer_device *_tc3_dev = NULL;
 
 static int8_t         get_tc_index(const void *const hw);
 static uint8_t        tc_get_hardware_index(const void *const hw);
@@ -260,9 +278,9 @@ static void tc_interrupt_handler(struct _timer_device *device)
 /**
  * \brief TC interrupt handler
  */
-void TC1_Handler(void)
+void TC3_Handler(void)
 {
-	tc_interrupt_handler(_tc1_dev);
+	tc_interrupt_handler(_tc3_dev);
 }
 
 /**
@@ -306,8 +324,8 @@ static int8_t get_tc_index(const void *const hw)
  */
 static void _tc_init_irq_param(const void *const hw, void *dev)
 {
-	if (hw == TC1) {
-		_tc1_dev = (struct _timer_device *)dev;
+	if (hw == TC3) {
+		_tc3_dev = (struct _timer_device *)dev;
 	}
 }
 

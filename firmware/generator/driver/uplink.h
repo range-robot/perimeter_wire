@@ -30,4 +30,9 @@ inline static void uplink_write_temp(uint8_t temp)
 	app_registers->temp = temp;
 }
 
+inline static void uplink_write_voltage(uint8_t voltage)
+{
+	app_registers->voltage = voltage;
+}
+
 #endif /* UPLINK_H_ */

@@ -111,19 +111,21 @@ static inline void pwgen_check(struct pwgen_t* const gen)
 {
 	if (gen->state == _PWGEN_STATE_IDLE)
 	{
-		*gen->led = LM_OFF;
+		gen->led->pulse = LM_OFF;
 	}
 	else
 	{
 		if (gpio_get_pin_level(gen->error))
 		{
 			// No eror
-			*gen->led = LM_ON;
+			gen->led->color = LC_Green;
+			gen->led->pulse = LM_ON;
 		}
 		else
 		{
 			// Overcurrent
-			*gen->led = LM_PULSE_1;
+			gen->led->color = LC_Red;
+			gen->led->pulse = LM_PULSE_1;
 		}
 	}
 }

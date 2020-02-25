@@ -34,8 +34,8 @@
 #ifndef ATMEL_PARTS_H
 #define ATMEL_PARTS_H
 
-#include "samd11.h"
+#include "samd21.h"
 
-#include "hri_d11.h"
+#include "hri_d21d.h"
 
 #endif /* ATMEL_PARTS_H */

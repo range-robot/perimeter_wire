@@ -4,6 +4,7 @@
 #include <hal_timer.h>
 #include "atmel_start_pins.h"
 #include "board.h"
+#include "leds.h"
 
 /* CONFIG */
 #define PGWEN_TIMER_FREQUENCY TIMER_FREQUENCY
@@ -31,7 +32,7 @@ enum pwgen_channel_t {
 
 struct pwgen_t {
 	enum pwgen_channel_t channel;
-	uint8_t* led;
+	LedMode* led;
 
 	// pins
 	uint32_t enable;

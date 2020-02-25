@@ -21,18 +21,16 @@ extern "C" {
 #include <hal_io.h>
 #include <hal_sleep.h>
 
-#include <hal_adc_sync.h>
+#include <hal_adc_async.h>
 
 #include <hal_timer.h>
 #include <hpl_tc_base.h>
 
 #include "hal_usb_device.h"
 
-extern struct adc_sync_descriptor ADC_0;
-extern struct timer_descriptor    TIMER_0;
+extern struct adc_async_descriptor ADC_0;
+extern struct timer_descriptor     TIMER_0;
 
-void ADC_0_PORT_init(void);
-void ADC_0_CLOCK_init(void);
 void ADC_0_init(void);
 
 void USB_DEVICE_INSTANCE_CLOCK_init(void);

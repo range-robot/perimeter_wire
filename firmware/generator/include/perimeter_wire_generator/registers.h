@@ -6,14 +6,15 @@
 
 enum {
 	REGISTER_CONTROL = 0x00,
-	REGISTER_TEMP = 0x01,
 	REGISTER_A_MODE = 0x02,
 	REGISTER_A_DIV = 0x03,
 	REGISTER_A_CODE = 0x04,
 	REGISTER_B_MODE = 0x06,
 	REGISTER_B_DIV = 0x07,
 	REGISTER_B_CODE = 0x08,
-	REGISTER_COUNT = 0x0A
+	REGISTER_VOLTAGE = 0x10,
+	REGISTER_TEMP = 0x11,
+	REGISTER_COUNT = 0x12
 };
 typedef union {
 	uint16_t value;
@@ -32,7 +33,7 @@ struct app_registers_t {
 		};
 	} control;
 
-	uint8_t temp;
+	uint8_t reserved1;
 
 	struct {
 		uint8_t mode;
@@ -45,6 +46,11 @@ struct app_registers_t {
 		uint8_t divider;
 		reg_uint16_t code;
 	} channel_b;
+
+	uint8_t reserved2[6];
+	uint8_t voltage;
+	uint8_t temp;
+	
 };
 
 enum {
