@@ -175,11 +175,17 @@ int main(int argc, char **argv)
     usleep(10000);
   }
 
+  float voltage;
+  if (!driver.getVoltage(voltage))
+    ROS_WARN("Failed to read voltage");
+  else
+    ROS_INFO("Voltage: %fV", voltage);
+
   float temp;
   if (!driver.getTemperature(temp))
     ROS_WARN("Failed to read temperature");
   else
-    ROS_INFO("Temperature: %f", temp);
+    ROS_INFO("Temperature: %f°C", temp);
 
   // read info
   ROS_INFO("Channel A:");

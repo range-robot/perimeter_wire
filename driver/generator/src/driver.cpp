@@ -8,8 +8,13 @@
 #include "console.h"
 
 
-#define FIRMWARE_VERSION 1
-#define TEMP_FACTOR (1.0)
+#define FIRMWARE_VERSION 2
+
+#define ADC_RESOLUTION (1.65 / 256)
+#define VOLTAGE_DIVIDER_FACTOR ((1000 + 22) / 22)
+// From MCP9700A datasheet
+#define TEMP_COEFFICENT (0.01)
+#define TEMP_ZERO_VOLTAGE (0.5)
 using namespace perimeter_wire_generator;
 
 GeneratorDriver::GeneratorDriver(const std::string& com_port)
@@ -72,12 +77,22 @@ bool GeneratorDriver::setControl(bool enabled)
   return true;
 }
 
+bool GeneratorDriver::getVoltage(float& voltage)
+{
+  uint8_t int_volt;
+  if (!app_->getReg(REGISTER_VOLTAGE, int_volt))
+    return false;
+  voltage = int_volt * ADC_RESOLUTION * VOLTAGE_DIVIDER_FACTOR;
+  return true;
+}
+
 bool GeneratorDriver::getTemperature(float& temp)
 {
   uint8_t int_temp;
   if (!app_->getReg(REGISTER_TEMP, int_temp))
     return false;
-  temp = int_temp * TEMP_FACTOR;
+  float temp_volt = int_temp * ADC_RESOLUTION;
+  temp = (temp_volt - TEMP_ZERO_VOLTAGE) / TEMP_COEFFICENT;
   return true;
 }
 
