@@ -11,5 +11,9 @@
 #define CONF_ADC_0_MUX_TEMP 0x5
 #define CONF_ADC_0_MUX_VOLTAGE 0x4
 
+// high: 80°C
+#define TEMP_HIGH_THRESHOLD (201)
+// low: 75°C
+#define TEMP_LOW_THESHOLD (186)
 
 #endif /* BOARD_H_ */

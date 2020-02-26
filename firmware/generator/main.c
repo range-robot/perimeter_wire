@@ -32,6 +32,7 @@ enum {
 	ADC_READ_TEMP,
 	ADC_READ_VOLTAGE
 } adc_state = ADC_READ_TEMP;
+static bool has_high_temp = false;
 
 static void adc_convert_cb(const struct adc_async_descriptor *const descr, const uint8_t channel)
 {
@@ -42,6 +43,25 @@ static void adc_convert_cb(const struct adc_async_descriptor *const descr, const
 	{
 		case ADC_READ_TEMP:
 			uplink_write_temp(value);
+			if (value >= TEMP_HIGH_THRESHOLD)
+			{
+				has_high_temp = true;
+				pwgen_disable(&genA, &TIMER_0);
+				pwgen_disable(&genB, &TIMER_0);
+				LED_mode_A.color = LC_Red;
+				LED_mode_A.pulse = LM_PULSE_5;
+				LED_mode_B.color = LC_Red;
+				LED_mode_B.pulse = LM_PULSE_5;
+			}
+			else if (value <= TEMP_LOW_THESHOLD)
+			{
+				if (has_high_temp)
+				{
+					has_high_temp = false;
+					pwgen_set_config(&genA, &genA_config, &TIMER_0);
+					pwgen_set_config(&genB, &genB_config, &TIMER_0);
+				}
+			}
 			adc_state = ADC_READ_VOLTAGE;
 			break;
 		case ADC_READ_VOLTAGE:
@@ -111,6 +131,6 @@ int main(void)
 			send_hello = false;
 			app_layer_send_hello_message(FIRMWARE_VERSION);
 		}
-		pwgen_task();
+		pwgen_task(!has_high_temp);
 	}
 }

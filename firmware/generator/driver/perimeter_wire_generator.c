@@ -74,6 +74,13 @@ void pwgen_init(struct pwgen_t* const gen, enum pwgen_channel_t channel)
 	gpio_set_pin_level(gen->in2, false);
 }
 
+void pwgen_disable(struct pwgen_t* const gen, struct timer_descriptor* const timer)
+{
+	struct pwgen_config_t config;
+	config.mode = PWGEN_MODE_DISABLED;
+	pwgen_set_config(gen, &config, timer);
+}
+
 void pwgen_set_config(struct pwgen_t* const gen, const struct pwgen_config_t* const config, struct timer_descriptor* const timer)
 {
 	gen->mode = config->mode;
@@ -107,8 +114,11 @@ void pwgen_set_config(struct pwgen_t* const gen, const struct pwgen_config_t* co
 	}
 }
 
-static inline void pwgen_check(struct pwgen_t* const gen)
+static inline void pwgen_check(struct pwgen_t* const gen, bool setLed)
 {
+	if (!setLed)
+		return;
+
 	if (gen->state == _PWGEN_STATE_IDLE)
 	{
 		gen->led->pulse = LM_OFF;
@@ -130,8 +140,8 @@ static inline void pwgen_check(struct pwgen_t* const gen)
 	}
 }
 
-void pwgen_task(void)
+void pwgen_task(bool setLed)
 {
-	pwgen_check(_pwgenA);
-	pwgen_check(_pwgenB);
+	pwgen_check(_pwgenA, setLed);
+	pwgen_check(_pwgenB, setLed);
 }

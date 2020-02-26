@@ -58,7 +58,8 @@ struct pwgen_config_t
 };
 
 void pwgen_init(struct pwgen_t* const gen, enum pwgen_channel_t channel);
+void pwgen_disable(struct pwgen_t* const gen, struct timer_descriptor* const timer);
 void pwgen_set_config(struct pwgen_t* const gen, const struct pwgen_config_t* const config, struct timer_descriptor* const timer);
-void pwgen_task(void);
+void pwgen_task(bool set_led);
 
 #endif /* PERIMETER_WIRE_GENERATOR_H_ */
