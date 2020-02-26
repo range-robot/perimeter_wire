@@ -51,8 +51,8 @@ if(CMAKE_BUILD_TYPE MATCHES RelWithDebInfo)
 endif(CMAKE_BUILD_TYPE MATCHES RelWithDebInfo)
 
 if(CMAKE_BUILD_TYPE MATCHES Debug)
-   set(CMAKE_C_FLAGS_DEBUG "-O0 -save-temps -g3")
-   set(CMAKE_CXX_FLAGS_DEBUG "-O0 -save-temps -g3")
+   set(CMAKE_C_FLAGS_DEBUG "-Os -save-temps -g3")
+   set(CMAKE_CXX_FLAGS_DEBUG "-Os -save-temps -g3")
 endif(CMAKE_BUILD_TYPE MATCHES Debug)
 
 
@@ -63,8 +63,9 @@ add_definitions("-D__SAMD21E17D__")
 add_definitions("-x c")
 
 add_definitions("-Wall")
-#add_definitions("-Werror")
 add_definitions(-Wmissing-prototypes -Wpointer-arith)
+
+#add_definitions("-Werror")
 #add_definitions(-Werror-implicit-function-declaration)
 #add_definitions(-Wstrict-prototypes)
 #add_definitions("-pedantic")
@@ -74,8 +75,7 @@ add_definitions(-Wmissing-prototypes -Wpointer-arith)
 #add_definitions("-fshort-enums")
 #add_definitions("-funsigned-char")
 #add_definitions("-funsigned-bitfields")
-#add_definitions(-fdata-sections -fdata-sections -g3 -fno-strict-aliasing)
-#add_definitions(-save-temps)
+#add_definitions(-fdata-sections -fdata-sections -fno-strict-aliasing)
 #add_definitions(-mrelax -save-temps)
 
 add_definitions("-ffunction-sections")
