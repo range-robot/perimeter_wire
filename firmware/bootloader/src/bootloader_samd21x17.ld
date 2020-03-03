@@ -145,7 +145,7 @@ SECTIONS
 	*/
 
 	__etext = .;
-  PROVIDE(__sketch_vectors_ptr = ORIGIN(FLASH) + LENGTH(FLASH));
+  PROVIDE(__sketch_vectors_ptr = 0x2000);
 
 
 	.data : AT (__etext)

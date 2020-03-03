@@ -23,7 +23,6 @@
 #include "sam_ba_serial.h"
 #include "board_driver_serial.h"
 #include "board_driver_usb.h"
-#include "board_driver_jtag.h"
 #include "sam_ba_usb.h"
 #include "sam_ba_cdc.h"
 #include "board_driver_led.h"
