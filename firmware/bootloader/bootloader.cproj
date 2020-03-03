@@ -13,7 +13,7 @@
     <OutputFileExtension>.elf</OutputFileExtension>
     <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
     <AssemblyName>samd21_sam_ba</AssemblyName>
-    <Name>samd21_sam_ba</Name>
+    <Name>bootloader</Name>
     <RootNamespace>samd21_sam_ba</RootNamespace>
     <ToolchainFlavour>Native</ToolchainFlavour>
     <KeepTimersRunning>true</KeepTimersRunning>
@@ -67,6 +67,18 @@
     </com_atmel_avrdbg_tool_edbg>
     <ResetRule>0</ResetRule>
     <EraseKey />
+    <custom>
+      <ToolOptions xmlns="">
+        <InterfaceProperties>
+        </InterfaceProperties>
+        <InterfaceName>
+        </InterfaceName>
+      </ToolOptions>
+      <ToolType xmlns="">custom</ToolType>
+      <ToolNumber xmlns="">
+      </ToolNumber>
+      <ToolName xmlns="">Custom Programming Tool</ToolName>
+    </custom>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <ToolchainSettings>
@@ -133,6 +145,12 @@
       <SubType>compile</SubType>
       <Link>board_definitions.h</Link>
     </Compile>
+    <Compile Include="board_driver_i2c.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="board_driver_i2c.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="board_driver_led.c">
       <SubType>compile</SubType>
       <Link>board_driver_led.c</Link>
@@ -140,6 +158,12 @@
     <Compile Include="board_driver_led.h">
       <SubType>compile</SubType>
       <Link>board_driver_led.h</Link>
+    </Compile>
+    <Compile Include="board_driver_pmic.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="board_driver_pmic.h">
+      <SubType>compile</SubType>
     </Compile>
     <Compile Include="board_driver_serial.c">
       <SubType>compile</SubType>
@@ -205,10 +229,6 @@
     <None Include="Makefile">
       <SubType>compile</SubType>
       <Link>Makefile</Link>
-    </None>
-    <None Include="README.md">
-      <SubType>compile</SubType>
-      <Link>README.md</Link>
     </None>
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
