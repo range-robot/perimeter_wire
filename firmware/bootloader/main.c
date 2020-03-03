@@ -25,7 +25,6 @@
 #include "board_driver_led.h"
 #include "board_driver_i2c.h"
 #include "board_driver_pmic.h"
-#include "board_driver_jtag.h"
 #include "sam_ba_usb.h"
 #include "sam_ba_cdc.h"
 
