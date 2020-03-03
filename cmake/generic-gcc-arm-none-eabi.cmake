@@ -162,12 +162,13 @@ function(add_arm_executable EXECUTABLE_NAME)
    set(hex_file ${EXECUTABLE_NAME}${MCU_TYPE_FOR_FILENAME}.hex)
    set(hex_file_path ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${hex_file})
    set(${EXECUTABLE_NAME}_HEX ${hex_file_path} PARENT_SCOPE)
+   set(bin_file ${EXECUTABLE_NAME}${MCU_TYPE_FOR_FILENAME}.bin)
+   set(bin_file_path ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${bin_file})
+   set(${EXECUTABLE_NAME}_BIN ${bin_file_path} PARENT_SCOPE)
    set(map_file ${EXECUTABLE_NAME}${MCU_TYPE_FOR_FILENAME}.map)
    set(map_file_path ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${map_file})
    set(${EXECUTABLE_NAME}_MAP ${map_file_path} PARENT_SCOPE)
-   set(eeprom_image ${EXECUTABLE_NAME}${MCU_TYPE_FOR_FILENAME}-eeprom.hex)
-   set(eeprom_image_path ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${eeprom_image})
-   set(${EXECUTABLE_NAME}_EEPROM ${eeprom_image_path} PARENT_SCOPE)
+
 
    # elf file
    add_executable(${elf_file} EXCLUDE_FROM_ALL ${ARGN})
@@ -186,23 +187,18 @@ function(add_arm_executable EXECUTABLE_NAME)
          ${ARM_SIZE_TOOL} ${ARM_SIZE_ARGS} ${elf_file_path}
       DEPENDS ${elf_file_path}
    )
-
-   # eeprom
    add_custom_command(
-      OUTPUT ${eeprom_image_path}
+      OUTPUT ${bin_file_path}
       COMMAND
-         ${ARM_OBJCOPY} -j .eeprom --set-section-flags=.eeprom=alloc,load
-            --change-section-lma .eeprom=0 --no-change-warnings
-            -O ihex ${elf_file_path} ${eeprom_image_path}
+         ${ARM_OBJCOPY} -O binary -R .eeprom -R .fuse -R .lock -R .signature ${elf_file_path} ${bin_file_path}
       DEPENDS ${elf_file_path}
    )
 
    add_custom_target(
       ${EXECUTABLE_NAME}
       ALL
-      DEPENDS ${hex_file_path} ${eeprom_image_path}
+      DEPENDS ${hex_file_path} ${bin_file_path}
    )
-
    set_target_properties(
       ${EXECUTABLE_NAME}
       PROPERTIES
