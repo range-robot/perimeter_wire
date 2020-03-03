@@ -34,7 +34,8 @@ extern void board_init(void);
 volatile uint32_t* pulSketch_Start_Address;
 
 static void jump_to_application(void) {
-
+	if (__sketch_vectors_ptr == 0)
+		return;
   /* Rebase the Stack Pointer */
   __set_MSP( (uint32_t)(__sketch_vectors_ptr) );
 
@@ -50,12 +51,15 @@ static volatile bool main_b_cdc_enable = false;
 #ifdef CONFIGURE_PMIC
 static volatile bool jump_to_app = false;
 #endif
+#ifdef SAM_BA_TIMEOUT
+static volatile int timeout = SAM_BA_TIMEOUT;
+#endif
 
 /**
  * \brief Check the application startup condition
  *
  */
-static void check_start_application(void)
+static bool has_start_application(void)
 {
 //  LED_init();
 //  LED_off();
@@ -64,10 +68,10 @@ static void check_start_application(void)
    * Test sketch stack pointer @ &__sketch_vectors_ptr
    * Stay in SAM-BA if value @ (&__sketch_vectors_ptr) == 0xFFFFFFFF (Erased flash cell value)
    */
-  if (__sketch_vectors_ptr == 0xFFFFFFFF)
+  if (__sketch_vectors_ptr == 0xFFFFFFFFu)
   {
     /* Stay in bootloader */
-    return;
+    return false;
   }
 
   /*
@@ -86,49 +90,9 @@ static void check_start_application(void)
   if ( ((uint32_t)(&__sketch_vectors_ptr) & ~SCB_VTOR_TBLOFF_Msk) != 0x00)
   {
     /* Stay in bootloader */
-    return;
+    return false;
   }
 
-#if defined(BOOT_DOUBLE_TAP_ADDRESS)
-  #define DOUBLE_TAP_MAGIC 0x07738135
-  if (PM->RCAUSE.bit.POR)
-  {
-    /* On power-on initialize double-tap */
-    BOOT_DOUBLE_TAP_DATA = 0;
-  }
-  else
-  {
-    if (BOOT_DOUBLE_TAP_DATA == DOUBLE_TAP_MAGIC)
-    {
-      /* Second tap, stay in bootloader */
-      BOOT_DOUBLE_TAP_DATA = 0;
-      return;
-    }
-
-#ifdef HAS_EZ6301QI
-    // wait a tiny bit for the EZ6301QI to settle,
-    // as it's connected to RESETN and might reset
-    // the chip when the cable is plugged in fresh
-
-    for (uint32_t i=0; i<2500; i++) /* 10ms */
-      /* force compiler to not optimize this... */
-      __asm__ __volatile__("");
-#endif
-
-    /* First tap */
-    BOOT_DOUBLE_TAP_DATA = DOUBLE_TAP_MAGIC;
-
-    /* Wait 0.5sec to see if the user tap reset again.
-     * The loop value is based on SAMD21 default 1MHz clock @ reset.
-     */
-    for (uint32_t i=0; i<125000; i++) /* 500ms */
-      /* force compiler to not optimize this... */
-      __asm__ __volatile__("");
-
-    /* Timeout happened, continue boot... */
-    BOOT_DOUBLE_TAP_DATA = 0;
-  }
-#endif
 
 /*
 #if defined(BOOT_LOAD_PIN)
@@ -146,18 +110,11 @@ static void check_start_application(void)
   if (!boot_en)
   {
     // Stay in bootloader
-    return;
+    return false;
   }
 #endif
 */
-
-//  LED_on();
-#ifdef CONFIGURE_PMIC
-  jump_to_app = true;
-#else
-  jump_to_application();
-#endif
-
+	return true;
 }
 
 #if DEBUG_ENABLE
@@ -180,7 +137,22 @@ int main(void)
   DEBUG_PIN_HIGH;
 
   /* Jump in application if condition is satisfied */
-  check_start_application();
+  bool has_app = has_start_application();
+
+#ifndef SAM_BA_TIMEOUT
+  if (has_app)
+  {  
+	  //  LED_on();
+#ifdef CONFIGURE_PMIC
+	jump_to_app = true;
+#else
+	jump_to_application();
+#endif
+  }
+#else
+  timeout = has_app ? SAM_BA_TIMEOUT : -1;
+#endif
+
 
   /* We have determined we should stay in the monitor. */
   /* System initialization */
@@ -189,23 +161,6 @@ int main(void)
 
 #ifdef CONFIGURE_PMIC
   configure_pmic();
-#endif
-
-#ifdef ENABLE_JTAG_LOAD
-  uint32_t temp ;
-  // Get whole current setup for both odd and even pins and remove odd one
-  temp = (PORT->Group[0].PMUX[27 >> 1].reg) & PORT_PMUX_PMUXE( 0xF ) ;
-  // Set new muxing
-  PORT->Group[0].PMUX[27 >> 1].reg = temp|PORT_PMUX_PMUXO( 7 ) ;
-  // Enable port mux
-  PORT->Group[0].PINCFG[27].reg |= PORT_PINCFG_PMUXEN ;
-  clockout(0, 1);
-
-  jtagInit();
-  if ((jtagBitstreamVersion() & 0xFF000000) != 0xB0000000) {
-    // FPGA is not in the bootloader, restart it
-    jtagReload();    
-  }
 #endif
 
 #ifdef CONFIGURE_PMIC
@@ -233,7 +188,7 @@ int main(void)
   LEDTX_off();
 
   /* Start the sys tick (1 ms) */
-  SysTick_Config(1000);
+  SysTick_Config(48000);
 
   /* Wait for a complete enum on usb or a '#' char on serial line */
   while (1)
@@ -273,6 +228,14 @@ int main(void)
 
 void SysTick_Handler(void)
 {
+#ifdef SAM_BA_TIMEOUT
+  // timeout == -1 => disabled
+  if (timeout > 0)
+	timeout --;
+  else if (timeout == 0)
+    jump_to_application();
+#endif
+
   LED_pulse();
 
   sam_ba_monitor_sys_tick();
