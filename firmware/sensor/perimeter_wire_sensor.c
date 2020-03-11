@@ -58,12 +58,12 @@ uint16_t pwsens_get_buffer_value(uint16_t index)
 static inline void pwsens_adc_set_channel(uint8_t channel)
 {
 	adc_pos_input_t channel_mux_map[PWSENS_CHANNEL_COUNT] = {
-		0x02, // AIN2 ref
+		0x00, // AIN0 ref
 		0x05, // AIN4 A (X)
 		0x04, // AIN3 B (Y)
 		0x06, // AIN6 C (Z)
 	};
-	adc_dma_set_inputs(&PWSENS_ADC, channel_mux_map[channel], CONF_ADC_0_MUXNEG, 0);
+	adc_dma_set_inputs(&PWSENS_ADC, channel_mux_map[channel], 0x00, 0);
 }
 
 /*
@@ -211,22 +211,6 @@ void pwsens_task(void)
 				sigcode[i] = val;
 			lastvalue = val;
 		}
-		
-		// center
-		int32_t sum = 0;
-		for (int i = 0; i < PWSENS_SAMPLE_COUNT; i++)
-		{
-			// reduce resolution
-			ADC_buffer[i] = ADC_buffer[i] >> 4;
-			sum += ADC_buffer[i];
-		}
-		int16_t center = sum / PWSENS_SAMPLE_COUNT;
-		for (int i = 0; i < PWSENS_SAMPLE_COUNT; i++)
-		{
-			// adjust center position
-			ADC_buffer[i] = ADC_buffer[i] - center;
-		}
-		
 
 		uint16_t quality;
 		uint8_t repeat = channel_state->repeat;
