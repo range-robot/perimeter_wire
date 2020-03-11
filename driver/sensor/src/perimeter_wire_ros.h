@@ -20,7 +20,8 @@ public:
   PerimeterWireRos(ros::NodeHandle nh,
     PerimeterWireDriver& driver, float filter) :
     driver_(driver),
-    filter_(filter)
+    filter_(filter),
+    last_{}
   {
     pub_ = nh.advertise<std_msgs::Float32MultiArray>("perimeter_wire", 1);
   }

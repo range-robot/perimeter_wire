@@ -8,6 +8,7 @@
 // macro for software reset
 #define APP_RESET _reset_mcu
 
+#define APP_LAYER_GET_REG_HOOK(adr)
 #define APP_LAYER_SET_REG_HOOK(adr) uplink_set_reg_callback(adr);
 
 #define APP_LAYER_REGISTERS registers

@@ -31,7 +31,10 @@ enum {
 	REGISTER_CHANNEL_D_L = 0x1A,
 	REGISTER_CHANNEL_D_H = 0x1B,
 	REGISTER_CHANNEL_D = REGISTER_CHANNEL_D_L,
-	REGISTER_COUNT = 0x1C
+	REGISTER_BUFFER_LENGTH = 0x1C,  // 16-bit
+	REGISTER_BUFFER_INDEX = 0x1E,	// 16-bit auto-increment
+	REGISTER_BUFFER_VALUE = 0x20,	// 16-bit
+	REGISTER_COUNT = 0x22
 };
 
 typedef union {
@@ -49,6 +52,12 @@ typedef struct {
 	reg_int16_t mag;
 } channel_reg_t;
 
+typedef struct {
+	uint16_t length;
+	uint16_t index;
+	uint16_t value;
+} buffer_reg_t;
+
 struct app_registers_t {
 	union {
 		uint8_t value;
@@ -61,6 +70,7 @@ struct app_registers_t {
 	uint8_t reserved[2];
 
 	channel_reg_t channel[4];
+	buffer_reg_t buffer;
 };
 
 enum {

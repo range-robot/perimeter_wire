@@ -146,3 +146,23 @@ bool PerimeterWireDriver::setRepeat(int channel, uint8_t repeat)
   app_->setReg(repeat_register_map[channel], repeat);
   return true;
 }
+
+bool PerimeterWireDriver::getBufferIndex(uint16_t& index)
+{
+  return app_->getReg16(REGISTER_BUFFER_INDEX, index);
+}
+
+bool PerimeterWireDriver::setBufferIndex(uint16_t index)
+{
+  app_->setReg16(REGISTER_BUFFER_INDEX, index);
+}
+
+bool PerimeterWireDriver::getBufferLength(uint16_t& length)
+{
+  return app_->getReg16(REGISTER_BUFFER_LENGTH, length);
+}
+
+bool PerimeterWireDriver::getBufferValue(uint16_t& value)
+{
+  return app_->getReg16(REGISTER_BUFFER_VALUE, value);
+}

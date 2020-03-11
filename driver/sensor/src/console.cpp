@@ -8,7 +8,7 @@ using namespace perimeter_wire_sensor;
 
 void usage()
 {
-  printf("Usage: console [-hD] [-p port] [-d divider]\n");
+  printf("Usage: console [-hD] [-p port] [-d divider] [-s channel]\n");
   printf("Options:\n");
   printf("-h\thelp\n");
   printf("-D\tuse differntial mode\n");
@@ -16,6 +16,39 @@ void usage()
   printf("-c\tset code\n");
   printf("-r\tset repeat\n");
   printf("-p\tuse serial port\n");
+  printf("-s\tread sample\n");
+}
+
+void readSample(PerimeterWireDriver& driver, int sample, bool differential)
+{
+  // Start, non continous
+  uint8_t flags = (differential ? 0x90 : 0x10) | (0x01 << sample);
+  driver.setFlags(flags);
+
+  usleep(10000);
+
+  // read the buffer
+  uint16_t bufferLen;
+  if (!driver.getBufferLength(bufferLen))
+  {
+    printf("Failed to read buffer length\n");
+    return;
+  }
+  printf("Buffer length is %d\n", bufferLen);
+
+  uint16_t value, index;
+  for (uint16_t i = 0; i < bufferLen; i++) {
+    if (!driver.getBufferValue(value))
+    {
+      printf("Buffer read error\n");
+      return;
+    }
+    else {
+      driver.getBufferIndex(index);
+      printf("%d: %d\n", index, (int16_t) value);
+
+    }
+  }
 }
 
 int main(int argc, char **argv)
@@ -24,9 +57,10 @@ int main(int argc, char **argv)
   int divider = 0;
   int code = 0;
   int repeat = 0;
+  int sample = -1;
   bool differential = false;
   std::string port("/dev/ttyUSB0");
-  while ((opt = getopt(argc, argv, "hDp:d:c:r:")) != -1)
+  while ((opt = getopt(argc, argv, "hDp:d:c:r:s:")) != -1)
   {
     switch (opt)
     {
@@ -48,6 +82,9 @@ int main(int argc, char **argv)
         break;
       case 'r':
         repeat = std::stoi(optarg);
+        break;
+      case 's':
+        sample = std::stoi(optarg);
         break;
       default: /* '?' */
         usage();
@@ -95,10 +132,21 @@ int main(int argc, char **argv)
       usleep(10000);
     }
   }
+
+  if (sample >= 0)
+  {
+    readSample(driver, sample, differential);
+
+    driver.stop();
+    thread.join();
+
+    exit(EXIT_SUCCESS);
+  }
+
   if (differential)
-    driver.setFlags(0x81);
+    driver.setFlags(0xBf);
   else
-    driver.setFlags(0x01);
+    driver.setFlags(0x3f);
   usleep(10000);
   driver.setControl(true);
   usleep(10000);

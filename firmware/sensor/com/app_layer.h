@@ -111,6 +111,7 @@ static inline void app_layer_handle_get_reg(uint8_t* message, uint8_t len) {
 		if (adr >= APP_LAYER_MAX_REGISTER)
 			system_throw_error(ERR_BAD_ADDRESS);
 		else {
+			APP_LAYER_GET_REG_HOOK(adr);
 			uint8_t buffer[2] = {
 				adr,
 				APP_LAYER_REGISTERS[adr]
@@ -129,6 +130,7 @@ static inline void app_layer_handle_get_reg16(uint8_t* message, uint8_t len) {
 		if (adr +1 >= APP_LAYER_MAX_REGISTER)
 			system_throw_error(ERR_BAD_ADDRESS);
 		else {
+			APP_LAYER_GET_REG_HOOK(adr);
 			uint8_t buffer[3] = {
 				adr,
 				APP_LAYER_REGISTERS[adr],

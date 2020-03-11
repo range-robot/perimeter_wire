@@ -6,7 +6,15 @@
 
 static bool send_hello = false;
 
-
+void uplink_get_reg_callback(uint8_t adr) {
+	if (adr == REGISTER_BUFFER_VALUE) {
+		uint16_t index = uplink_get_buffer_index();
+		if (index >= pwsens_get_buffer_length())
+			index = 0;
+		uplink_set_buffer_value(pwsens_get_buffer_value(index));
+		uplink_set_buffer_index(index + 1);
+	}
+}
 void uplink_set_reg_callback(uint8_t adr) {
 	if (adr == REGISTER_FLAGS)
 	{
@@ -35,6 +43,8 @@ int main(void)
 
 	pwsens_init();
 	//timer_start(&TIMER_0);
+
+	uplink_set_buffer_length(pwsens_get_buffer_length());
 
 	while (1)
 	{

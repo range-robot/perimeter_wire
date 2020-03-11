@@ -69,7 +69,7 @@ int main(int argc, char **argv)
     usleep(10000);
   }
 
-  driver.setFlags(config.differential ? 0x8f : 0x0f);
+  driver.setFlags(config.differential ? 0xBf : 0x3f);
   usleep(10000);
   driver.setControl(true);
   usleep(10000);

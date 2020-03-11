@@ -37,6 +37,12 @@ public:
     bool setCode(int channel, uint16_t code);
     bool setRepeat(int channel, uint8_t repeat);
     bool getChannel(int channel, float& value);
+
+    // buffer access
+    bool getBufferIndex(uint16_t& index);
+    bool setBufferIndex(uint16_t index);
+    bool getBufferLength(uint16_t& index);
+    bool getBufferValue(uint16_t& index);
 };
 
 }  // namespace perimeter_wire_sensor

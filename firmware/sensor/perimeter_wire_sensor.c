@@ -14,7 +14,13 @@ bool pwsens_adc_running;
 uint8_t pwsens_flags;
 enum
 {
-	PWSENS_FLAGS_ENABLE = 0x01,
+	PWSENS_FLAGS_ENABLE_CH_A = 0x01,
+	PWSENS_FLAGS_ENABLE_CH_B = 0x02,
+	PWSENS_FLAGS_ENABLE_CH_C = 0x04,
+	PWSENS_FLAGS_ENABLE_CH_D = 0x08,
+	PWSENS_FLAGS_ENABLE = PWSENS_FLAGS_ENABLE_CH_A | PWSENS_FLAGS_ENABLE_CH_B | PWSENS_FLAGS_ENABLE_CH_C | PWSENS_FLAGS_ENABLE_CH_D,
+	PWSENS_FLAGS_START = 0x10,
+	PWSENS_FLAGS_CONTINUOUS = 0x20,
 	PWSENS_FLAGS_DIFFERENTIAL = 0x80
 };
 
@@ -39,6 +45,16 @@ struct
 	uint8_t channel;
 } pwsens_state;
 
+// buffer access
+uint16_t pwsens_get_buffer_length()
+{
+	return PWSENS_SAMPLE_COUNT;
+}
+uint16_t pwsens_get_buffer_value(uint16_t index)
+{
+	return (uint16_t)ADC_buffer[index];
+}
+
 static inline void pwsens_adc_set_channel(uint8_t channel)
 {
 	adc_pos_input_t channel_mux_map[PWSENS_CHANNEL_COUNT] = {
@@ -49,6 +65,31 @@ static inline void pwsens_adc_set_channel(uint8_t channel)
 	};
 	adc_dma_set_inputs(&PWSENS_ADC, channel_mux_map[channel], CONF_ADC_0_MUXNEG, 0);
 }
+
+/*
+ * Set the adc mux to the next enabled channel
+ */
+static inline bool pwsens_adc_set_next_channel(int channel)
+{
+	uint8_t flags = pwsens_flags;
+	bool enabled = (flags & PWSENS_FLAGS_ENABLE) != 0;
+	if (!enabled)
+		return false;
+	
+	uint8_t next_channel = channel + 1;
+	for (int i = 0; i < 4; i++)
+	{
+		if (next_channel >= PWSENS_CHANNEL_COUNT)
+			next_channel = 0;
+		if ((flags & (PWSENS_FLAGS_ENABLE_CH_A << next_channel)) != 0)
+			continue;
+		next_channel++;
+	}
+
+	pwsens_state.channel = next_channel;
+	pwsens_adc_set_channel(next_channel);
+	return true;
+}		
 
 void pwsens_start_conversion(void)
 {
@@ -76,11 +117,10 @@ void pwsens_init(void)
 void pwsens_set_flags(uint8_t flags)
 {
 	pwsens_flags = flags;
-	if (((flags & PWSENS_FLAGS_ENABLE) != 0) && pwsens_state.status == PWSENS_STOPPED)
+	if (((flags & PWSENS_FLAGS_START) != 0) && pwsens_state.status == PWSENS_STOPPED)
 	{
-		pwsens_adc_set_channel(0);
-		pwsens_state.channel = 0;
-		pwsens_start_conversion();
+		if (pwsens_adc_set_next_channel(-1))
+			pwsens_start_conversion();
 	}
 }
 
@@ -150,12 +190,7 @@ void pwsens_task(void)
 	if (pwsens_state.status == PWSENS_ANALYSE)
 	{
 		uint8_t channel = pwsens_state.channel;
-		// next channel
-		uint8_t next_channel = channel + 1;
-		if (next_channel >= PWSENS_CHANNEL_COUNT)
-			next_channel = 0;
-		pwsens_state.channel = next_channel;
-		pwsens_adc_set_channel(next_channel);
+		bool enabled = pwsens_adc_set_next_channel(channel);
 
 		// oversampling factor
 		channel_state_t* channel_state = &pwsens_state.ch[channel];
@@ -201,9 +236,11 @@ void pwsens_task(void)
 				
 		uplink_set_channel(channel, mag);
 		
-		if ((pwsens_flags & PWSENS_FLAGS_ENABLE) != 0)
+		if (enabled && (pwsens_flags & PWSENS_FLAGS_CONTINUOUS) != 0)
 		{
 			pwsens_start_conversion();
 		}
+		else
+			pwsens_state.status = PWSENS_STOPPED;
 	}
 }
