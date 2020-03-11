@@ -58,9 +58,9 @@ int main(int argc, char **argv)
   int code = 0;
   int repeat = 0;
   int sample = -1;
-  bool differential = false;
+  bool differential = false, reset = false, bootload = false;
   std::string port("/dev/ttyUSB0");
-  while ((opt = getopt(argc, argv, "hDp:d:c:r:s:")) != -1)
+  while ((opt = getopt(argc, argv, "hDp:d:c:r:s:RB")) != -1)
   {
     switch (opt)
     {
@@ -70,6 +70,12 @@ int main(int argc, char **argv)
         break;
       case 'D':
         differential = true;
+        break;
+      case 'B':
+        bootload = true;
+        break;
+      case 'R':
+        reset = true;
         break;
       case 'p':
         port = optarg;
@@ -136,6 +142,18 @@ int main(int argc, char **argv)
   if (sample >= 0)
   {
     readSample(driver, sample, differential);
+
+    driver.stop();
+    thread.join();
+
+    exit(EXIT_SUCCESS);
+  }
+
+  if (reset || bootload)
+  {
+    printf("Resetting device");
+    driver.reset(bootload);
+    usleep(10000);
 
     driver.stop();
     thread.join();

@@ -89,7 +89,7 @@ bool PerimeterWireDriver::getFWVersion(uint16_t& version)
   return app_->getVersion(version);
 }
 
-void PerimeterWireDriver::reset() {
+void PerimeterWireDriver::reset(bool bootload) {
   app_->reset();
 }
 

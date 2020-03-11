@@ -1,11 +1,12 @@
 /*
  * AppLayer
- * Version: 24.09.19
+ * Version: 11.03.20
  * 
  * Changelog:
  * 08.05.19: replace boost::function with std::function
  * 24.09.19: extract com_config.h
  * 24.09.19: use bulk write method
+ * 11.03.20: add reset to bootloader (from 08.05.19 version)
  */
 
 #ifndef SRC_APP_LAYER_H_
@@ -300,10 +301,15 @@ public:
         putMessage(MESSAGE_COMMAND, data);
     }
 
-    void reset() {
+    void reset(bool bootloader = false) {
         in_reset_ = true;
-        std::vector<uint8_t> data = {};
-        putMessage(MESSAGE_RESET, data);
+        if (bootloader) {
+            std::vector<uint8_t> data = {1};
+            putMessage(MESSAGE_RESET, data);
+        } else {
+            std::vector<uint8_t> data = {};
+            putMessage(MESSAGE_RESET, data);
+        }
     }
 
     bool isActive() {

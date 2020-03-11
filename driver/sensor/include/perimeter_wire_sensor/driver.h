@@ -27,7 +27,7 @@ public:
     void stop();
 
     bool getFWVersion(uint16_t& version);
-    void reset(void);
+    void reset(bool bootload=false);
 
     bool getControl(bool& enabled);
     bool setControl(bool enable);

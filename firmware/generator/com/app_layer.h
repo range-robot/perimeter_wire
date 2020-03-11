@@ -1,8 +1,8 @@
 /*
  * protocol.h
  *
- * Created: 03.08.2017 15:16:37
- *  Author: Michael
+ * Version 11.03.20
+ * 11.03.20 Add reset to bootlaoder
  */ 
 
 
@@ -10,7 +10,6 @@
 #define APP_LAYER_H_
 
 #include "app_layer_config.h"
-#include <perimeter_wire_generator/messages.h>
 #include "../com/data_link_layer.h"
 #include "board.h"
 #include "error.h"
@@ -61,11 +60,20 @@ static inline void app_layer_handle_get_version(uint8_t* message, uint8_t len) {
 }
 
 static inline void app_layer_handle_reset(uint8_t* message, uint8_t len) {
-	if (len != 1) {
-		system_throw_error(ERR_PROTOCOL);
+	if (len == 1) {
+		APP_RESET(false);
+	}
+	else if (len == 2) {
+		// with option
+		uint8_t opt = message[1];
+		if (opt == 1) {
+			APP_RESET(true);
+		} else {
+			APP_RESET(false);
+		}
 	}
 	else {
-		APP_RESET();
+		system_throw_error(ERR_PROTOCOL);
 	}
 }
 
