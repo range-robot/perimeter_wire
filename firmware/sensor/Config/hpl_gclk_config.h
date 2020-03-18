@@ -76,7 +76,7 @@
 // <i>
 // <id> gclk_gen_0_div
 #ifndef CONF_GCLK_GEN_0_DIV
-#define CONF_GCLK_GEN_0_DIV 2
+#define CONF_GCLK_GEN_0_DIV 1
 #endif
 
 // </h>
@@ -227,7 +227,7 @@
 // <i>
 // <id> gclk_gen_2_div
 #ifndef CONF_GCLK_GEN_2_DIV
-#define CONF_GCLK_GEN_2_DIV 1
+#define CONF_GCLK_GEN_2_DIV 2
 #endif
 
 // </h>

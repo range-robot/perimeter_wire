@@ -25,7 +25,7 @@
 
 // <i> Select the clock source for ADC.
 #ifndef CONF_GCLK_ADC_SRC
-#define CONF_GCLK_ADC_SRC GCLK_CLKCTRL_GEN_GCLK0_Val
+#define CONF_GCLK_ADC_SRC GCLK_CLKCTRL_GEN_GCLK2_Val
 #endif
 
 /**
@@ -41,7 +41,7 @@
  * \brief CPU's Clock frequency
  */
 #ifndef CONF_CPU_FREQUENCY
-#define CONF_CPU_FREQUENCY 24000000
+#define CONF_CPU_FREQUENCY 48000000
 #endif
 
 // <y> USB Clock Source
@@ -65,7 +65,7 @@
 
 // <i> Select the clock source for USB.
 #ifndef CONF_GCLK_USB_SRC
-#define CONF_GCLK_USB_SRC GCLK_CLKCTRL_GEN_GCLK2_Val
+#define CONF_GCLK_USB_SRC GCLK_CLKCTRL_GEN_GCLK0_Val
 #endif
 
 /**

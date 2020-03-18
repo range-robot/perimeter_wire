@@ -2,16 +2,16 @@ format_version: '2'
 name: My Project
 versions:
   api: '1.0'
-  backend: 1.7.279
+  backend: 1.7.301
   commit: 1e07622763d149970fd8808a8f12ff3b1e84e0d7
   content: unknown
   content_pack_name: unknown
   format: '2'
-  frontend: 1.7.279
-  packs_version_avr8: 1.0.1401
+  frontend: 1.7.301
+  packs_version_avr8: 1.0.1408
   packs_version_qtouch: unknown
   packs_version_sam: 1.0.1373
-  version_backend: 1.7.279
+  version_backend: 1.7.301
   version_frontend: ''
 board:
   identifier: CustomBoard
@@ -178,11 +178,11 @@ drivers:
       domain_group:
         nodes:
         - name: ADC
-          input: Generic clock generator 0
+          input: Generic clock generator 2
           external: false
           external_frequency: 0
         configuration:
-          adc_gclk_selection: Generic clock generator 0
+          adc_gclk_selection: Generic clock generator 2
   GCLK:
     user_label: GCLK
     definition: Atmel:SAMD21D_Drivers:0.0.1::SAMD21E17D-AF::GCLK::driver_config_definition::GCLK::HAL:HPL:GCLK
@@ -245,13 +245,13 @@ drivers:
       gclk_arch_gen_7_idc: false
       gclk_arch_gen_7_oe: false
       gclk_arch_gen_7_oov: false
-      gclk_gen_0_div: 2
+      gclk_gen_0_div: 1
       gclk_gen_0_div_sel: false
       gclk_gen_0_oscillator: Fractional Digital Phase Locked Loop (FDPLL96M)
       gclk_gen_1_div: 8
       gclk_gen_1_div_sel: false
       gclk_gen_1_oscillator: External Crystal Oscillator 0.4-32MHz (XOSC)
-      gclk_gen_2_div: 1
+      gclk_gen_2_div: 2
       gclk_gen_2_div_sel: false
       gclk_gen_2_oscillator: Fractional Digital Phase Locked Loop (FDPLL96M)
       gclk_gen_3_div: 1
@@ -692,11 +692,11 @@ drivers:
       domain_group:
         nodes:
         - name: USB
-          input: Generic clock generator 2
+          input: Generic clock generator 0
           external: false
           external_frequency: 0
         configuration:
-          usb_gclk_selection: Generic clock generator 2
+          usb_gclk_selection: Generic clock generator 0
 pads:
   V_GND:
     name: PA02
