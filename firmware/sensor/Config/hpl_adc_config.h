@@ -243,7 +243,7 @@
 // <i>This register gives the number of input sources included in pin scan. The number of input sources included is INPUTSCAN + 1. 0 disables the input scan feature. (INPUTSCAN)
 // <id> adc_arch_inputscan
 #ifndef CONF_ADC_0_INPUTSCAN
-#define CONF_ADC_0_INPUTSCAN 0
+#define CONF_ADC_0_INPUTSCAN 2
 #endif
 
 // <o> Positive Mux Setting Offset <0-15>

@@ -63,7 +63,7 @@ static inline void pwsens_adc_set_channel(uint8_t channel)
 		0x04, // AIN3 B (Y)
 		0x06, // AIN6 C (Z)
 	};
-	adc_dma_set_inputs(&PWSENS_ADC, channel_mux_map[channel], 0x00, 0);
+	adc_dma_set_inputs(&PWSENS_ADC, channel_mux_map[1], 0x00, 0);
 }
 
 /*
@@ -164,12 +164,12 @@ int16_t corrFilter(const int8_t *H, int8_t subsample, uint8_t repeat, int16_t M,
 					ss=0;
 					Hi++; // next filter coeffs
 				}
-				ipi++;
+				ipi += PWSENS_SAMPLE_STRIDE;
 			}
 		}
 		if (sum > sumMax) sumMax = sum;
 		if (sum < sumMin) sumMin = sum;
-		ip++;
+		ip += PWSENS_SAMPLE_STRIDE;
 	}
 	// normalize to 4095
 	//sumMin = ((float)sumMin) / ((float)(Hsum*127)) * 4095.0;
@@ -214,7 +214,7 @@ void pwsens_task(void)
 
 		uint16_t quality;
 		uint8_t repeat = channel_state->repeat;
-		int16_t mag = corrFilter(sigcode, subSample, repeat, CODE_SIZE, ADC_buffer, PWSENS_SAMPLE_COUNT - CODE_SIZE * subSample * repeat, &quality);
+		int16_t mag = corrFilter(sigcode, subSample, repeat, CODE_SIZE, ADC_buffer, (PWSENS_SAMPLE_COUNT / PWSENS_SAMPLE_STRIDE) - CODE_SIZE * subSample * repeat, &quality);
 		channel_state->mag = mag;
 
 				
