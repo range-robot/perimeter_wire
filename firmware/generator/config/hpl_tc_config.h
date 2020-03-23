@@ -27,13 +27,6 @@
 #define CONF_TC3_PRESCALER TC_CTRLA_PRESCALER_DIV16_Val
 #endif
 
-// <o> Length of one timer tick in uS <0-4294967295>
-// <id> timer_tick
-#ifndef CONF_TC3_TIMER_TICK
-#define CONF_TC3_TIMER_TICK 9
-#endif
-// </h>
-
 // <e> Advanced configuration
 // <id> timer_advanced_configuration
 #ifndef CONF_TC3__ADVANCED_CONFIGURATION_ENABLE
@@ -155,8 +148,7 @@
 #endif
 
 #ifndef CONF_TC3_CC0
-#define CONF_TC3_CC0                                                                                                   \
-	(uint32_t)(((float)CONF_TC3_TIMER_TICK / 1000000.f) / (1.f / (CONF_GCLK_TC3_FREQUENCY / CONF_TC3_PRESCALE)))
+#define CONF_TC3_CC0 (14)
 #endif
 
 // <<< end of configuration section >>>

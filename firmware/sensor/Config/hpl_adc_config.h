@@ -210,7 +210,7 @@
 // <i> These bits control the ADC sampling time in number of half CLK_ADC cycles, depending of the prescaler value, thus controlling the ADC input impedance. (SAMPLEN)
 // <id> adc_arch_samplen
 #ifndef CONF_ADC_0_SAMPLEN
-#define CONF_ADC_0_SAMPLEN 0
+#define CONF_ADC_0_SAMPLEN 3
 #endif
 
 // <o> Window Monitor Mode
