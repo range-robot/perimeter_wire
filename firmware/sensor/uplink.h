@@ -16,24 +16,25 @@ inline static void uplink_get_flags(uint8_t* flags)
 	*flags = app_registers->flags;
 }
 
-inline static uint8_t uplink_get_divider(uint8_t channel)
+inline static uint8_t uplink_get_divider()
 {
-	return app_registers->channel[channel].divider;
+	return app_registers->config.divider;
 }
 
-inline static uint16_t uplink_get_code(uint8_t channel)
+inline static uint16_t uplink_get_code()
 {
-	return app_registers->channel[channel].code;
+	return app_registers->config.code;
 }
 
-inline static uint8_t uplink_get_repeat(uint8_t channel)
+inline static uint8_t uplink_get_repeat()
 {
-	return app_registers->channel[channel].repeat;
+	return app_registers->config.repeat;
 }
 
-inline static void uplink_set_channel(uint8_t channel, int16_t value)
+inline static void uplink_set_channel(uint8_t channel, int16_t value, uint16_t quality)
 {
 	app_registers->channel[channel].mag.value = value;
+	app_registers->channel[channel].qual.value = quality;
 }
 
 inline static void uplink_set_buffer_length(uint16_t length)

@@ -18,7 +18,7 @@
 // <i> Defines the bit resolution for the ADC sample values (RESSEL)
 // <id> adc_resolution
 #ifndef CONF_ADC_0_RESSEL
-#define CONF_ADC_0_RESSEL 0x0
+#define CONF_ADC_0_RESSEL 0x2
 #endif
 
 // <o> Reference Selection
@@ -91,7 +91,7 @@
 // <i> These bits define the Mux selection for the positive ADC input. (MUXPOS)
 // <id> adc_pinmux_positive
 #ifndef CONF_ADC_0_MUXPOS
-#define CONF_ADC_0_MUXPOS 0x6
+#define CONF_ADC_0_MUXPOS 0x4
 #endif
 
 // <o> Negative Mux Input Selection
@@ -108,7 +108,7 @@
 // <i> These bits define the Mux selection for the negative ADC input. (MUXNEG)
 // <id> adc_pinmux_negative
 #ifndef CONF_ADC_0_MUXNEG
-#define CONF_ADC_0_MUXNEG 0x18
+#define CONF_ADC_0_MUXNEG 0x00
 #endif
 
 // </h>
@@ -210,7 +210,7 @@
 // <i> These bits control the ADC sampling time in number of half CLK_ADC cycles, depending of the prescaler value, thus controlling the ADC input impedance. (SAMPLEN)
 // <id> adc_arch_samplen
 #ifndef CONF_ADC_0_SAMPLEN
-#define CONF_ADC_0_SAMPLEN 3
+#define CONF_ADC_0_SAMPLEN 0
 #endif
 
 // <o> Window Monitor Mode

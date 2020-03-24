@@ -22,10 +22,10 @@ void uplink_set_reg_callback(uint8_t adr) {
 		uplink_get_flags(&flags);
 		pwsens_set_flags(flags);
 	}
-	else if (adr >= REGISTER_CHANNEL_A_DIVIDER && adr < REGISTER_COUNT)
+	else if (adr >= REGISTER_CHANNEL_DIVIDER && adr <= REGISTER_CHANNEL_CODE)
 	{
 		for (int i = 0; i < PWSENS_CHANNEL_COUNT; i++)
-			pwsens_set_channel(i, uplink_get_divider(i), uplink_get_code(i), uplink_get_repeat(i));
+			pwsens_set_config(i, uplink_get_divider(), uplink_get_code(), uplink_get_repeat());
 	}
 }
 

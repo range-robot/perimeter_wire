@@ -13,37 +13,37 @@ class PerimeterWireRos
 private:
   PerimeterWireDriver driver_;
   ros::Publisher pub_;
-  float last_[4];
-  float filter_;
 
 public:
   PerimeterWireRos(ros::NodeHandle nh,
     PerimeterWireDriver& driver, float filter) :
-    driver_(driver),
-    filter_(filter),
-    last_{}
+    driver_(driver)
   {
     pub_ = nh.advertise<std_msgs::Float32MultiArray>("perimeter_wire", 1);
   }
 
   void cycle()
   {
-    float value[4];
+    float value;
+    float quality;
     std_msgs::Float32MultiArray array;
 
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 3; i++)
     {
-      if (!driver_.getChannel(i, value[i]))
+      if (!driver_.getChannel(i, value))
       {
         ROS_WARN("Reading channel %d failed.", i);
         return;
       }
-      last_[i] = (1.0 - filter_) * value[i] + filter_ * last_[i];
-      array.data.push_back(value[i]);
-      array.data.push_back(last_[i]);
+      if (!driver_.getQuality(i, quality))
+      {
+        ROS_WARN("Reading quality %d failed.", i);
+        return;
+      }
+      array.data.push_back(value);
+      array.data.push_back(quality);
     }
 
-    array.data.push_back(sqrt(value[0]*value[0] + value[1]*value[1]));
     pub_.publish(array);
   }
 };

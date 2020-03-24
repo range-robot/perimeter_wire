@@ -15,29 +15,13 @@ using namespace perimeter_wire_sensor;
 const uint8_t channel_register_map[] = {
   REGISTER_CHANNEL_A,
   REGISTER_CHANNEL_B,
-  REGISTER_CHANNEL_C,
-  REGISTER_CHANNEL_D
+  REGISTER_CHANNEL_C
 };
 
-const uint8_t divider_register_map[] = {
-  REGISTER_CHANNEL_A_DIVIDER,
-  REGISTER_CHANNEL_B_DIVIDER,
-  REGISTER_CHANNEL_C_DIVIDER,
-  REGISTER_CHANNEL_D_DIVIDER
-};
-
-const uint8_t code_register_map[] = {
-  REGISTER_CHANNEL_A_CODE,
-  REGISTER_CHANNEL_B_CODE,
-  REGISTER_CHANNEL_C_CODE,
-  REGISTER_CHANNEL_D_CODE
-};
-
-const uint8_t repeat_register_map[] = {
-  REGISTER_CHANNEL_A_REPEAT,
-  REGISTER_CHANNEL_B_REPEAT,
-  REGISTER_CHANNEL_C_REPEAT,
-  REGISTER_CHANNEL_D_REPEAT
+const uint8_t quality_register_map[] = {
+  REGISTER_CHANNEL_A_QUAL,
+  REGISTER_CHANNEL_B_QUAL,
+  REGISTER_CHANNEL_C_QUAL
 };
 
 PerimeterWireDriver::PerimeterWireDriver(const std::string& com_port)
@@ -123,27 +107,33 @@ bool PerimeterWireDriver::getChannel(int channel, float& value)
   return res;
 }
 
-bool PerimeterWireDriver::setDivider(int channel, uint8_t divider)
+
+bool PerimeterWireDriver::getQuality(int channel, float& value)
 {
-  if (channel < 0 || channel >= sizeof(divider_register_map))
+  if (channel < 0 || channel >= sizeof(quality_register_map))
     return false;
-  app_->setReg(divider_register_map[channel], divider);
+  uint8_t reg = quality_register_map[channel];
+  uint16_t val16;
+  bool res = app_->getReg16(reg, val16);
+  value = val16;
+  return res;
+}
+
+bool PerimeterWireDriver::setDivider(uint8_t divider)
+{
+  app_->setReg(REGISTER_CHANNEL_DIVIDER, divider);
   return true;
 }
 
-bool PerimeterWireDriver::setCode(int channel, uint16_t code)
+bool PerimeterWireDriver::setCode(uint16_t code)
 {
-  if (channel < 0 || channel >= sizeof(code_register_map))
-    return false;
-  app_->setReg16(code_register_map[channel], code);
+  app_->setReg16(REGISTER_CHANNEL_CODE, code);
   return true;
 }
 
-bool PerimeterWireDriver::setRepeat(int channel, uint8_t repeat)
+bool PerimeterWireDriver::setRepeat(uint8_t repeat)
 {
-  if (channel < 0 || channel >= sizeof(repeat_register_map))
-    return false;
-  app_->setReg(repeat_register_map[channel], repeat);
+  app_->setReg(REGISTER_CHANNEL_REPEAT, repeat);
   return true;
 }
 

@@ -33,10 +33,11 @@ public:
     bool setControl(bool enable);
     bool setFlags(uint8_t flags);
 
-    bool setDivider(int channel, uint8_t divider);
-    bool setCode(int channel, uint16_t code);
-    bool setRepeat(int channel, uint8_t repeat);
+    bool setDivider(uint8_t divider);
+    bool setCode(uint16_t code);
+    bool setRepeat(uint8_t repeat);
     bool getChannel(int channel, float& value);
+    bool getQuality(int channel, float& value);
 
     // buffer access
     bool getBufferIndex(uint16_t& index);
