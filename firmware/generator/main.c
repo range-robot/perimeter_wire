@@ -91,6 +91,7 @@ int main(void)
 	atmel_start_init();
 
 	usb_serial_init(usb_connect);
+	uplink_init();
 	
 	pwgen_init(&genA, PWGEN_A);
 	pwgen_init(&genB, PWGEN_B);
@@ -126,6 +127,7 @@ int main(void)
 	{
 		usb_serial_task();
 		app_layer_cycle();
+		uplink_task();
 		if (send_hello)
 		{
 			send_hello = false;

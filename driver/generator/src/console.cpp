@@ -9,7 +9,7 @@ using namespace perimeter_wire_generator;
 
 void usage()
 {
-  printf("Usage: console [-h] [-ab] [-m mode] [-d div] [-c code] [-p port]\n");
+  printf("Usage: console [-h] [-abs] [-m mode] [-d div] [-c code] [-p port]\n");
   printf("Options:\n");
   printf("-h\thelp\n");
   printf("-p\tuse serial port\n");
@@ -18,18 +18,19 @@ void usage()
   printf("-c\tset code\n");
   printf("-a\tconfigure channel a\n");
   printf("-b\tconfigure channel b\n");
+  printf("-s\tsave configuration to nv storage\n");
 }
 
 int main(int argc, char **argv)
 {
-  bool chA = false, chB = false;
+  bool chA = false, chB = false, save = false;
   bool setDiv = false, setMode = false, setCode = false;
   uint8_t div = 0;
   uint8_t mode = 0;
   uint16_t code = 0;
   int opt;
   std::string port("/dev/ttyUSB0");
-  while ((opt = getopt(argc, argv, "habp:m:d:c:")) != -1)
+  while ((opt = getopt(argc, argv, "habsp:m:d:c:")) != -1)
   {
     switch (opt)
     {
@@ -57,6 +58,9 @@ int main(int argc, char **argv)
       case 'c':
         setCode = true;
         code = std::stoi(optarg);
+        break;
+      case 's':
+        save = true;
         break;
       default: /* '?' */
         usage();
@@ -173,6 +177,13 @@ int main(int argc, char **argv)
         ROS_INFO("Set mode for channel B to 0x%x", mode);
     }
     usleep(10000);
+  }
+
+  if (save) {
+    if (!driver.saveConfiguration())
+      ROS_WARN("Failed to save configuration");
+    else
+      ROS_INFO("Configuration saved.");
   }
 
   float voltage;

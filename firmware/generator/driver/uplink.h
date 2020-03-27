@@ -10,6 +10,8 @@ extern void (* const cmds[COMMAND_COUNT])(void);
 extern struct app_registers_t * app_registers;
 
 void uplink_set_reg_callback(uint8_t adr);
+void uplink_init(void);
+void uplink_task(void);
 
 inline static void uplink_read_generatorA_config(struct pwgen_config_t *const config)
 {

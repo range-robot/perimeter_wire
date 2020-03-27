@@ -2,16 +2,16 @@ format_version: '2'
 name: generator
 versions:
   api: '1.0'
-  backend: 1.7.298
+  backend: 1.7.301
   commit: 1e07622763d149970fd8808a8f12ff3b1e84e0d7
   content: unknown
   content_pack_name: unknown
   format: '2'
-  frontend: 1.7.298
+  frontend: 1.7.301
   packs_version_avr8: 1.0.1408
   packs_version_qtouch: unknown
   packs_version_sam: 1.0.1373
-  version_backend: 1.7.298
+  version_backend: 1.7.301
   version_frontend: ''
 board:
   identifier: CustomBoard
@@ -234,6 +234,19 @@ drivers:
       gclk_gen_7_div: 1
       gclk_gen_7_div_sel: false
       gclk_gen_7_oscillator: External Crystal Oscillator 0.4-32MHz (XOSC)
+    optional_signals: []
+    variant: null
+    clocks:
+      domain_group: null
+  FLASH_INSTANCE:
+    user_label: FLASH_INSTANCE
+    definition: Atmel:SAMD21D_Drivers:0.0.1::SAMD21E17D-AF::NVMCTRL::driver_config_definition::Flash::HAL:Driver:FLASH
+    functionality: Flash
+    api: HAL:Driver:FLASH
+    configuration:
+      nvm_arch_cache: false
+      nvm_arch_read_mode: No Miss Penalty
+      nvm_arch_sleepprm: Wake On Access
     optional_signals: []
     variant: null
     clocks:

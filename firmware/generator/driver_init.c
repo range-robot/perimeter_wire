@@ -31,6 +31,8 @@ struct timer_descriptor             TIMER_0;
 static uint8_t ADC_0_buffer[ADC_0_BUFFER_SIZE];
 static uint8_t ADC_0_map[ADC_0_CH_MAX + 1];
 
+struct flash_descriptor FLASH_INSTANCE;
+
 /**
  * \brief ADC initialization function
  *
@@ -52,6 +54,18 @@ void ADC_0_init(void)
 	gpio_set_pin_direction(R_TEMP, GPIO_DIRECTION_OFF);
 
 	gpio_set_pin_function(R_TEMP, PINMUX_PA05B_ADC_AIN5);
+}
+
+void FLASH_INSTANCE_CLOCK_init(void)
+{
+
+	_pm_enable_bus_clock(PM_BUS_APBB, NVMCTRL);
+}
+
+void FLASH_INSTANCE_init(void)
+{
+	FLASH_INSTANCE_CLOCK_init();
+	flash_init(&FLASH_INSTANCE, NVMCTRL);
 }
 
 /**
@@ -373,6 +387,8 @@ void system_init(void)
 	gpio_set_pin_function(LED1_R, GPIO_PIN_FUNCTION_OFF);
 
 	ADC_0_init();
+
+	FLASH_INSTANCE_init();
 
 	TIMER_0_init();
 

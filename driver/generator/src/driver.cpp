@@ -77,6 +77,15 @@ bool GeneratorDriver::setControl(bool enabled)
   return true;
 }
 
+bool GeneratorDriver::saveConfiguration()
+{
+  uint8_t control;
+  if (!app_->getReg(REGISTER_CONTROL, control))
+    return false;
+  app_->setReg(REGISTER_CONTROL, control | 0x80);
+  return true;
+}
+
 bool GeneratorDriver::getVoltage(float& voltage)
 {
   uint8_t int_volt;

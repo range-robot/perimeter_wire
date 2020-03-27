@@ -32,6 +32,7 @@ public:
     void reset(void);
 
     bool setControl(bool enable);
+    bool saveConfiguration();
     bool getVoltage(float& voltage);
     bool getTemperature(float& temp);
 

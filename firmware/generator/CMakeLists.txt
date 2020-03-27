@@ -126,6 +126,7 @@ add_arm_executable(firmware
 ./hal/src/hal_atomic.c
 ./hal/src/hal_delay.c
 ./hal/src/hal_gpio.c
+./hal/src/hal_flash.c
 ./hal/src/hal_init.c
 ./hal/src/hal_io.c
 ./hal/src/hal_sleep.c
@@ -141,6 +142,7 @@ add_arm_executable(firmware
 ./hpl/core/hpl_init.c
 ./hpl/dmac/hpl_dmac.c
 ./hpl/gclk/hpl_gclk.c
+./hpl/nvmctrl/hpl_nvmctrl.c
 ./hpl/pm/hpl_pm.c
 ./hpl/sysctrl/hpl_sysctrl.c
 ./hpl/tc/hpl_tc.c

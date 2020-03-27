@@ -14,7 +14,10 @@ enum {
 	REGISTER_B_CODE = 0x08,
 	REGISTER_VOLTAGE = 0x10,
 	REGISTER_TEMP = 0x11,
-	REGISTER_COUNT = 0x12
+	REGISTER_COUNT = 0x12,
+
+	REGISTER_SAVE_START = REGISTER_A_MODE,
+	REGISTER_SAVE_END = 0x0A
 };
 typedef union {
 	uint16_t value;
@@ -29,7 +32,8 @@ struct app_registers_t {
 		uint8_t value;
 		struct {
 			uint8_t run : 1;
-			uint8_t reserved : 7;
+			uint8_t reserved : 6;
+			uint8_t save : 1;
 		};
 	} control;
 
