@@ -16,16 +16,9 @@ void uplink_get_reg_callback(uint8_t adr) {
 	}
 }
 void uplink_set_reg_callback(uint8_t adr) {
-	if (adr == REGISTER_FLAGS)
+	if (adr >= REGISTER_FLAGS && adr <= REGISTER_CHANNEL_CODE)
 	{
-		uint8_t flags;
-		uplink_get_flags(&flags);
-		pwsens_set_flags(flags);
-	}
-	else if (adr >= REGISTER_CHANNEL_DIVIDER && adr <= REGISTER_CHANNEL_CODE)
-	{
-		for (int i = 0; i < PWSENS_CHANNEL_COUNT; i++)
-			pwsens_set_config(i, uplink_get_divider(), uplink_get_code(), uplink_get_repeat());
+		pwsens_set_config(uplink_get_flags(), uplink_get_divider(), uplink_get_code(), uplink_get_repeat(), uplink_get_filter());
 	}
 }
 

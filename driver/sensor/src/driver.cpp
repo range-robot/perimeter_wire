@@ -107,7 +107,6 @@ bool PerimeterWireDriver::getChannel(int channel, float& value)
   return res;
 }
 
-
 bool PerimeterWireDriver::getQuality(int channel, float& value)
 {
   if (channel < 0 || channel >= sizeof(quality_register_map))
@@ -117,6 +116,17 @@ bool PerimeterWireDriver::getQuality(int channel, float& value)
   bool res = app_->getReg16(reg, val16);
   value = val16;
   return res;
+}
+
+bool PerimeterWireDriver::getMeasurementCount(uint8_t& counter)
+{
+  return app_->getReg(REGISTER_COUNTER, counter);
+}
+
+bool PerimeterWireDriver::setFilterSize(uint8_t filter)
+{
+  app_->setReg(REGISTER_FILTER, filter);
+  return true;
 }
 
 bool PerimeterWireDriver::setDivider(uint8_t divider)

@@ -6,7 +6,9 @@
 
 enum {
 	REGISTER_CONTROL = 0x00,
-	REGISTER_FLAGS = 0x01,
+	REGISTER_COUNTER = 0x01,		// measurement counter
+	REGISTER_FLAGS = 0x02,
+	REGISTER_FILTER = 0x03,			// filter length (0-MAX_FILTER)
 	REGISTER_CHANNEL_DIVIDER = 0x04,
 	REGISTER_CHANNEL_REPEAT = 0x05,
 	REGISTER_CHANNEL_CODE = 0x06,	// 16-bit
@@ -31,6 +33,8 @@ typedef union {
 } reg_int16_t;
 
 typedef struct {
+	uint8_t flags;
+	uint8_t filter_size;
 	uint8_t divider;
 	uint8_t repeat;
 	uint16_t code;
@@ -55,8 +59,7 @@ struct app_registers_t {
 			uint8_t reserved : 7;
 		};
 	} control;
-	uint8_t flags;
-	uint8_t reserved[2];
+	uint8_t measurement_counter;
 
 	channel_config_reg_t config;
 	channel_reg_t channel[3];
@@ -76,7 +79,9 @@ enum
 	PWSENS_FLAGS_START = 0x10,
 	PWSENS_FLAGS_CONTINUOUS = 0x20,
 	PWSENS_FLAGS_SYNC_MODE = 0x40,
-	PWSENS_FLAGS_DIFFERENTIAL = 0x80
+	PWSENS_FLAGS_DIFFERENTIAL = 0x80,
+
+	PWSENS_FLAGS_RUNNING_UPDATE = PWSENS_FLAGS_CONTINUOUS
 };
 
 #endif /* PERIMETER_WIRE_FIRMWARE_CONFIG_H_ */

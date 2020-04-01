@@ -36,8 +36,10 @@ public:
     bool setDivider(uint8_t divider);
     bool setCode(uint16_t code);
     bool setRepeat(uint8_t repeat);
+    bool setFilterSize(uint8_t filter);
     bool getChannel(int channel, float& value);
     bool getQuality(int channel, float& value);
+    bool getMeasurementCount(uint8_t& counter);
 
     // buffer access
     bool getBufferIndex(uint16_t& index);

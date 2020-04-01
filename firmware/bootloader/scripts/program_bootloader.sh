@@ -2,6 +2,10 @@
 
 set -e
 
+# Having problems with ATMEL-ICE? Read this:
+# https://community.atmel.com/forum/samd21-fuse-settings-causing-programming-failure
+# Also make sure your Atmel Studio configuration is correct
+# Dont't overwrite bootloader. Use the bl linker script and incremental uploading.
 
 echo "Programming bootlaoder (Using Programmer)"
 

@@ -9,13 +9,14 @@ using namespace perimeter_wire_sensor;
 
 void usage()
 {
-  printf("Usage: console [-hD] [-p port] [-d divider] [-s channel]\n");
+  printf("Usage: console [-hD] [-p port] [-d divider] [-f filter] [-s channel]\n");
   printf("Options:\n");
   printf("-h\thelp\n");
   printf("-D\tuse differntial mode\n");
   printf("-d\tset frequency divider\n");
   printf("-c\tset code\n");
   printf("-r\tset repeat\n");
+  printf("-f\tset filter size\n");
   printf("-p\tuse serial port\n");
   printf("-s\tread sample\n");
 }
@@ -72,12 +73,13 @@ int main(int argc, char **argv)
   int opt;
   int divider = 0;
   int code = 0;
+  int filter = -1;
   int repeat = 0;
   bool sample = false;
   bool sync = false;
   bool differential = false, reset = false, bootload = false;
   std::string port("/dev/ttyUSB0");
-  while ((opt = getopt(argc, argv, "hDp:d:c:r:sRBS")) != -1)
+  while ((opt = getopt(argc, argv, "hDp:d:c:r:f:sRBS")) != -1)
   {
     switch (opt)
     {
@@ -106,6 +108,9 @@ int main(int argc, char **argv)
       case 'r':
         repeat = std::stoi(optarg);
         break;
+      case 'f':
+        filter = std::stoi(optarg);
+        break;
       case 's':
         sample = true;
         break;
@@ -127,7 +132,7 @@ int main(int argc, char **argv)
     ROS_INFO("Using divider %d", divider);
     if (!driver.setDivider(divider))
     {
-      ROS_ERROR("Failed to set divider for channel");
+      ROS_ERROR("Failed to set divider");
     }
     usleep(10000);
   }
@@ -136,7 +141,7 @@ int main(int argc, char **argv)
     ROS_INFO("Using code 0x%x", code);
     if (!driver.setCode(code))
     {
-      ROS_ERROR("Failed to set code for channel");
+      ROS_ERROR("Failed to set code");
     }
     usleep(10000);
   }
@@ -145,7 +150,16 @@ int main(int argc, char **argv)
     ROS_INFO("Using repeat 0x%x", repeat);
     if (!driver.setRepeat(repeat))
     {
-      ROS_ERROR("Failed to set repeat for channel");
+      ROS_ERROR("Failed to set repeat");
+    }
+    usleep(10000);
+  }
+  if (filter >= 0)
+  {
+    ROS_INFO("Using filter size %d", filter);
+    if (!driver.setFilterSize(filter))
+    {
+      ROS_ERROR("Failed to set filter size");
     }
     usleep(10000);
   }
@@ -190,7 +204,13 @@ int main(int argc, char **argv)
 
   printf("A\tAQ\tB\tBQ\tC\tCQ\n");
   float a, b, c, aq, bq, cq;
+  uint8_t count;
   while (true) {
+    if (!driver.getMeasurementCount(count))
+    {
+      ROS_WARN("Reading mesaurement count.");
+      continue;
+    }
     if (!driver.getChannel(0, a))
     {
       ROS_WARN("Reading channel a failed.");
@@ -221,8 +241,8 @@ int main(int argc, char **argv)
       ROS_WARN("Reading quality c failed.");
       continue;
     }
-    printf("%.4f\t%.0f\t%.4f\t%.0f\t%.4f\t%.0f\n", a, aq, b, bq, c, cq);
-    usleep(32000);
+    printf("%.4f\t%.0f\t%.4f\t%.0f\t%.4f\t%.0f\t%d\n", a, aq, b, bq, c, cq, count);
+    usleep(filter <= 1 ? 20000 : 20000 * filter);
   }
 
   driver.stop();

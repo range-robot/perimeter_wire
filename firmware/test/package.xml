@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>perimeter_wire_firmware_tests</name>
+  <version>0.0.0</version>
+  <description>The perimeter_wire_firmware_tests package</description>
+
+  <maintainer email="michael.stoll@stolltec.com">Michael Stoll</maintainer>
+
+  <license>Proprietary</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <depend>perimeter_wire_generator_firmware</depend>
+  <depend>perimeter_wire_sensor_firmware</depend>
+
+  <test_depend>roslint</test_depend>
+</package>

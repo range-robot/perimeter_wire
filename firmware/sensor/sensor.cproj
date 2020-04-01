@@ -26,7 +26,7 @@
     <OverrideVtorValue>exception_table</OverrideVtorValue>
     <BootSegment>2</BootSegment>
     <ResetRule>0</ResetRule>
-    <eraseonlaunchrule>0</eraseonlaunchrule>
+    <eraseonlaunchrule>4</eraseonlaunchrule>
     <EraseKey />
     <AsfFrameworkConfig>
       <framework-data>
@@ -155,13 +155,13 @@
           <AcmeProjectActionInfo Action="File" Source="usb_start.h" IsConfig="false" Hash="tIiPIYvUpZZo7de2aDnOew" />
           <AcmeProjectActionInfo Action="File" Source="atmel_start.h" IsConfig="false" Hash="RMqb5tXF0KJJUa8pwHEMHQ" />
           <AcmeProjectActionInfo Action="File" Source="atmel_start.c" IsConfig="false" Hash="cPHebvG8xgdrV+XTYs6EeA" />
-          <AcmeProjectActionInfo Action="File" Source="config/hpl_adc_config.h" IsConfig="true" Hash="lbpghCbMf5vNjuJSbP0s0w" />
+          <AcmeProjectActionInfo Action="File" Source="config/hpl_adc_config.h" IsConfig="true" Hash="uPVx3PofII0NZNpmEqvUFA" />
           <AcmeProjectActionInfo Action="File" Source="config/hpl_dmac_config.h" IsConfig="true" Hash="VSEpXW6hBmM+IPTDLIqYzg" />
-          <AcmeProjectActionInfo Action="File" Source="config/hpl_gclk_config.h" IsConfig="true" Hash="vCLtrc7LoSwKuO42FlefGQ" />
+          <AcmeProjectActionInfo Action="File" Source="config/hpl_gclk_config.h" IsConfig="true" Hash="KGcCm+2lHE9meMp/1Yc4yg" />
           <AcmeProjectActionInfo Action="File" Source="config/hpl_pm_config.h" IsConfig="true" Hash="GH0DautnKY3X7yLEFG4tgA" />
           <AcmeProjectActionInfo Action="File" Source="config/hpl_sysctrl_config.h" IsConfig="true" Hash="r01Ns+V2dhMb+ErK9GLsOA" />
           <AcmeProjectActionInfo Action="File" Source="config/hpl_usb_config.h" IsConfig="true" Hash="OTnXMB+/o/b7gPmkxUTUeQ" />
-          <AcmeProjectActionInfo Action="File" Source="config/peripheral_clk_config.h" IsConfig="true" Hash="ydEKsBor2MR8zswMeU3kpQ" />
+          <AcmeProjectActionInfo Action="File" Source="config/peripheral_clk_config.h" IsConfig="true" Hash="DL0m6I+6oAAQUETP5MR1zw" />
           <AcmeProjectActionInfo Action="File" Source="config/usbd_config.h" IsConfig="true" Hash="W5m2swIDDnyVSERQEu1qww" />
         </AcmeActionInfos>
         <NonsecureFilesInfo />
@@ -214,6 +214,7 @@
   <armgcc.compiler.directories.IncludePaths>
     <ListValues>
       <Value>%24(PackRepoDir)\arm\cmsis\5.4.0\CMSIS\Core\Include\</Value>
+      <Value>%24(PackRepoDir)\atmel\SAMD21_DFP\1.3.395\samd21d\include</Value>
       <Value>../Config</Value>
       <Value>../</Value>
       <Value>../examples</Value>
@@ -232,7 +233,6 @@
       <Value>../usb/class/cdc</Value>
       <Value>../usb/class/cdc/device</Value>
       <Value>../usb/device</Value>
-      <Value>%24(PackRepoDir)\Atmel\SAMD21_DFP\1.3.395\samd21d\include</Value>
     </ListValues>
   </armgcc.compiler.directories.IncludePaths>
   <armgcc.compiler.optimization.level>Optimize for size (-Os)</armgcc.compiler.optimization.level>
@@ -254,6 +254,7 @@
   <armgcc.assembler.general.IncludePaths>
     <ListValues>
       <Value>%24(PackRepoDir)\arm\cmsis\5.4.0\CMSIS\Core\Include\</Value>
+      <Value>%24(PackRepoDir)\atmel\SAMD21_DFP\1.3.395\samd21d\include</Value>
       <Value>../Config</Value>
       <Value>../</Value>
       <Value>../examples</Value>
@@ -272,12 +273,12 @@
       <Value>../usb/class/cdc</Value>
       <Value>../usb/class/cdc/device</Value>
       <Value>../usb/device</Value>
-      <Value>%24(PackRepoDir)\Atmel\SAMD21_DFP\1.3.395\samd21d\include</Value>
     </ListValues>
   </armgcc.assembler.general.IncludePaths>
   <armgcc.preprocessingassembler.general.IncludePaths>
     <ListValues>
       <Value>%24(PackRepoDir)\arm\cmsis\5.4.0\CMSIS\Core\Include\</Value>
+      <Value>%24(PackRepoDir)\atmel\SAMD21_DFP\1.3.395\samd21d\include</Value>
       <Value>../Config</Value>
       <Value>../</Value>
       <Value>../examples</Value>
@@ -296,7 +297,6 @@
       <Value>../usb/class/cdc</Value>
       <Value>../usb/class/cdc/device</Value>
       <Value>../usb/device</Value>
-      <Value>%24(PackRepoDir)\Atmel\SAMD21_DFP\1.3.395\samd21d\include</Value>
     </ListValues>
   </armgcc.preprocessingassembler.general.IncludePaths>
 </ArmGcc>
@@ -319,6 +319,7 @@
     <ListValues>
       <Value>../include</Value>
       <Value>%24(PackRepoDir)\arm\cmsis\5.4.0\CMSIS\Core\Include\</Value>
+      <Value>%24(PackRepoDir)\atmel\SAMD21_DFP\1.3.395\samd21d\include</Value>
       <Value>../Config</Value>
       <Value>../</Value>
       <Value>../examples</Value>
@@ -337,7 +338,6 @@
       <Value>../usb/class/cdc</Value>
       <Value>../usb/class/cdc/device</Value>
       <Value>../usb/device</Value>
-      <Value>%24(PackRepoDir)\Atmel\SAMD21_DFP\1.3.395\samd21d\include</Value>
     </ListValues>
   </armgcc.compiler.directories.IncludePaths>
   <armgcc.compiler.optimization.level>Optimize for size (-Os)</armgcc.compiler.optimization.level>
@@ -361,6 +361,7 @@
   <armgcc.assembler.general.IncludePaths>
     <ListValues>
       <Value>%24(PackRepoDir)\arm\cmsis\5.4.0\CMSIS\Core\Include\</Value>
+      <Value>%24(PackRepoDir)\atmel\SAMD21_DFP\1.3.395\samd21d\include</Value>
       <Value>../Config</Value>
       <Value>../</Value>
       <Value>../examples</Value>
@@ -379,13 +380,13 @@
       <Value>../usb/class/cdc</Value>
       <Value>../usb/class/cdc/device</Value>
       <Value>../usb/device</Value>
-      <Value>%24(PackRepoDir)\Atmel\SAMD21_DFP\1.3.395\samd21d\include</Value>
     </ListValues>
   </armgcc.assembler.general.IncludePaths>
   <armgcc.assembler.debugging.DebugLevel>Default (-g)</armgcc.assembler.debugging.DebugLevel>
   <armgcc.preprocessingassembler.general.IncludePaths>
     <ListValues>
       <Value>%24(PackRepoDir)\arm\cmsis\5.4.0\CMSIS\Core\Include\</Value>
+      <Value>%24(PackRepoDir)\atmel\SAMD21_DFP\1.3.395\samd21d\include</Value>
       <Value>../Config</Value>
       <Value>../</Value>
       <Value>../examples</Value>
@@ -404,7 +405,6 @@
       <Value>../usb/class/cdc</Value>
       <Value>../usb/class/cdc/device</Value>
       <Value>../usb/device</Value>
-      <Value>%24(PackRepoDir)\Atmel\SAMD21_DFP\1.3.395\samd21d\include</Value>
     </ListValues>
   </armgcc.preprocessingassembler.general.IncludePaths>
   <armgcc.preprocessingassembler.debugging.DebugLevel>Default (-Wa,-g)</armgcc.preprocessingassembler.debugging.DebugLevel>
@@ -757,6 +757,9 @@
     <Compile Include="main.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="matching_filter.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="perimeter_wire_sensor.c">
       <SubType>compile</SubType>
     </Compile>
@@ -862,6 +865,9 @@
       <SubType>compile</SubType>
     </None>
     <None Include="Device_Startup\samd21e17d_flash_bl.ld">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Device_Startup\samd21e17d_sram.ld">
       <SubType>compile</SubType>
     </None>
     <None Include="documentation\usb_device_cdc.rst">
