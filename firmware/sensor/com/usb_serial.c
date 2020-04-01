@@ -22,7 +22,7 @@ struct rx_buffer {
 	uint32_t count;
 };
 
-#define RXBUFFER_COUNT 4
+#define RXBUFFER_COUNT 16
 uint32_t rx_buffer_write_index, rx_buffer_read_index;
 
 struct rx_buffer rx_buffer[RXBUFFER_COUNT];
@@ -69,7 +69,8 @@ static bool usb_device_cb_state_c(usb_cdc_control_signal_t state)
 		/* Start RX */
 		rx_buffer_read_index = 0;
 		rx_buffer_write_index = 0;
-		rx_buffer[0].start = rx_buffer[0].count = 0;
+		for (uint8_t i = 0; i < RXBUFFER_COUNT; i++)
+			rx_buffer[i].start = rx_buffer[i].count = 0;
 
 		int32_t err =  cdcdf_acm_read(rx_buffer[0].buffer, USB_SERIAL_RX_SIZE);
 		if (ERR_NONE != err)
@@ -136,5 +137,13 @@ int16_t async_serial_get(void)
 void async_serial_write(const uint8_t* buf, uint8_t count)
 {	
 	int32_t res = cdcdf_acm_write(buf, count);
-	ASSERT(res == count);
+	if (res == ERR_NONE)
+		return;
+	else if (res == USB_HALTED)
+		return;  // USB halted. discard data
+	else if (res > 0)
+		return;
+	else
+		ASSERT(false);
+	(void)res;
 }
