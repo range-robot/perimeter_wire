@@ -100,6 +100,21 @@ int main(int argc, char **argv)
   int state = 0;
   while (privateNh.ok())
   {
+    // check
+    auto error = driver.getLastError();
+    if (error)
+    {
+      if (error.value() == boost::system::errc::no_such_file_or_directory)
+      {
+        ROS_ERROR("Interface does not exist any more (device detached)");
+      }
+      else
+      {
+        ROS_ERROR("IO error (%d): %s", error.value(), error.message().c_str());
+      }
+      break;
+    }
+
     // process
     rosDrv.cycle();
     ros::spinOnce();

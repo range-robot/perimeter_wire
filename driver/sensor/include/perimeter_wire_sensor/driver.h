@@ -2,6 +2,7 @@
 #define PERIMETER_WIRE_SENSOR_PERIMETER_WIRE_DRIVER_H_
 
 #include <memory>
+#include <boost/system/error_code.hpp>
 
 class AsyncSerial;
 class DataLink;
@@ -15,8 +16,11 @@ private:
     std::shared_ptr<DataLink> dll_;
     std::shared_ptr<AppLayer> app_;
 
+    boost::system::error_code last_error_;
+
     void helloCallback(uint16_t version);
     void cmdResultCallback(uint8_t cmd, uint8_t result);
+    void errorCallback(const boost::system::error_code &);
 
 public:
     explicit PerimeterWireDriver(const std::string& com_port);
@@ -46,6 +50,11 @@ public:
     bool setBufferIndex(uint16_t index);
     bool getBufferLength(uint16_t& index);
     bool getBufferValue(uint16_t& index);
+
+    const boost::system::error_code getLastError() const
+    {
+        return last_error_;
+    }
 };
 
 }  // namespace perimeter_wire_sensor

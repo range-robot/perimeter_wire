@@ -28,6 +28,7 @@ PerimeterWireDriver::PerimeterWireDriver(const std::string& com_port)
 {
   using namespace std::placeholders;
   serial_ = std::make_shared<AsyncSerial>(com_port);
+  serial_->setErrorCallback(std::bind(&PerimeterWireDriver::errorCallback, this, _1));
   dll_ = std::make_shared<DataLink>(serial_);
   app_ = std::make_shared<AppLayer>(dll_);
   app_->setHelloCallback(std::bind(&PerimeterWireDriver::helloCallback, this, _1));
@@ -51,6 +52,11 @@ void PerimeterWireDriver::helloCallback(uint16_t version)
 void PerimeterWireDriver::cmdResultCallback(uint8_t cmd, uint8_t result)
 {
   ROS_ERROR("Received orphanded command result. Cmd: %i, Result: %x", (int)cmd, (int)result);
+}
+
+void PerimeterWireDriver::errorCallback(const boost::system::error_code &ec)
+{
+  last_error_ = ec;
 }
 
 void PerimeterWireDriver::run()

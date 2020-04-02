@@ -21,6 +21,24 @@ void usage()
   printf("-s\tread sample\n");
 }
 
+bool checkDriver(PerimeterWireDriver& driver)
+{
+  auto error = driver.getLastError();
+  if (error)
+  {
+    if (error.value() == boost::system::errc::no_such_file_or_directory)
+    {
+      printf("Interface does not exist any more (device detached)\n");
+    }
+    else
+    {
+      printf("IO error (%d): %s\n", error.value(), error.message().c_str());
+    }
+    return false;
+  }
+  return true;
+}
+
 void readSample(PerimeterWireDriver& driver)
 {
   // Start, non continous
@@ -205,7 +223,7 @@ int main(int argc, char **argv)
   printf("A\tAQ\tB\tBQ\tC\tCQ\n");
   float a, b, c, aq, bq, cq;
   uint8_t count;
-  while (true) {
+  while (checkDriver(driver)) {
     if (!driver.getMeasurementCount(count))
     {
       ROS_WARN("Reading mesaurement count.");
