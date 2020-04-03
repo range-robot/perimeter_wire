@@ -100,6 +100,7 @@ bool PerimeterWireDriver::setControl(bool enabled)
 bool PerimeterWireDriver::setFlags(uint8_t flags)
 {
   app_->setReg(REGISTER_FLAGS, flags);
+  return true;
 }
 
 bool PerimeterWireDriver::getChannel(int channel, float& value)

@@ -47,23 +47,32 @@ int main(int argc, char **argv)
   PerimeterWireDriver driver(config.com_port);
   std::thread thread([&driver](){driver.run();});
 
+  if (!driver.setFlags(0))
+  {
+    ROS_ERROR("Failed to stop device.");
+    return EXIT_FAILURE;
+  }
+  // avoid overflow
+  usleep(10000);
   if (!driver.setDivider(config.divider))
   {
-    ROS_ERROR("Failed to set divider for channel");
+    ROS_ERROR("Failed to set divider");
     return EXIT_FAILURE;
   }
   // avoid overflow
   usleep(10000);
   if (!driver.setCode(config.code))
   {
-    ROS_ERROR("Failed to set code for channel");
+    ROS_ERROR("Failed to set code");
     return EXIT_FAILURE;
   }
   // avoid overflow
   usleep(10000);
   if (!driver.setRepeat(config.repeat))
   {
-    ROS_ERROR("Failed to set repeat for channel");
+    ROS_ERROR("Failed to set repeat");
+    return EXIT_FAILURE;
+  }
   // avoid overflow
   usleep(10000);
   if (!driver.setFilterSize(config.filter))
@@ -74,9 +83,13 @@ int main(int argc, char **argv)
   // avoid overflow
   usleep(10000);
 
-  driver.setFlags(PWSENS_FLAGS_START | PWSENS_FLAGS_CONTINUOUS | PWSENS_FLAGS_ENABLE
-                  | (config.differential ? PWSENS_FLAGS_DIFFERENTIAL : 0)
-                  | (config.sync ? PWSENS_FLAGS_SYNC_MODE : 0));
+  if (!driver.setFlags(PWSENS_FLAGS_START | PWSENS_FLAGS_CONTINUOUS | PWSENS_FLAGS_ENABLE
+                       | (config.differential ? PWSENS_FLAGS_DIFFERENTIAL : 0)
+                       | (config.sync ? PWSENS_FLAGS_SYNC_MODE : 0)))
+  {
+    ROS_ERROR("Failed to enable device");
+    return EXIT_FAILURE;
+  }
   usleep(10000);
   driver.setControl(true);
   usleep(10000);
@@ -96,7 +109,7 @@ int main(int argc, char **argv)
   diagnostic_updater::Updater updater;
   updater.setHardwareID(config.com_port);
   
-  ros::Rate rate(100.0);
+  ros::Rate rate(10.0);
   int state = 0;
   while (privateNh.ok())
   {

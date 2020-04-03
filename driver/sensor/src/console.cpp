@@ -1,7 +1,9 @@
 #include <getopt.h>
 #include <string>
 #include <thread>
+#include <chrono>
 #include <ros/console.h>
+#include <ros/rate.h>
 #include <perimeter_wire_sensor/driver.h>
 #include <perimeter_wire_sensor_firmware/registers.h>
 
@@ -9,16 +11,20 @@ using namespace perimeter_wire_sensor;
 
 void usage()
 {
-  printf("Usage: console [-hD] [-p port] [-d divider] [-f filter] [-s channel]\n");
+  printf("Usage: console [-hDSsRB] [-p port] [-d divider] [-f filter] [-F frequency]\n");
   printf("Options:\n");
   printf("-h\thelp\n");
+  printf("-R\treset\n");
+  printf("-B\treset to bootloader\n");
   printf("-D\tuse differntial mode\n");
+  printf("-S\tuse sync mode\n");
   printf("-d\tset frequency divider\n");
   printf("-c\tset code\n");
   printf("-r\tset repeat\n");
   printf("-f\tset filter size\n");
   printf("-p\tuse serial port\n");
   printf("-s\tread sample\n");
+  printf("-F\tread frequency\n");
 }
 
 bool checkDriver(PerimeterWireDriver& driver)
@@ -39,11 +45,17 @@ bool checkDriver(PerimeterWireDriver& driver)
   return true;
 }
 
-void readSample(PerimeterWireDriver& driver)
+void readSample(PerimeterWireDriver& driver, bool differential, bool sync)
 {
   // Start, non continous
-  uint8_t flags = PWSENS_FLAGS_START | PWSENS_FLAGS_ENABLE;
-  driver.setFlags(flags);
+  uint8_t flags = PWSENS_FLAGS_START | PWSENS_FLAGS_ENABLE
+                  | (differential ? PWSENS_FLAGS_DIFFERENTIAL : 0)
+                  | (sync ? PWSENS_FLAGS_SYNC_MODE : 0);
+  if (!driver.setFlags(flags))
+  {
+    ROS_ERROR("Failed to enable device.\n");
+    exit(EXIT_FAILURE);
+  }
 
   usleep(10000);
 
@@ -83,21 +95,28 @@ void readSample(PerimeterWireDriver& driver)
   }
   printf("%.4f\t%.4f\t%.4f\n", a, b, c);
 
+  uint8_t counter;
+  if (!driver.getMeasurementCount(counter))
+  {
+    ROS_WARN("Reading mesaurement count.");
+  }
+  printf("Counter: %d\n", counter);
   driver.setFlags(0);
 }
 
 int main(int argc, char **argv)
 {
   int opt;
-  int divider = 0;
+  int divider = -1;
   int code = 0;
   int filter = -1;
   int repeat = 0;
+  float freq = 10;
   bool sample = false;
   bool sync = false;
   bool differential = false, reset = false, bootload = false;
   std::string port("/dev/ttyUSB0");
-  while ((opt = getopt(argc, argv, "hDp:d:c:r:f:sRBS")) != -1)
+  while ((opt = getopt(argc, argv, "hDp:d:c:r:f:F:sRBS")) != -1)
   {
     switch (opt)
     {
@@ -129,6 +148,9 @@ int main(int argc, char **argv)
       case 'f':
         filter = std::stoi(optarg);
         break;
+      case 'F':
+        freq = std::stof(optarg);
+        break;
       case 's':
         sample = true;
         break;
@@ -145,7 +167,12 @@ int main(int argc, char **argv)
   // Spin thread for serial (required for sync api)
   std::thread thread([&driver]() { driver.run(); });
 
-  if (divider != 0)
+  ROS_INFO("Stopping device");
+  if (!driver.setFlags(0))
+  {
+    ROS_ERROR("Failed to stop device.");
+  }
+  if (divider >= 0)
   {
     ROS_INFO("Using divider %d", divider);
     if (!driver.setDivider(divider))
@@ -184,7 +211,7 @@ int main(int argc, char **argv)
 
   if (sample)
   {
-    readSample(driver);
+    readSample(driver, differential, sync);
 
     driver.stop();
     thread.join();
@@ -204,9 +231,13 @@ int main(int argc, char **argv)
     exit(EXIT_SUCCESS);
   }
 
-  driver.setFlags(PWSENS_FLAGS_START | PWSENS_FLAGS_CONTINUOUS | PWSENS_FLAGS_ENABLE
-                  | (differential ? PWSENS_FLAGS_DIFFERENTIAL : 0)
-                  | (sync ? PWSENS_FLAGS_SYNC_MODE : 0));
+  if (!driver.setFlags(PWSENS_FLAGS_START | PWSENS_FLAGS_CONTINUOUS | PWSENS_FLAGS_ENABLE
+                      | (differential ? PWSENS_FLAGS_DIFFERENTIAL : 0)
+                      | (sync ? PWSENS_FLAGS_SYNC_MODE : 0)))
+  {
+    ROS_ERROR("Failed to enable device.\n");
+    exit(EXIT_FAILURE);
+  }
   usleep(10000);
   driver.setControl(true);
   usleep(10000);
@@ -220,9 +251,12 @@ int main(int argc, char **argv)
     ROS_ERROR("Failed to enable device.");
   }
 
-  printf("A\tAQ\tB\tBQ\tC\tCQ\n");
+  printf("sec\tA\tAQ\tB\tBQ\tC\tCQ\tcount\n");
   float a, b, c, aq, bq, cq;
   uint8_t count;
+  auto start = std::chrono::steady_clock::now();
+  ros::Time::init();
+  ros::Rate r(freq);
   while (checkDriver(driver)) {
     if (!driver.getMeasurementCount(count))
     {
@@ -259,8 +293,11 @@ int main(int argc, char **argv)
       ROS_WARN("Reading quality c failed.");
       continue;
     }
-    printf("%.4f\t%.0f\t%.4f\t%.0f\t%.4f\t%.0f\t%d\n", a, aq, b, bq, c, cq, count);
-    usleep(filter <= 1 ? 20000 : 20000 * filter);
+    auto time = std::chrono::steady_clock::now();
+    auto seconds = std::chrono::duration_cast<std::chrono::duration<double> >(time - start);
+    printf("%.3f\t%.4f\t%.0f\t%.4f\t%.0f\t%.4f\t%.0f\t%d\n", 
+      seconds.count(), a, aq, b, bq, c, cq, count);
+    r.sleep();
   }
 
   driver.stop();
