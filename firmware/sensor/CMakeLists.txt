@@ -104,6 +104,7 @@ include_directories(
   hpl/gclk
   hpl/port
   hpl/pm
+  hpl/rtc
   hri
   usb
   usb/class/cdc
@@ -127,6 +128,7 @@ add_arm_executable(firmware
 ./hal/src/hal_init.c
 ./hal/src/hal_io.c
 ./hal/src/hal_sleep.c
+./hal/src/hal_timer.c
 ./hal/src/hal_usb_device.c
 ./hal/utils/src/utils_assert.c
 ./hal/utils/src/utils_event.c
@@ -138,6 +140,7 @@ add_arm_executable(firmware
 ./hpl/dmac/hpl_dmac.c
 ./hpl/gclk/hpl_gclk.c
 ./hpl/pm/hpl_pm.c
+./hpl/rtc/hpl_rtc.c
 ./hpl/sysctrl/hpl_sysctrl.c
 ./hpl/usb/hpl_usb.c
 ./main.c

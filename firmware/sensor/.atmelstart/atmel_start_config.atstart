@@ -296,6 +296,37 @@ drivers:
           external: false
           external_frequency: 0
         configuration: {}
+  TIMER_0:
+    user_label: TIMER_0
+    definition: Atmel:SAMD21D_Drivers:0.0.1::SAMD21E17D-AF::RTC::driver_config_definition::Timer::HAL:Driver:Timer
+    functionality: Timer
+    api: HAL:Driver:Timer
+    configuration:
+      rtc_arch_comp_val: 1024
+      rtc_arch_init_reset: true
+      rtc_arch_prescaler: Peripheral clock divided by 2
+      rtc_cmpeo0: false
+      rtc_event_control: false
+      rtc_ovfeo: false
+      rtc_pereo0: false
+      rtc_pereo1: false
+      rtc_pereo2: false
+      rtc_pereo3: false
+      rtc_pereo4: false
+      rtc_pereo5: false
+      rtc_pereo6: false
+      rtc_pereo7: false
+    optional_signals: []
+    variant: null
+    clocks:
+      domain_group:
+        nodes:
+        - name: RTC
+          input: Generic clock generator 1
+          external: false
+          external_frequency: 0
+        configuration:
+          rtc_clk_selection: Generic clock generator 1
   DMAC:
     user_label: DMAC
     definition: Atmel:SAMD21D_Drivers:0.0.1::SAMD21E17D-AF::DMAC::driver_config_definition::DMAC::HAL:HPL:DMAC

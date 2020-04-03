@@ -23,6 +23,8 @@ static struct
 	int16_t buffer[PWSENS_CHANNEL_COUNT][PWSENS_MAX_FILTER];
 	uint8_t pos;
 } filter_state;;
+static struct timer_task pwsens_dma_task;
+
 
 // channel offset
 // pyhsical mapping
@@ -86,6 +88,7 @@ void pwsens_start_conversion(void)
 	hri_adc_write_INPUTCTRL_INPUTOFFSET_bf(PWSENS_ADC.device.hw, 0);
 	adc_dma_enable_channel(&PWSENS_ADC, 0);
 	adc_dma_read(&PWSENS_ADC, (uint8_t*)ADC_buffer_reading, PWSENS_SAMPLE_COUNT);
+	timer_add_task(&TIMER_0, &pwsens_dma_task);
 	//adc_dma_start_conversion(&PWSENS_ADC);
 }
 
@@ -94,6 +97,7 @@ void pwsens_convert_cb(const struct adc_dma_descriptor *const descr)
 	adc_dma_disable_channel(&PWSENS_ADC, 0);
 	adc_dma_set_conversion_mode(&PWSENS_ADC, ADC_CONVERSION_MODE_SINGLE_CONVERSION);
 	pwsens_state.status = PWSENS_ANALYSE;
+	timer_remove_task(&TIMER_0, &pwsens_dma_task);
 }
 
 void pwsens_error_cb(const struct adc_dma_descriptor *const descr)
@@ -101,12 +105,30 @@ void pwsens_error_cb(const struct adc_dma_descriptor *const descr)
 	adc_dma_disable_channel(&PWSENS_ADC, 0);
 	adc_dma_set_conversion_mode(&PWSENS_ADC, ADC_CONVERSION_MODE_SINGLE_CONVERSION);
 	system_throw_error(ERR_ABORTED);
+	timer_remove_task(&TIMER_0, &pwsens_dma_task);
 	pwsens_state.status = PWSENS_COVERTING;
 	pwsens_start_conversion();
 }
 
+void pwsens_dma_task_10ms(const struct timer_task *const timer_task)
+{
+	if (pwsens_state.status == PWSENS_COVERTING)
+	{
+		// Timeout, restart dma transfer
+		adc_dma_disable_channel(&PWSENS_ADC, 0);
+		adc_dma_set_conversion_mode(&PWSENS_ADC, ADC_CONVERSION_MODE_SINGLE_CONVERSION);
+		system_throw_error(ERR_ABORTED);
+		pwsens_state.status = PWSENS_COVERTING;
+		pwsens_start_conversion();
+	}
+}
+
 void pwsens_init(void)
 {
+	pwsens_dma_task.cb = &pwsens_dma_task_10ms;
+	pwsens_dma_task.interval = 10; // 10 ms
+	pwsens_dma_task.mode = TIMER_TASK_ONE_SHOT;
+
 	adc_dma_set_conversion_mode(&PWSENS_ADC, ADC_CONVERSION_MODE_FREERUN);
 	adc_dma_register_callback(&PWSENS_ADC, ADC_DMA_ERROR_CB, pwsens_error_cb);
 	adc_dma_register_callback(&PWSENS_ADC, ADC_DMA_COMPLETE_CB, pwsens_convert_cb);

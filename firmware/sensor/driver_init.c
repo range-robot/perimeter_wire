@@ -13,7 +13,10 @@
 #include <hpl_gclk_base.h>
 #include <hpl_pm_base.h>
 
+#include <hpl_rtc_base.h>
+
 struct adc_dma_descriptor ADC_0;
+struct timer_descriptor   TIMER_0;
 
 /**
  * \brief ADC initialization function
@@ -61,6 +64,18 @@ static void ADC_0_init(void)
 	gpio_set_pin_direction(MAG_C, GPIO_DIRECTION_OFF);
 
 	gpio_set_pin_function(MAG_C, PINMUX_PA10B_ADC_AIN18);
+}
+
+/**
+ * \brief Timer initialization function
+ *
+ * Enables Timer peripheral, clocks and initializes Timer driver
+ */
+static void TIMER_0_init(void)
+{
+	_pm_enable_bus_clock(PM_BUS_APBA, RTC);
+	_gclk_enable_channel(RTC_GCLK_ID, CONF_GCLK_RTC_SRC);
+	timer_init(&TIMER_0, RTC, _rtc_get_timer());
 }
 
 void USB_DEVICE_INSTANCE_PORT_init(void)
@@ -171,6 +186,8 @@ void system_init(void)
 	init_mcu();
 
 	ADC_0_init();
+
+	TIMER_0_init();
 
 	USB_DEVICE_INSTANCE_init();
 }
