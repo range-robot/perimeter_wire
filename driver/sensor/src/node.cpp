@@ -104,7 +104,9 @@ int main(int argc, char **argv)
     ROS_ERROR("Failed to enable device.");
     return EXIT_FAILURE;
   }
-  PerimeterWireRos rosDrv(nh, driver);
+
+  int code_weight = PerimeterWireDriver::getCodeWeight(config.code, config.differential);
+  PerimeterWireRos rosDrv(nh, driver, code_weight);
   
   diagnostic_updater::Updater updater;
   updater.setHardwareID(config.com_port);

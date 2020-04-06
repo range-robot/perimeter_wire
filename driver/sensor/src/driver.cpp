@@ -9,7 +9,9 @@
 
 
 #define FIRMWARE_VERSION 1
-#define ADC_MAX (4096.0f)
+#define CODE_SIZE (16)
+// adc resolution: 10bit, but max 1/2 amplitude (0.5V/1.0V)
+#define ADC_MAX (512.0f)
 using namespace perimeter_wire_sensor;
 
 const uint8_t channel_register_map[] = {
@@ -172,4 +174,18 @@ bool PerimeterWireDriver::getBufferLength(uint16_t& length)
 bool PerimeterWireDriver::getBufferValue(uint16_t& value)
 {
   return app_->getReg16(REGISTER_BUFFER_VALUE, value);
+}
+
+int PerimeterWireDriver::getCodeWeight(uint16_t code, bool differentiate)
+{
+  int weight = 0;
+  int8_t lastvalue = ((code & (1 << (CODE_SIZE-1))) == 0) ? -1 : 1;
+  for (int i = 0; i < CODE_SIZE; i++)
+  {
+    int8_t val = ((code & (1 << i)) == 0) ? -1 : 1;
+    if (!differentiate || val != lastvalue)
+      weight++;
+    lastvalue = val;
+  }
+  return weight;
 }

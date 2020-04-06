@@ -13,11 +13,13 @@ class PerimeterWireRos
 private:
   PerimeterWireDriver driver_;
   ros::Publisher pub_;
+  const int code_weight_;
 
 public:
   PerimeterWireRos(ros::NodeHandle nh,
-    PerimeterWireDriver& driver) :
-    driver_(driver)
+    PerimeterWireDriver& driver, int code_weight) :
+    driver_(driver),
+    code_weight_(code_weight)
   {
     pub_ = nh.advertise<std_msgs::Float32MultiArray>("perimeter_wire", 1);
   }
@@ -40,7 +42,7 @@ public:
         ROS_WARN("Reading quality %d failed.", i);
         return;
       }
-      array.data.push_back(value);
+      array.data.push_back(value / code_weight_);
       array.data.push_back(quality);
     }
 

@@ -45,6 +45,12 @@ public:
     bool getQuality(int channel, float& value);
     bool getMeasurementCount(uint8_t& counter);
 
+    // helpers
+    /*
+     * Get the maximum value, this code can gerneate
+     */
+    static int getCodeWeight(uint16_t code, bool differentiate);
+
     // buffer access
     bool getBufferIndex(uint16_t& index);
     bool setBufferIndex(uint16_t index);
