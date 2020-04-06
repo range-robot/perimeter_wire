@@ -2,7 +2,7 @@
 #ifndef SRC_PERIMETER_WIRE_ROS_H_
 #define SRC_PERIMETER_WIRE_ROS_H_
 
-#include <perimeter_wire_sensor/driver.h>
+#include <perimeter_wire_sensor_driver/driver.h>
 #include <ros/node_handle.h>
 #include <std_msgs/Float32MultiArray.h>
 

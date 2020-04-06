@@ -4,7 +4,7 @@
 #include <chrono>
 #include <ros/console.h>
 #include <ros/rate.h>
-#include <perimeter_wire_sensor/driver.h>
+#include <perimeter_wire_sensor_driver/driver.h>
 #include <perimeter_wire_sensor_firmware/registers.h>
 
 using namespace perimeter_wire_sensor;

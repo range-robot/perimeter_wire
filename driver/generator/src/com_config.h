@@ -7,8 +7,8 @@
 #include "console.h"
 
 // app-layer
-#include <perimeter_wire_generator/messages.h>
-#include <perimeter_wire_generator/registers.h>
+#include <perimeter_wire_generator_firmware/messages.h>
+#include <perimeter_wire_generator_firmware/registers.h>
 #define APP_LAYER_MAX_REGISTER REGISTER_COUNT
 
 // data-link-layer

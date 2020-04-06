@@ -1,7 +1,7 @@
 
 #include <string>
-#include <perimeter_wire_generator/driver.h>
-#include <perimeter_wire_generator/registers.h>
+#include <perimeter_wire_generator_driver/driver.h>
+#include <perimeter_wire_generator_firmware/registers.h>
 #include "async_serial.h"
 #include "data_link_layer.h"
 #include "app_layer.h"

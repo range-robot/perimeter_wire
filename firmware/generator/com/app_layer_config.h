@@ -3,7 +3,7 @@
 
 #include "hpl_reset.h"
 #include "driver/uplink.h"
-#include <perimeter_wire_generator/registers.h>
+#include <perimeter_wire_generator_firmware/registers.h>
 
 // macro for software reset
 #define APP_RESET(bootload) _reset_mcu()

@@ -1,7 +1,7 @@
 
 #include "uplink.h"
 #include "driver_init.h"
-#include <perimeter_wire_generator/registers.h>
+#include <perimeter_wire_generator_firmware/registers.h>
 #include <err_codes.h>
 #include <utils_assert.h>
 #include <string.h>

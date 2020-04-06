@@ -2,7 +2,7 @@
 #include <string>
 #include <thread>
 #include <ros/node_handle.h>
-#include <perimeter_wire_sensor/driver.h>
+#include <perimeter_wire_sensor_driver/driver.h>
 #include <perimeter_wire_sensor_firmware/registers.h>
 #include <diagnostic_updater/diagnostic_updater.h>
 #include "perimeter_wire_ros.h"

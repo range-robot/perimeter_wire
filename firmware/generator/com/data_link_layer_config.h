@@ -10,7 +10,7 @@
 #define DATALINK_CONFIG_H_
 
 #include "usb_serial.h"
-#include <perimeter_wire_generator/messages.h>
+#include <perimeter_wire_generator_firmware/messages.h>
 
 #define DATALINK_START_FLAG (0x7E)
 #define DATALINK_END_FLAG (0x7E)

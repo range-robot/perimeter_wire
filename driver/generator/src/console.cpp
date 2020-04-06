@@ -2,7 +2,7 @@
 #include <string>
 #include <thread>
 #include <unistd.h>
-#include <perimeter_wire_generator/driver.h>
+#include <perimeter_wire_generator_driver/driver.h>
 #include "console.h"
 
 using namespace perimeter_wire_generator;

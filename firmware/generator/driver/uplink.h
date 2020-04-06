@@ -2,7 +2,7 @@
 #define UPLINK_H_
 
 #include "perimeter_wire_generator.h"
-#include <perimeter_wire_generator/registers.h>
+#include <perimeter_wire_generator_firmware/registers.h>
 
 extern uint8_t registers[REGISTER_COUNT];
 extern void (* const cmds[COMMAND_COUNT])(void);
