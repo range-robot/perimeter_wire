@@ -10,7 +10,5 @@
 
   <buildtool_depend>catkin</buildtool_depend>
   
-  <!-- TODO
-    <build_depend>gcc-arm-none-eabi</build_depend>
-  <build_depend>avr-libc</build_depend>-->
+  <build_depend>gcc-arm-none-eabi</build_depend>
 </package>
