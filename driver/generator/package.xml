@@ -10,6 +10,8 @@
 
   <buildtool_depend>catkin</buildtool_depend>
 
+  <build_depend>boost</build_depend>
+  <depend>libboost-system</depend>
   <depend>perimeter_wire_generator_firmware</depend>
 
   <test_depend>roslint</test_depend>
