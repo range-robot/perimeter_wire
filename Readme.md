@@ -14,7 +14,7 @@
  * Robot-Shop uses 1mH, Arudmower 100mH coil.
 
 
- == Theory ==
+== Theory ==
 
 Magnetic field strength for z coil:
 k: konstant
@@ -46,3 +46,7 @@ https://www.wolframalpha.com/input/?i=%7Csin%28arctan%28x%2F0.4%29%29+*+cos%28ar
 "cwd": "${workspaceRoot}/firmware/generator",
 "valuesFormatting": "parseText",
 ```
+
+== Program and Test ==
+
+See prod/Testing.md
