@@ -188,6 +188,7 @@ int main(int argc, char **argv)
     {
       ROS_ERROR("Failed to set code");
     }
+    ROS_INFO("Code weight is %d. Divide with this to normalize.", driver.getCodeWeight(code, differential));
     usleep(10000);
   }
   if (repeat != 0)
