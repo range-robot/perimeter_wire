@@ -29,6 +29,14 @@ For d = 0.4 and coil distance 0.05 we get:
 https://www.wolframalpha.com/input/?i=%7Csin%28arctan%28x%2F0.4%29%29+*+cos%28arctan%28x%2F0.4%29%29%2F0.4%7C+-+%7Csin%28arctan%28%28x-0.05%29%2F0.4%29%29+*+cos%28arctan%28%28x-0.05%29%2F0.4%29%29%2F0.4%7C
 
 
+== Orientation ==
+
+The hardware is designed to measure a vector in a cartesian coordinate system. However the coil for x is inverted.
+
+Looking at the magnetic field of a loop. We define z > 0 to be inside the loop and when above the loop y > 0 to be forward direction. In that case x > 0 means rotation to the right.
+
+When the pcb is mounted flat on the robot and upper pcb is facing in drive direction orientation is '-xyz'.  When it's upside down (in case) and facing in drive direction orientation is '-x-y-z'. And when its mounted on the front of the robot, with the case / pcb facing in drive direction orientation is '-z-yx'.
+
 == Debugging ==
 
 * Compile using --cmake-args -DCMAKE_BUILD_TYPE=Debug
