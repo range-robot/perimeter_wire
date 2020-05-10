@@ -2,8 +2,8 @@
 Changelog for package perimeter_wire_sensor_driver
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.2 (2020-05-10)
+------------------
 * Add orientation parameter
 * Add information about code weight to console
 * Contributors: Michael Stoll
