@@ -38,7 +38,8 @@ struct PerimeterWireDriverConfig
     privateNh.param("differential", differential, true);
     privateNh.param("filter", filter, 0);
     privateNh.param("orientation", orientation, std::string("xyz"));
-    ROS_INFO("perimeter_wire configuration: divider: %d, code: 0x%x, repeat: %d, diff: %d", divider, code, repeat, differential);
+    ROS_INFO("perimeter_wire configuration: divider: %d, code: 0x%x, repeat: %d, diff: %d, orientation: %s",
+             divider, code, repeat, differential, orientation.c_str());
   }
 
   void getChannelMap(ChannelMapping& map)
