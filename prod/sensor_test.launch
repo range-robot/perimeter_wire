@@ -1,0 +1,15 @@
+<?xml version="1.0"?> 
+<launch>
+  <node pkg="perimeter_wire_sensor_driver" type="perimeter_wire_driver" name="perimeter_wire" output="screen">
+    <param name="port" value="/dev/ttyACM0" />
+    <param name="divider" value="4" />
+    <param name="code" value="7010" />
+    <param name="repeat" value="1" />
+    <param name="filter" value="8" />
+    <param name="differential" value="true" />
+    <param name="sync" value="true" />
+    <param name="orientation" value="-xyz" />
+  </node>
+  <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot" args="/perimeter_wire/data[0] /perimeter_wire/data[2] /perimeter_wire/data[4]" output="screen">
+  </node>
+</launch>
