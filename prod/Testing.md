@@ -42,3 +42,36 @@ Disconnect all cables.
    | L2       | > 5.0     | < 0.5     | 1.0 - 4.0 |
    | L3       | 1.0 - 4.0 | > 5.0     | < 0.5     |
    Write this table to the test protocoll (using real values)
+
+
+
+== generator pcb ==
+
+Testing a sensor pcb requires
+* completely assembled generator assembly
+* PC with linux (set up for build and testing)
+* ATMEL ICE Programmer with cable
+* USB cable
+
+=== Programming ===
+
+1. Connect ATMEL ICE to pc and generator (programming port)
+2. Connect USB cable to pc and generator
+3. Run ./firmware/bootloader/scritps/program_bootloader.sh
+4. Run ./firmware/generator/scripts/program_with_bootloader.sh
+   If you get error "Device unsupported" bootloader is not running.
+   Then disconnect the USB and run the command again within 5 seconds.
+
+=== Testing ===
+
+1. Setup power supply current limit to 0.1A. Voltage 1V. Connect to gernerator power.
+   Raise voltage slowly to 12V. Current should stay below 0.01A.
+2. Run
+   > rosrun perimeter_wire_generator_driver console -p /dev/ttyACM0 -m 7 -a -b -c 5555 -d 4
+   LEDs should light up green. Some output at console.
+3. Connect wire between CH1 and short
+   Power supply should show current of 0.05A - 0.07A.
+   Remove wire
+4. Connect wire between CH2 and short
+   Power supply should show current of 0.05A - 0.07A.
+   Remove wire
