@@ -2,6 +2,9 @@
 Changelog for package perimeter_wire_bootloader
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.0.2 (2020-05-10)
 ------------------
 
