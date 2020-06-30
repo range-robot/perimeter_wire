@@ -2,8 +2,8 @@
 Changelog for package perimeter_wire_generator_firmware
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.3 (2020-06-30)
+------------------
 * Add bootloader configuration
 * Contributors: Michael Stoll
 

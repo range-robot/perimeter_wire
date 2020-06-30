@@ -2,8 +2,8 @@
 Changelog for package perimeter_wire_sensor_driver
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.3 (2020-06-30)
+------------------
 * Log info about orientation
 * Contributors: Michael Stoll
 
