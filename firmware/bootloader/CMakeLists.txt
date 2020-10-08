@@ -92,9 +92,29 @@ add_arm_executable(bootloader
   src/sam_ba_usb.c
 )
 
+add_custom_target(version ALL
+  COMMAND git -C ${CMAKE_SOURCE_DIR} describe --tags > ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/version
+  VERBATIM
+  USES_TERMINAL)
+
 #############
 ## Install ##
 #############
+
+
+install(FILES ${bootloader_HEX}
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+  RENAME bootloader.hex
+)
+
+install(FILES ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/version openocd.cfg
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+)
+
+install(FILES scripts/program.sh
+  PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+)
 
 install(DIRECTORY include/${PROJECT_NAME}/
   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
